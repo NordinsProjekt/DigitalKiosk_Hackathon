@@ -1,0 +1,24 @@
+
+
+
+Idé:
+Skapa en digitalkiosk åt en affär.
+
+Syfte:
+Att låta kunder söka fram varor med detaljerad information om dem.
+Se en karta av butiken och se vart varan finns.
+Möjlighet att skriva ut en inköpslista med varorna med hyllplats nummer och sektion.
+Kunna skriva in personnummer och skriva ut sina personliga rabatter.
+
+Detta är funktioner som kunden kommer ha nytta av.
+
+BackOffice:
+En applikation som kan lägga till varor och editera varor i butiken.
+Samt skapa nya användare och ställa in personliga varor
+
+API:
+Ha endpoints som hemsidan kan utnyttja via Javascript.
+REST api.
+
+Hårdvara:
+Skärm i lodrätposition 1080x1920 upplösning.

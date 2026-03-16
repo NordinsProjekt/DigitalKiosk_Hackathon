@@ -1,0 +1,27 @@
+<Solution>
+  <Folder Name="/1. Domain/">
+    <Project Path="Entities/Entities.csproj" />
+  </Folder>
+  <Folder Name="/2. DomainServices/">
+    <Project Path="DomainFactories/Factories.csproj" />
+  </Folder>
+  <Folder Name="/3. Application/">
+    <Project Path="Services/Services.csproj" />
+  </Folder>
+  <Folder Name="/4. Infrastructure/">
+    <Project Path="EF_MSSQL/EF_MSSQL.csproj" />
+  </Folder>
+  <Folder Name="/5. Presentation/">
+    <Project Path="BackOfficeConsole/BackOfficeConsole.csproj" />
+    <Project Path="DigitalKiosk_Hackathon/DigitalKiosk_Hackathon.csproj" />
+  </Folder>
+  <Folder Name="/6. Tests/">
+    <Project Path="Application.ServicesTests/Application.ServicesTests.csproj" />
+    <Project Path="Domain.FactoriesTests/Domain.FactoriesTests.csproj" />
+  </Folder>
+  <Folder Name="/8. Dokumentation/">
+    <File Path="DatabaseSchema.xsd" />
+    <File Path="Masterplan.txt" />
+  </Folder>
+  <Folder Name="/9. Html/" />
+</Solution>

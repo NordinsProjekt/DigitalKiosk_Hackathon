@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://tempuri.org/XMLSchema.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/XMLSchema.xsd"
+    xmlns:mstns="http://tempuri.org/XMLSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <!-- ===== Enumerations ===== -->
+
+  <xs:simpleType name="ShelfLocation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A1" />
+      <xs:enumeration value="A2" />
+      <xs:enumeration value="A3" />
+      <xs:enumeration value="B1" />
+      <xs:enumeration value="B2" />
+      <xs:enumeration value="B3" />
+      <xs:enumeration value="C1" />
+      <xs:enumeration value="C2" />
+      <xs:enumeration value="C3" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Section">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FruitsAndVegetables" />
+      <xs:enumeration value="Dairy" />
+      <xs:enumeration value="Meat" />
+      <xs:enumeration value="Fish" />
+      <xs:enumeration value="Deli" />
+      <xs:enumeration value="Bread" />
+      <xs:enumeration value="Beverages" />
+      <xs:enumeration value="Frozen" />
+      <xs:enumeration value="Grocery" />
+      <xs:enumeration value="Pantry" />
+      <xs:enumeration value="Candy" />
+      <xs:enumeration value="IceCream" />
+      <xs:enumeration value="Baking" />
+      <xs:enumeration value="Spices" />
+      <xs:enumeration value="CannedGoods" />
+      <xs:enumeration value="Pasta" />
+      <xs:enumeration value="Breakfast" />
+      <xs:enumeration value="Coffee" />
+      <xs:enumeration value="Household" />
+      <xs:enumeration value="Kitchenware" />
+      <xs:enumeration value="Hygiene" />
+      <xs:enumeration value="Pets" />
+      <xs:enumeration value="Baby" />
+      <xs:enumeration value="Other" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ===== Guid type ===== -->
+
+  <xs:simpleType name="Guid">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- ===== Table: Product ===== -->
+
+  <xs:complexType name="Product">
+    <xs:sequence>
+      <xs:element name="Id"            type="mstns:Guid"          />
+      <xs:element name="Name"          type="xs:string"           />
+      <xs:element name="Description"   type="xs:string"           />
+      <xs:element name="ShelfLocation" type="mstns:ShelfLocation" />
+      <xs:element name="Section"       type="mstns:Section"       />
+      <xs:element name="Price"         type="xs:decimal"          />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ===== Table: Customer ===== -->
+
+  <xs:complexType name="Customer">
+    <xs:sequence>
+      <xs:element name="Id"                     type="mstns:Guid" />
+      <xs:element name="Name"                   type="xs:string"  />
+      <xs:element name="PersonalIdentityNumber" type="xs:string"  />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ===== Table: DiscountedProduct ===== -->
+
+  <xs:complexType name="DiscountedProduct">
+    <xs:sequence>
+      <xs:element name="Id"              type="mstns:Guid"       />
+      <xs:element name="Discount"        type="xs:int"           />
+      <xs:element name="MaximumProducts" type="xs:int"           />
+      <xs:element name="ProductId"       type="mstns:Guid"       />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ===== Join Table: CustomerDiscountedProduct (Many-to-Many) ===== -->
+
+  <xs:complexType name="CustomerDiscountedProduct">
+    <xs:sequence>
+      <xs:element name="CustomerId"          type="mstns:Guid" />
+      <xs:element name="DiscountedProductId" type="mstns:Guid" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- ===== Root element: Database ===== -->
+
+  <xs:element name="Database">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Products" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Product" type="mstns:Product" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Customers" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Customer" type="mstns:Customer" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DiscountedProducts" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DiscountedProduct" type="mstns:DiscountedProduct" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CustomerDiscountedProducts" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CustomerDiscountedProduct" type="mstns:CustomerDiscountedProduct" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+
+    <!-- ===== Keys & References (Foreign Keys) ===== -->
+
+    <!-- PK: Product.Id -->
+    <xs:key name="PK_Product">
+      <xs:selector xpath="mstns:Products/mstns:Product" />
+      <xs:field xpath="mstns:Id" />
+    </xs:key>
+
+    <!-- PK: Customer.Id -->
+    <xs:key name="PK_Customer">
+      <xs:selector xpath="mstns:Customers/mstns:Customer" />
+      <xs:field xpath="mstns:Id" />
+    </xs:key>
+
+    <!-- PK: DiscountedProduct.Id -->
+    <xs:key name="PK_DiscountedProduct">
+      <xs:selector xpath="mstns:DiscountedProducts/mstns:DiscountedProduct" />
+      <xs:field xpath="mstns:Id" />
+    </xs:key>
+
+    <!-- PK: CustomerDiscountedProduct (composite) -->
+    <xs:key name="PK_CustomerDiscountedProduct">
+      <xs:selector xpath="mstns:CustomerDiscountedProducts/mstns:CustomerDiscountedProduct" />
+      <xs:field xpath="mstns:CustomerId" />
+      <xs:field xpath="mstns:DiscountedProductId" />
+    </xs:key>
+
+    <!-- FK: DiscountedProduct.ProductId -> Product.Id -->
+    <xs:keyref name="FK_DiscountedProduct_Product" refer="mstns:PK_Product">
+      <xs:selector xpath="mstns:DiscountedProducts/mstns:DiscountedProduct" />
+      <xs:field xpath="mstns:ProductId" />
+    </xs:keyref>
+
+    <!-- FK: CustomerDiscountedProduct.CustomerId -> Customer.Id -->
+    <xs:keyref name="FK_CDP_Customer" refer="mstns:PK_Customer">
+      <xs:selector xpath="mstns:CustomerDiscountedProducts/mstns:CustomerDiscountedProduct" />
+      <xs:field xpath="mstns:CustomerId" />
+    </xs:keyref>
+
+    <!-- FK: CustomerDiscountedProduct.DiscountedProductId -> DiscountedProduct.Id -->
+    <xs:keyref name="FK_CDP_DiscountedProduct" refer="mstns:PK_DiscountedProduct">
+      <xs:selector xpath="mstns:CustomerDiscountedProducts/mstns:CustomerDiscountedProduct" />
+      <xs:field xpath="mstns:DiscountedProductId" />
+    </xs:keyref>
+
+  </xs:element>
+
+</xs:schema>
