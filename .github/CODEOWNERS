@@ -1,7 +1,9 @@
 # CODEOWNERS
 # Each line defines a file pattern and the owner(s) who must review changes to those files.
 # These owners will be automatically requested for review on any pull request that modifies matching files.
-# At least 2 reviewer approvals are required before merging (enforced via branch protection rules).
+# At least 2 reviewer approvals are required before merging (enforced via branch protection rules):
+#   1. A human member of the NordinsProjekt organization
+#   2. GitHub Copilot
 
-# All files require review from both GitHub Copilot and NordinsProjekt (human)
-* @NordinsProjekt @copilot
+# All files require review from a human in NordinsProjekt and from GitHub Copilot
+* @NordinsProjekt @github-copilot
