@@ -6,7 +6,7 @@ Skapa en digitalkiosk åt en affär.
 
 Syfte:
 Att låta kunder söka fram varor med detaljerad information om dem.
-Se en karta av butiken och se vart varan finns.
+Se en karta av butiken och se vart varan finns. (Javascript Canvas)
 Möjlighet att skriva ut en inköpslista med varorna med hyllplats nummer och sektion.
 Kunna skriva in personnummer och skriva ut sina personliga rabatter.
 
@@ -22,3 +22,49 @@ REST api.
 
 Hårdvara:
 Skärm i lodrätposition 1080x1920 upplösning.
+Skärm har touch.
+
+Stack:
+
+MSSQL för databas.
+ASP .NET Core API för att hämta information från databas.
+Hemsida i html/css/js
+Hemsida pratar med api via javascript http client.
+Backoffice är en console app ASP .NET Core, där anställda kan lägga till 
+kunder/produkter och fixa med erbjudanden
+Använda kvittoskrivare som är kopplad till kiosken.
+
+
+Prioritetslista:
+
+Kund vill ha en kiosk i butiken där kunder kan söka fram produkter och se detaljerad information.
+Kunden ska även kunna se en karta över butiken och se vart produkten är någonstans.
+PRIO 1
+
+Butikenskunder ska kunna lägga till flera varor och skriva ut dessa som en inköpslista
+PRIO 2
+
+Butikenskunder ska kunna filtrera fram varor baserat på avdelning.
+PRIO 1
+
+Butikenskunder ska kunna slå in sitt personnummer och se alla personliga erbjudanden och kunna skriva ut listan.
+PRIO 3
+
+Det ska finnas ett sätt för anställda att kunna lägga till produkter i systemet.
+PRIO 1
+
+Inventering av produkter och kunna ändra saldo på varje produkt
+PRIO 4
+
+DoD
+Alla features ska ha en egen branch, de ska utgå ifrån develop/release branch.
+Alla Pull Requests ska reviewas av Co-pilot och en annan utvecklare.
+C# kod måste ha unittest
+All HTML måste vara semantisk
+Bra namngivning och ingen utkommenterad kod
+Solutionen måste kunna byggas efter merge.
+
+Onsdag är en sprint
+Torsdag är en sprint.
+
+I slutet på dagen ska en körbar version finnas för att visa kund.
