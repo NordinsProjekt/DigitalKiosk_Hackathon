@@ -11,29 +11,29 @@ public class CustomerDiscountedProductRepository(KioskDbContext context) : ICust
         return await context.CustomerDiscountedProducts.AsNoTracking().ToListAsync();
     }
 
-    public async Task<CustomerDiscountedProduct?> GetByIdAsync(Guid id)
+    public async Task<CustomerDiscountedProduct?> GetByIdAsync(Guid discontinuedProductId, Guid customerId)
     {
-        return await context.CustomerDiscountedProducts.FindAsync(id);
+        return await context.CustomerDiscountedProducts.FindAsync(discontinuedProductId, customerId);
     }
 
-    public async Task AddAsync(CustomerDiscountedProduct discountedProduct)
+    public async Task AddAsync(CustomerDiscountedProduct customerDiscountedProduct)
     {
-        await context.CustomerDiscountedProducts.AddAsync(discountedProduct);
+        await context.CustomerDiscountedProducts.AddAsync(customerDiscountedProduct);
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(CustomerDiscountedProduct discountedProduct)
+    public async Task UpdateAsync(CustomerDiscountedProduct customerDiscountedProduct)
     {
-        context.CustomerDiscountedProducts.Update(discountedProduct);
+        context.CustomerDiscountedProducts.Update(customerDiscountedProduct);
         await context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid discontinuedProductId, Guid customerId)
     {
-        var discountedProduct = await context.CustomerDiscountedProducts.FindAsync(id);
-        if (discountedProduct == null) return;
+        var customerDiscountedProduct = await context.CustomerDiscountedProducts.FindAsync(discontinuedProductId, customerId);
+        if (customerDiscountedProduct == null) return;
         
-        context.CustomerDiscountedProducts.Remove(discountedProduct);
+        context.CustomerDiscountedProducts.Remove(customerDiscountedProduct);
         await context.SaveChangesAsync();
     }
     
