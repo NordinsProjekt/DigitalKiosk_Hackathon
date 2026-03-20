@@ -1,11 +1,12 @@
-# This workflow will build a .NET project and run all unit tests on every push.
+# This workflow will build a .NET project and run all unit tests on pull requests.
+# It is required to pass before any pull request can be merged into master or develop.
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
 name: .NET
 
 on:
-  push:
-    branches: [ "**" ]
+  pull_request:
+    branches: [ "master", "develop" ]
 
 permissions:
   contents: read
