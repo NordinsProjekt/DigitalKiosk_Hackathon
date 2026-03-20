@@ -2,10 +2,10 @@ using Entities;
 
 namespace Services.Interfaces;
 
-public interface IDiscountedProductsRepository
+public interface IDiscountedProductRepository
 {
     Task<List<DiscountedProduct>> GetAllAsync();
-    Task<DiscountedProduct?> GetAsync(Guid id);
+    Task<DiscountedProduct?> GetByIdAsync(Guid id);
     Task AddAsync(DiscountedProduct discountedProduct);
     Task UpdateAsync(DiscountedProduct discountedProduct);
     Task DeleteAsync(Guid id);

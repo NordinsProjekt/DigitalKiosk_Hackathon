@@ -22,7 +22,7 @@ public class ProductRepository(KioskDbContext context) : IProductRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Product product)
+    public async Task UpdateAsync(Product product) // Ser ingen mening med att splitta denna likt Customer Update?
     {
         context.Products.Update(product);
         await context.SaveChangesAsync();
