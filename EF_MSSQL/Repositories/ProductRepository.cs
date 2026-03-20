@@ -36,4 +36,5 @@ public class ProductRepository(KioskDbContext context) : IProductRepository
         context.Products.Remove(product);
         await context.SaveChangesAsync();
     }
+    
 }

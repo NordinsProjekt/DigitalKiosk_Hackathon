@@ -9,4 +9,5 @@ public interface ICustomerDiscountedProductRepository
     Task AddAsync(CustomerDiscountedProduct customerDiscountedProduct);
     Task UpdateAsync(CustomerDiscountedProduct customerDiscountedProduct);
     Task DeleteAsync(Guid id);
+    
 }
