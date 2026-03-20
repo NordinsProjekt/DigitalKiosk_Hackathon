@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kravspecifikation — Digital Kiosk för Anderssons Livs AB</title>
+    <style>
+        /* ============================================
+           TYPOGRAFI & GRUNDFORMAT
+           ============================================ */
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
+        :root {
+            --color-primary: #1a3a5c;
+            --color-secondary: #2c5f8a;
+            --color-accent: #c0392b;
+            --color-prio1: #c0392b;
+            --color-prio2: #e67e22;
+            --color-prio3: #2980b9;
+            --color-prio4: #7f8c8d;
+            --color-bg-light: #f8f9fa;
+            --color-border: #dee2e6;
+            --color-text: #212529;
+            --color-text-muted: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', 'Segoe UI', Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: #fff;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', 'Georgia', serif;
+            color: var(--color-primary);
+            margin-bottom: 0.5em;
+        }
+
+        h1 {
+            font-size: 22pt;
+            font-weight: 900;
+            border-bottom: 3px solid var(--color-primary);
+            padding-bottom: 0.3em;
+            margin-bottom: 0.8em;
+        }
+
+        h2 {
+            font-size: 16pt;
+            font-weight: 700;
+            margin-top: 1.5em;
+            margin-bottom: 0.6em;
+            border-left: 4px solid var(--color-secondary);
+            padding-left: 12px;
+        }
+
+        h3 {
+            font-size: 13pt;
+            font-weight: 700;
+            margin-top: 1.2em;
+            margin-bottom: 0.4em;
+        }
+
+        h4 {
+            font-size: 11pt;
+            font-weight: 700;
+            color: var(--color-secondary);
+            margin-top: 1em;
+        }
+
+        p {
+            margin-bottom: 0.8em;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 1.5em;
+            margin-bottom: 0.8em;
+        }
+
+        li {
+            margin-bottom: 0.3em;
+        }
+
+        /* ============================================
+           SIDHUVUD / DOKUMENTINFO
+           ============================================ */
+        .document-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: 16px;
+            margin-bottom: 30px;
+        }
+
+        .document-header .logo-area {
+            flex: 1;
+        }
+
+        .document-header .logo-area .company-name {
+            font-family: 'Merriweather', serif;
+            font-size: 26pt;
+            font-weight: 900;
+            color: var(--color-primary);
+            line-height: 1.1;
+        }
+
+        .document-header .logo-area .company-tagline {
+            font-size: 10pt;
+            color: var(--color-text-muted);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        .document-header .meta-area {
+            text-align: right;
+            font-size: 9pt;
+            color: var(--color-text-muted);
+            min-width: 180px;
+        }
+
+        .document-header .meta-area .doc-type {
+            font-size: 11pt;
+            font-weight: 700;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+            margin-bottom: 24px;
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+        }
+
+        .meta-table td {
+            padding: 6px 12px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .meta-table td:first-child {
+            font-weight: 600;
+            width: 160px;
+            color: var(--color-secondary);
+        }
+
+        /* ============================================
+           TABELLER
+           ============================================ */
+        table.requirements {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0 1.5em 0;
+            font-size: 10pt;
+        }
+
+        table.requirements thead {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        table.requirements th {
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 9.5pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table.requirements td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--color-border);
+            vertical-align: top;
+        }
+
+        table.requirements tbody tr:nth-child(even) {
+            background: var(--color-bg-light);
+        }
+
+        table.requirements tbody tr:hover {
+            background: #e8f0fe;
+        }
+
+        /* Prio badges */
+        .prio-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 9pt;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .prio-1 { background: var(--color-prio1); }
+        .prio-2 { background: var(--color-prio2); }
+        .prio-3 { background: var(--color-prio3); }
+        .prio-4 { background: var(--color-prio4); }
+
+        /* ============================================
+           KRAV-KORT
+           ============================================ */
+        .requirement-card {
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            background: #fff;
+            border-left: 5px solid var(--color-prio1);
+        }
+
+        .requirement-card.prio-2-card { border-left-color: var(--color-prio2); }
+        .requirement-card.prio-3-card { border-left-color: var(--color-prio3); }
+        .requirement-card.prio-4-card { border-left-color: var(--color-prio4); }
+
+        .requirement-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .requirement-card .card-title {
+            font-family: 'Merriweather', serif;
+            font-size: 12pt;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .requirement-card .card-id {
+            font-size: 9pt;
+            color: var(--color-text-muted);
+            font-weight: 600;
+        }
+
+        .requirement-card p {
+            font-size: 10.5pt;
+            margin-bottom: 0.5em;
+        }
+
+        .requirement-card .acceptance-criteria {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--color-border);
+        }
+
+        .requirement-card .acceptance-criteria h4 {
+            font-size: 9.5pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .requirement-card .acceptance-criteria ul {
+            font-size: 10pt;
+            margin-left: 1.2em;
+        }
+
+        /* ============================================
+           DoD / CHECKLISTA
+           ============================================ */
+        .dod-list {
+            list-style: none;
+            margin-left: 0;
+            padding: 0;
+        }
+
+        .dod-list li {
+            padding: 8px 12px 8px 36px;
+            border-bottom: 1px solid var(--color-border);
+            position: relative;
+            font-size: 10.5pt;
+        }
+
+        .dod-list li::before {
+            content: "☐";
+            position: absolute;
+            left: 10px;
+            top: 8px;
+            font-size: 14pt;
+            color: var(--color-secondary);
+        }
+
+        /* ============================================
+           REFERENSTABELL (Sektioner / Hyllplatser)
+           ============================================ */
+        table.reference {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8em 0;
+            font-size: 9.5pt;
+        }
+
+        table.reference th {
+            background: var(--color-bg-light);
+            padding: 6px 10px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid var(--color-border);
+            color: var(--color-secondary);
+        }
+
+        table.reference td {
+            padding: 5px 10px;
+            border: 1px solid var(--color-border);
+        }
+
+        /* ============================================
+           BUTIKSKARTA ILLUSTRATION
+           ============================================ */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            max-width: 240px;
+            margin: 1em auto;
+        }
+
+        .store-grid .cell {
+            background: var(--color-bg-light);
+            border: 2px solid var(--color-secondary);
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 11pt;
+            color: var(--color-secondary);
+            border-radius: 4px;
+        }
+
+        /* ============================================
+           UNDERSKRIFTER
+           ============================================ */
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            gap: 40px;
+        }
+
+        .signature-block {
+            flex: 1;
+            text-align: center;
+        }
+
+        .signature-line {
+            border-top: 1px solid #333;
+            margin-top: 60px;
+            padding-top: 8px;
+            font-size: 10pt;
+            color: var(--color-text-muted);
+        }
+
+        .signature-label {
+            font-size: 9pt;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+
+        /* ============================================
+           SIDFOT
+           ============================================ */
+        .page-footer {
+            margin-top: 40px;
+            padding-top: 12px;
+            border-top: 1px solid var(--color-border);
+            font-size: 8pt;
+            color: var(--color-text-muted);
+            text-align: center;
+        }
+
+        /* ============================================
+           SIDBRYTNINGAR FÖR PRINT / PDF
+           ============================================ */
+        @page {
+            size: A4;
+            margin: 18mm 20mm;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                font-size: 10pt;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+
+            .requirement-card {
+                page-break-inside: avoid;
+            }
+
+            table.requirements tr {
+                page-break-inside: avoid;
+            }
+
+            h2, h3 {
+                page-break-after: avoid;
+            }
+
+            .signatures {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* ============================================
+           INFOBANNER
+           ============================================ */
+        .info-banner {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin: 1em 0;
+            font-size: 10pt;
+        }
+
+        .info-banner strong {
+            color: var(--color-secondary);
+        }
+
+        /* Konfidentialitet */
+        .confidential-stamp {
+            text-align: center;
+            font-size: 9pt;
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            padding: 6px;
+            border: 2px solid var(--color-accent);
+            border-radius: 4px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         SIDHUVUD
+         ============================================ -->
+    <div class="document-header">
+        <div class="logo-area">
+            <div class="company-name">Anderssons Livs AB</div>
+            <div class="company-tagline">Kvalitet och närhet sedan 1987 — Storgatan 14, 553 20 Jönköping</div>
+        </div>
+        <div class="meta-area">
+            <div class="doc-type">Kravspecifikation</div>
+            Dokumentnr: AL-2026-003<br>
+            Version: 1.0<br>
+            Datum: 2026-03-19<br>
+            Status: <strong>Godkänd</strong>
+        </div>
+    </div>
+
+    <!-- Dokumentmetadata -->
+    <table class="meta-table">
+        <tr>
+            <td>Beställare</td>
+            <td><strong>Anderssons Livs AB</strong> — Margareta Andersson, Butiksägare</td>
+        </tr>
+        <tr>
+            <td>Kontaktperson (beställare)</td>
+            <td>Margareta Andersson, tel: 036-12 34 56, e-post: margareta@anderssonslivs.se</td>
+        </tr>
+        <tr>
+            <td>Mottagare / Leverantör</td>
+            <td><strong>Studentföretaget</strong> — Utvecklingsgruppen</td>
+        </tr>
+        <tr>
+            <td>Projektnamn</td>
+            <td>Digital Kiosk — Kundinformationssystem för butik</td>
+        </tr>
+        <tr>
+            <td>Dokumenttyp</td>
+            <td>Kravspecifikation med prioritetsordning</td>
+        </tr>
+        <tr>
+            <td>Senast uppdaterad</td>
+            <td>2026-03-19</td>
+        </tr>
+    </table>
+
+    <!-- ============================================
+         1. INLEDNING
+         ============================================ -->
+    <h1>1. Inledning och Bakgrund</h1>
+
+    <p>
+        Anderssons Livs AB är en välsorterad livsmedelsbutik belägen på Storgatan 14 i Jönköping. Butiken har drivits
+        i familjens regi sedan 1987 och har idag ett sortiment på över 3 000 varor fördelat på 24 avdelningar.
+    </p>
+    <p>
+        Vi upplever att våra kunder allt oftare efterfrågar ett snabbare och mer självständigt sätt att hitta varor
+        i butiken. Idag behöver kunder fråga personal om var en specifik produkt finns, vilket skapar väntetider
+        — särskilt under högtrafik. Vi vill modernisera butiksupplevelsen genom att placera en <strong>digital informationskiosk</strong>
+        vid butiksentrén, där kunder på egen hand kan söka efter produkter, se var i butiken de finns och ta del av
+        sina personliga erbjudanden.
+    </p>
+    <p>
+        Vi har valt att anlita ert studentföretag för att utveckla denna lösning. Detta dokument beskriver våra
+        krav och förväntningar på systemet, ordnade efter den prioritet vi som beställare sätter.
+    </p>
+
+    <div class="info-banner">
+        <strong>Notera:</strong> Leverans sker iterativt. Vi förväntar oss att vid slutet av varje arbetsdag (sprint)
+        finnas en körbar version av systemet som vi kan granska och ge återkoppling på. Prioritetsordningen nedan
+        anger i vilken ordning vi önskar att funktionaliteten utvecklas.
+    </div>
+
+    <!-- ============================================
+         2. SYSTEMBESKRIVNING
+         ============================================ -->
+    <h1 class="page-break">2. Övergripande Systembeskrivning</h1>
+
+    <p>
+        Systemet ska bestå av tre huvuddelar som tillsammans bildar en komplett lösning:
+    </p>
+
+    <h3>2.1 Digital kiosk (kundgränssnitt)</h3>
+    <p>
+        En webbsida i HTML, CSS och JavaScript som visas i helskärmsläge på en pekskärm i butiken. Sidan ska vara
+        anpassad för stående (porträtt) skärmläge med upplösningen <strong>1080 × 1920 pixlar</strong>. All interaktion
+        sker via touchskärm — ingen mus eller tangentbord finns tillgängligt för kunden.
+    </p>
+
+    <h3>2.2 API (backend)</h3>
+    <p>
+        Ett REST-API byggt i ASP.NET Core som tillhandahåller all data till kioskens webbsida. Webbsidan kommunicerar
+        med API:et via JavaScript HTTP-anrop. API:et hämtar och lagrar data i en MSSQL-databas.
+    </p>
+
+    <h3>2.3 Administrationsverktyg (BackOffice)</h3>
+    <p>
+        En konsolapplikation i ASP.NET Core som vår butikspersonal använder för att hantera produkter, kunder och
+        erbjudanden. Verktyget ska vara intuitivt nog att vår personal kan använda det efter en kort genomgång.
+    </p>
+
+    <!-- ============================================
+         3. HÅRDVARUKRAV
+         ============================================ -->
+    <h2>2.4 Hårdvaruförutsättningar</h2>
+
+    <p>Följande hårdvara tillhandahålls av oss och finns redan på plats i butiken:</p>
+
+    <table class="reference">
+        <thead>
+            <tr>
+                <th>Komponent</th>
+                <th>Specifikation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Pekskärm</td>
+                <td>43" kapacitiv touchskärm, monterad i stående läge (porträtt), upplösning 1080 × 1920 px</td>
+            </tr>
+            <tr>
+                <td>Dator</td>
+                <td>Windows-baserad mini-PC ansluten till skärmen, med nätverksåtkomst till databasserver</td>
+            </tr>
+            <tr>
+                <td>Kvittoskrivare</td>
+                <td>Termisk kvittoskrivare (ESC/POS-kompatibel) ansluten via USB till kiosk-datorn</td>
+            </tr>
+            <tr>
+                <td>Nätverk</td>
+                <td>Kabelanslutet lokalt nätverk (LAN) — inga externa uppkopplingar krävs</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ============================================
+         4. BUTIKENS STRUKTUR (REFERENS)
+         ============================================ -->
+    <h1 class="page-break">3. Butikens Struktur — Referensdata</h1>
+
+    <p>
+        Butiken är organiserad i <strong>24 avdelningar</strong> (sektioner) och har ett hyllsystem med
+        <strong>9 hyllplatser</strong> ordnade i ett rutnät (3 × 3). Nedan följer de avdelningar och hyllplatser
+        som systemet ska stödja. Dessa ska användas vid registrering av produkter och vid visning av butikskarta.
+    </p>
+
+    <h3>3.1 Avdelningar (Sektioner)</h3>
+    <table class="reference">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Avdelning</th>
+                <th style="width: 25%;">Avdelning</th>
+                <th style="width: 25%;">Avdelning</th>
+                <th style="width: 25%;">Avdelning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Frukt &amp; Grönt</td>
+                <td>Mejeri</td>
+                <td>Kött</td>
+                <td>Fisk</td>
+            </tr>
+            <tr>
+                <td>Chark &amp; Delikatess</td>
+                <td>Bröd</td>
+                <td>Drycker</td>
+                <td>Fryst</td>
+            </tr>
+            <tr>
+                <td>Kolonial</td>
+                <td>Skafferi</td>
+                <td>Godis</td>
+                <td>Glass</td>
+            </tr>
+            <tr>
+                <td>Bakning</td>
+                <td>Kryddor</td>
+                <td>Konserver</td>
+                <td>Pasta</td>
+            </tr>
+            <tr>
+                <td>Frukost</td>
+                <td>Kaffe</td>
+                <td>Hushåll</td>
+                <td>Köksredskap</td>
+            </tr>
+            <tr>
+                <td>Hygien</td>
+                <td>Husdjur</td>
+                <td>Baby</td>
+                <td>Övrigt</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>3.2 Hyllplatser (Rutnät)</h3>
+    <p>
+        Butiken är indelad i ett 3 × 3-rutnät. Varje produkt tilldelas en hyllplats enligt nedan. Kartan
+        på kiosken ska använda detta rutnät för att visuellt peka ut var produkten finns.
+    </p>
+    <div class="store-grid">
+        <div class="cell">A1</div>
+        <div class="cell">A2</div>
+        <div class="cell">A3</div>
+        <div class="cell">B1</div>
+        <div class="cell">B2</div>
+        <div class="cell">B3</div>
+        <div class="cell">C1</div>
+        <div class="cell">C2</div>
+        <div class="cell">C3</div>
+    </div>
+
+    <!-- ============================================
+         5. KRAVSPECIFIKATION MED PRIORITET
+         ============================================ -->
+    <h1 class="page-break">4. Kravspecifikation</h1>
+
+    <p>
+        Nedan presenteras våra krav uppdelade efter prioritet. <strong>Prioritet 1</strong> är de funktioner
+        vi absolut måste ha på plats först — de utgör kärnan i systemet. Högre prioritetsnummer innebär att
+        funktionen kan vänta tills grundfunktionaliteten är säkrad.
+    </p>
+
+    <!-- Sammanfattningstabell -->
+    <table class="requirements">
+        <thead>
+            <tr>
+                <th style="width: 70px;">Krav-ID</th>
+                <th style="width: 70px;">Prioritet</th>
+                <th>Kravbeskrivning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>K-001</td>
+                <td><span class="prio-badge prio-1">Prio 1</span></td>
+                <td>Kunder ska kunna söka efter produkter och se detaljerad information samt en karta som visar var produkten finns</td>
+            </tr>
+            <tr>
+                <td>K-002</td>
+                <td><span class="prio-badge prio-1">Prio 1</span></td>
+                <td>Kunder ska kunna filtrera produkter baserat på avdelning/sektion</td>
+            </tr>
+            <tr>
+                <td>K-003</td>
+                <td><span class="prio-badge prio-1">Prio 1</span></td>
+                <td>Personal ska kunna lägga till och redigera produkter i systemet via administrationsverktyget</td>
+            </tr>
+            <tr>
+                <td>K-004</td>
+                <td><span class="prio-badge prio-2">Prio 2</span></td>
+                <td>Kunder ska kunna samla varor i en inköpslista och skriva ut den via kvittoskrivaren</td>
+            </tr>
+            <tr>
+                <td>K-005</td>
+                <td><span class="prio-badge prio-3">Prio 3</span></td>
+                <td>Kunder ska kunna identifiera sig med personnummer och se personliga erbjudanden</td>
+            </tr>
+            <tr>
+                <td>K-006</td>
+                <td><span class="prio-badge prio-4">Prio 4</span></td>
+                <td>Personal ska kunna utföra inventering och ändra lagersaldo per produkt</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ============================================
+         PRIO 1 — Detaljerade krav
+         ============================================ -->
+    <h2 class="page-break">4.1 Prioritet 1 — Grundläggande funktionalitet</h2>
+    <p>
+        Dessa krav utgör den absoluta kärnan i systemet. Utan dessa funktioner har kiosken inget
+        värde för våra kunder eller vår personal. Vi förväntar oss att all prioritet 1-funktionalitet
+        levereras och demonstreras först.
+    </p>
+
+    <!-- K-001 -->
+    <div class="requirement-card">
+        <div class="card-header">
+            <span class="card-title">K-001 — Produktsökning och butikskarta</span>
+            <span class="prio-badge prio-1">Prio 1</span>
+        </div>
+        <p class="card-id">Beställare: Margareta Andersson &nbsp;|&nbsp; Skapad: 2026-03-19</p>
+
+        <p>
+            <strong>Som kund</strong> i butiken vill jag kunna söka efter en vara på kioskens pekskärm och
+            få upp detaljerad information om varan — inklusive namn, beskrivning, pris, vilken avdelning
+            den tillhör och vilken hyllplats den finns på.
+        </p>
+        <p>
+            Jag vill dessutom se en <strong>grafisk karta</strong> över butiken (baserat på rutnätet A1–C3)
+            där den aktuella produktens hyllplats är tydligt markerad, så att jag enkelt kan hitta dit.
+        </p>
+
+        <div class="acceptance-criteria">
+            <h4>Acceptanskriterier</h4>
+            <ul>
+                <li>Kunden kan skriva in ett sökord via ett skärmtangentbord (touch) och få matchande produkter listade.</li>
+                <li>Vid val av en produkt visas: produktnamn, beskrivning, pris (i SEK), avdelning och hyllplats.</li>
+                <li>En visuell butikskarta (3 × 3 rutnät) visas med den aktuella hyllplatsen markerad/highlightad.</li>
+                <li>Kartan ska vara implementerad med JavaScript Canvas eller motsvarande teknik.</li>
+                <li>Sökningen ska vara responsiv och fungera snabbt nog att kunden inte tappar intresset (&lt; 2 sek).</li>
+                <li>Gränssnittet ska vara anpassat för upplösningen 1080 × 1920 (porträtt, touch).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- K-002 -->
+    <div class="requirement-card">
+        <div class="card-header">
+            <span class="card-title">K-002 — Filtrering per avdelning</span>
+            <span class="prio-badge prio-1">Prio 1</span>
+        </div>
+        <p class="card-id">Beställare: Margareta Andersson &nbsp;|&nbsp; Skapad: 2026-03-19</p>
+
+        <p>
+            <strong>Som kund</strong> vill jag kunna bläddra bland butikens varor genom att välja en
+            avdelning (t.ex. "Mejeri", "Frukt &amp; Grönt", "Fryst") och se alla produkter som hör till
+            den avdelningen. Detta ska vara ett komplement till fritextsökningen i K-001.
+        </p>
+
+        <div class="acceptance-criteria">
+            <h4>Acceptanskriterier</h4>
+            <ul>
+                <li>Alla 24 avdelningar (se avsnitt 3.1) ska finnas tillgängliga som filtreringsalternativ.</li>
+                <li>Vid val av en avdelning visas en lista med alla produkter som tillhör den avdelningen.</li>
+                <li>Kunden ska kunna klicka/trycka på en produkt i listan för att se detaljerad information (som i K-001).</li>
+                <li>Det ska vara enkelt att byta avdelning eller gå tillbaka till sökvyn.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- K-003 -->
+    <div class="requirement-card">
+        <div class="card-header">
+            <span class="card-title">K-003 — Produktadministration (BackOffice)</span>
+            <span class="prio-badge prio-1">Prio 1</span>
+        </div>
+        <p class="card-id">Beställare: Margareta Andersson &nbsp;|&nbsp; Skapad: 2026-03-19</p>
+
+        <p>
+            <strong>Som butiksanställd</strong> vill jag kunna lägga till nya produkter i systemet samt
+            redigera befintliga produkter, så att informationen som visas på kiosken alltid är korrekt
+            och uppdaterad.
+        </p>
+        <p>
+            Verktyget ska vara en konsolapplikation som körs på personalens dator. Det behöver inte vara
+            grafiskt avancerat, men det ska vara tydligt och svårt att göra misstag.
+        </p>
+
+        <div class="acceptance-criteria">
+            <h4>Acceptanskriterier</h4>
+            <ul>
+                <li>Personal kan lägga till en ny produkt med: namn, beskrivning, pris, avdelning och hyllplats.</li>
+                <li>Personal kan redigera befintliga produkter (ändra pris, flytta till annan hyllplats, uppdatera beskrivning).</li>
+                <li>Avdelning ska väljas från en lista (de 24 definierade avdelningarna).</li>
+                <li>Hyllplats ska väljas från en lista (A1–C3).</li>
+                <li>Felaktig inmatning ska hanteras med tydliga felmeddelanden.</li>
+                <li>Ändringar ska omedelbart slå igenom på kiosken (via databasen och API:et).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PRIO 2
+         ============================================ -->
+    <h2 class="page-break">4.2 Prioritet 2 — Inköpslista och utskrift</h2>
+    <p>
+        När grundfunktionaliteten är på plats vill vi utöka kiosken med möjligheten att samla varor
+        och skriva ut en inköpslista. Detta ger ett tydligt mervärde för våra kunder.
+    </p>
+
+    <!-- K-004 -->
+    <div class="requirement-card prio-2-card">
+        <div class="card-header">
+            <span class="card-title">K-004 — Inköpslista med utskrift</span>
+            <span class="prio-badge prio-2">Prio 2</span>
+        </div>
+        <p class="card-id">Beställare: Margareta Andersson &nbsp;|&nbsp; Skapad: 2026-03-19</p>
+
+        <p>
+            <strong>Som kund</strong> vill jag kunna lägga till flera varor i en inköpslista medan jag
+            söker eller bläddrar bland produkter. När jag är klar vill jag kunna skriva ut listan på
+            kvittoskrivaren som sitter bredvid kiosken.
+        </p>
+        <p>
+            Den utskrivna listan ska vara praktisk att använda i butiken — varje vara ska visas med
+            namn, hyllplatsnummer och sektion så att jag snabbt hittar allting.
+        </p>
+
+        <div class="acceptance-criteria">
+            <h4>Acceptanskriterier</h4>
+            <ul>
+                <li>Kunden kan lägga till produkter i en inköpslista genom att trycka på en "Lägg till"-knapp vid varje produkt.</li>
+                <li>Inköpslistan visas i ett sidopanel eller dedikerad vy med alla tillagda varor.</li>
+                <li>Kunden kan ta bort enskilda varor från listan.</li>
+                <li>Listan visar för varje vara: produktnamn, avdelning (sektion) och hyllplats.</li>
+                <li>Kunden kan trycka på "Skriv ut" och få listan utskriven på kvittoskrivaren.</li>
+                <li>Utskriften ska vara snygg och lättläst på kvittopapper (ca 80 mm bredd).</li>
+                <li>Efter utskrift ska listan kunna tömmas för nästa kund.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PRIO 3
+         ============================================ -->
+    <h2>4.3 Prioritet 3 — Personliga erbjudanden</h2>
+    <p>
+        Vi har ett kundregister med personnummer. Vissa kunder har tillgång till personliga rabatter
+        på specifika varor. Vi vill ge dessa kunder möjligheten att se sina erbjudanden direkt i kiosken.
+    </p>
+
+    <!-- K-005 -->
+    <div class="requirement-card prio-3-card">
+        <div class="card-header">
+            <span class="card-title">K-005 — Personliga erbjudanden via personnummer</span>
+            <span class="prio-badge prio-3">Prio 3</span>
+        </div>
+        <p class="card-id">Beställare: Margareta Andersson &nbsp;|&nbsp; Skapad: 2026-03-19</p>
+
+        <p>
+            <strong>Som registrerad kund</strong> vill jag kunna slå in mitt personnummer på kiosken och
+            se en lista med alla mina personliga erbjudanden. Varje erbjudande ska visa vilken produkt
+            det gäller, hur stor rabatten är (i procent) och hur många jag maximalt får köpa till
+            rabattpriset.
+        </p>
+        <p>
+            Jag vill även kunna skriva ut listan med mina erbjudanden på kvittoskrivaren, så att
+            jag kan ha den med mig när jag handlar.
+        </p>
+
+        <div class="acceptance-criteria">
+            <h4>Acceptanskriterier</h4>
+            <ul>
+                <li>Kunden kan mata in sitt personnummer via ett numeriskt tangentbord på skärmen (touch).</li>
+                <li>Systemet validerar att personnumret finns registrerat — vid fel visas ett tydligt meddelande.</li>
+                <li>Vid giltig identifiering visas kundens namn och en lista med personliga erbjudanden.</li>
+                <li>Varje erbjudande visar: produktnamn, ordinarie pris, rabatt (%), rabatterat pris och max antal.</li>
+                <li>Kunden kan skriva ut erbjudandelistan på kvittoskrivaren.</li>
+                <li>Personnumret ska aldrig visas i utskriften av integritetsskäl — enbart kundens namn.</li>
+                <li>Personal ska i administrationsverktyget kunna skapa kunder, skapa erbjudanden och koppla erbjudanden till kunder.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================
+         PRIO 4
+         ============================================ -->
+    <h2 class="page-break">4.4 Prioritet 4 — Inventering och lagersaldo</h2>
+    <p>
+        Om tid finns vill vi gärna ha en grundläggande inventeringsfunktion. Detta är dock inte
+        avgörande för kioskens kärnfunktion och kan implementeras sist.
+    </p>
+
+    <!-- K-006 -->
+    <div class="requirement-card prio-4-card">
+        <div class="card-header">
+            <span class="card-title">K-006 — Inventering och lagersaldo</span>
+            <span class="prio-badge prio-4">Prio 4</span>
+        </div>
+        <p class="card-id">Beställare: Margareta Andersson &nbsp;|&nbsp; Skapad: 2026-03-19</p>
+
+        <p>
+            <strong>Som butiksanställd</strong> vill jag kunna se och uppdatera lagersaldo för varje
+            produkt via administrationsverktyget. Detta hjälper oss vid inventering och ger oss
+            möjlighet att i framtiden visa på kiosken om en vara finns i lager eller ej.
+        </p>
+
+        <div class="acceptance-criteria">
+            <h4>Acceptanskriterier</h4>
+            <ul>
+                <li>Varje produkt ska ha ett saldofält (antal i lager).</li>
+                <li>Personal kan uppdatera lagersaldo via administrationsverktyget.</li>
+                <li>Lagersaldot ska kunna visas på kiosken (valfritt — om det implementeras, visa "Finns i lager" / "Slut i lager").</li>
+                <li>En inventeringsöversikt där personal kan se alla produkter med aktuellt saldo.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================
+         5. TEKNISKA KRAV
+         ============================================ -->
+    <h1 class="page-break">5. Tekniska Förutsättningar och Krav</h1>
+
+    <p>
+        Vi har i samråd med er kommit överens om följande tekniska ramverk för lösningen. Dessa val
+        baseras på er kompetens och de förutsättningar vi har i butiken.
+    </p>
+
+    <table class="requirements">
+        <thead>
+            <tr>
+                <th style="width: 180px;">Komponent</th>
+                <th>Teknologi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Databas</strong></td>
+                <td>Microsoft SQL Server (MSSQL)</td>
+            </tr>
+            <tr>
+                <td><strong>Backend / API</strong></td>
+                <td>ASP.NET Core Web API (REST)</td>
+            </tr>
+            <tr>
+                <td><strong>ORM</strong></td>
+                <td>Entity Framework Core</td>
+            </tr>
+            <tr>
+                <td><strong>Kiosk-gränssnitt</strong></td>
+                <td>HTML5, CSS3, JavaScript (vanilla) — ingen ramverk</td>
+            </tr>
+            <tr>
+                <td><strong>Butikskarta</strong></td>
+                <td>JavaScript Canvas API</td>
+            </tr>
+            <tr>
+                <td><strong>Administrationsverktyg</strong></td>
+                <td>ASP.NET Core konsolapplikation</td>
+            </tr>
+            <tr>
+                <td><strong>Kvittoutskrift</strong></td>
+                <td>ESC/POS via USB-ansluten termisk skrivare</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="info-banner">
+        <strong>Kommunikation:</strong> Kioskens webbsida (frontend) kommunicerar med backend-API:et
+        via JavaScript <code>fetch()</code>-anrop (HTTP). Inga externa tjänster eller molnlösningar används
+        — all kommunikation sker inom det lokala nätverket.
+    </div>
+
+    <!-- ============================================
+         6. DATAMODELL (ÖVERSIKT)
+         ============================================ -->
+    <h2>5.1 Datamodell — Översikt</h2>
+
+    <p>
+        Följande huvudentiteter ska finnas i databasen. Vi förväntar oss att datamodellen stödjer
+        alla krav ovan och kan utvidgas vid behov (t.ex. med lagersaldo för K-006).
+    </p>
+
+    <table class="reference">
+        <thead>
+            <tr>
+                <th>Entitet</th>
+                <th>Nyckelattribut</th>
+                <th>Kopplingar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Produkt</strong></td>
+                <td>Namn, Beskrivning, Pris, Avdelning, Hyllplats</td>
+                <td>Kan ha flera rabatterbjudanden</td>
+            </tr>
+            <tr>
+                <td><strong>Kund</strong></td>
+                <td>Namn, Personnummer (unikt)</td>
+                <td>Kopplad till personliga erbjudanden</td>
+            </tr>
+            <tr>
+                <td><strong>Rabatterad produkt</strong></td>
+                <td>Rabatt (%), Maxantal</td>
+                <td>Kopplad till en produkt</td>
+            </tr>
+            <tr>
+                <td><strong>Kundrabatt (koppling)</strong></td>
+                <td>&mdash;</td>
+                <td>Kopplar en kund till ett erbjudande (många-till-många)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ============================================
+         7. DEFINITION OF DONE (DoD)
+         ============================================ -->
+    <h1 class="page-break">6. Definition of Done (DoD)</h1>
+
+    <p>
+        Följande kvalitetskrav har satts upp av ert företag som arbetssätt och leveranskvalitet.
+        Vi som beställare ser dessa som en garanti för att leveransen håller hög standard och att
+        koden är underhållbar om vi vill vidareutveckla systemet i framtiden.
+    </p>
+
+    <ul class="dod-list">
+        <li>
+            <strong>Branchstrategi:</strong> Varje feature ska utvecklas i en egen branch som utgår från
+            <em>develop</em>- eller <em>release</em>-branchen.
+        </li>
+        <li>
+            <strong>Code review:</strong> Alla Pull Requests ska granskas av både Co-pilot (automatiserad)
+            och minst en annan utvecklare innan merge.
+        </li>
+        <li>
+            <strong>Enhetstester:</strong> All C#-kod ska ha tillhörande enhetstester som verifierar
+            korrekt funktionalitet.
+        </li>
+        <li>
+            <strong>Semantisk HTML:</strong> All HTML-kod ska vara semantisk — korrekta element ska användas
+            för korrekt syfte (t.ex. <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>,
+            <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>).
+        </li>
+        <li>
+            <strong>Kodkvalitet:</strong> Bra namngivning av variabler, metoder och klasser. Ingen utkommenterad
+            kod ska finnas i leveransen.
+        </li>
+        <li>
+            <strong>Byggbar lösning:</strong> Hela solutionen måste kunna byggas utan fel efter varje merge
+            till develop/release.
+        </li>
+    </ul>
+
+    <!-- ============================================
+         8. TIDPLAN OCH SPRINTAR
+         ============================================ -->
+    <h1>7. Tidplan och Leveransmodell</h1>
+
+    <p>
+        Utvecklingen sker i sprintar, där varje arbetsdag utgör en sprint. I slutet av varje sprint
+        förväntar vi oss att en körbar version av systemet finns tillgänglig för demonstration och
+        granskning.
+    </p>
+
+    <table class="requirements">
+        <thead>
+            <tr>
+                <th style="width: 100px;">Sprint</th>
+                <th style="width: 100px;">Dag</th>
+                <th>Förväntat resultat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Sprint 1</strong></td>
+                <td>Onsdag</td>
+                <td>
+                    Grundläggande Prio 1-funktionalitet: Produktsökning, filtrering per avdelning,
+                    butikskarta och produktadministration via BackOffice. Körbar demoversion.
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Sprint 2</strong></td>
+                <td>Torsdag</td>
+                <td>
+                    Prio 2–3 funktionalitet: Inköpslista med utskrift, personliga erbjudanden.
+                    Om tid finns, Prio 4 (inventering). Slutleverans och demo för beställare.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="info-banner">
+        <strong>Viktigt:</strong> En körbar version ska alltid finnas vid dagens slut. Om en feature inte
+        hinner bli klar under en sprint, får den inte brytas in i huvudbranchen om den gör systemet instabilt.
+        Hellre en stabil leverans med färre funktioner än en instabil med fler.
+    </div>
+
+    <!-- ============================================
+         9. KONTAKTUPPGIFTER
+         ============================================ -->
+    <h1 class="page-break">8. Kontaktuppgifter</h1>
+
+    <table class="reference">
+        <thead>
+            <tr>
+                <th>Roll</th>
+                <th>Namn</th>
+                <th>Kontakt</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Beställare / Butiksägare</strong></td>
+                <td>Margareta Andersson</td>
+                <td>
+                    Tel: 036-12 34 56<br>
+                    E-post: margareta@anderssonslivs.se
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Butikschef (teknisk kontakt)</strong></td>
+                <td>Erik Johansson</td>
+                <td>
+                    Tel: 036-12 34 57<br>
+                    E-post: erik@anderssonslivs.se
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        Vid frågor gällande krav, prioritering eller butikens utformning — kontakta Margareta.
+        Vid tekniska frågor gällande hårdvara, nätverk och installation — kontakta Erik.
+    </p>
+
+    <!-- ============================================
+         10. GODKÄNNANDE OCH UNDERSKRIFTER
+         ============================================ -->
+    <h1>9. Godkännande</h1>
+
+    <p>
+        Detta dokument utgör den överenskomna kravspecifikationen mellan beställare och leverantör.
+        Genom underskrift bekräftar båda parter att de tagit del av och accepterar innehållet.
+    </p>
+
+    <div class="signatures">
+        <div class="signature-block">
+            <div class="signature-line">Margareta Andersson</div>
+            <div class="signature-label">Beställare — Anderssons Livs AB</div>
+            <br>
+            <div class="signature-label">Datum: ____________________</div>
+        </div>
+        <div class="signature-block">
+            <div class="signature-line">____________________________</div>
+            <div class="signature-label">Leverantör — Studentföretaget</div>
+            <br>
+            <div class="signature-label">Datum: ____________________</div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         SIDFOT
+         ============================================ -->
+    <div class="page-footer">
+        Anderssons Livs AB &nbsp;·&nbsp; Storgatan 14, 553 20 Jönköping &nbsp;·&nbsp;
+        Org.nr: 556789-0123 &nbsp;·&nbsp; Dokumentnr: AL-2026-003 v1.0
+    </div>
+
+</body>
+</html>
