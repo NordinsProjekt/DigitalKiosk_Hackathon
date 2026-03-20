@@ -4,9 +4,10 @@ namespace Services.Interfaces;
 
 public interface ICustomerDiscountedProductRepository
 {
-    Task<List<DiscountedProduct>> GetAllAsync();
-    Task<DiscountedProduct?> GetByIdAsync(Guid id);
+    Task<List<CustomerDiscountedProduct>> GetAllAsync();
+    Task<CustomerDiscountedProduct?> GetByIdAsync(Guid id, Guid customerId);
     Task AddAsync(CustomerDiscountedProduct customerDiscountedProduct);
     Task UpdateAsync(CustomerDiscountedProduct customerDiscountedProduct);
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(Guid id, Guid customerId);
+    
 }

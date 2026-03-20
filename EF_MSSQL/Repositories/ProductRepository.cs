@@ -22,7 +22,7 @@ public class ProductRepository(KioskDbContext context) : IProductRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Product product)
+    public async Task UpdateAsync(Product product) 
     {
         context.Products.Update(product);
         await context.SaveChangesAsync();
@@ -36,4 +36,5 @@ public class ProductRepository(KioskDbContext context) : IProductRepository
         context.Products.Remove(product);
         await context.SaveChangesAsync();
     }
+    
 }
