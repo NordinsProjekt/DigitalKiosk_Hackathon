@@ -12,11 +12,11 @@ public class KioskDbContext : DbContext
 
     public KioskDbContext(DbContextOptions<KioskDbContext> options) : base(options)
     {
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(KioskDbContext).Assembly);
     }
 }

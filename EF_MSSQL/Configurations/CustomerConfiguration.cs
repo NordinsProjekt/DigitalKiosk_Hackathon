@@ -12,7 +12,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 
         builder.Property(c => c.Name)
             .IsRequired()
-            .HasMaxLength(200);
+            .HasMaxLength(256);
 
         builder.Property(c => c.PersonalIdentityNumber)
             .IsRequired()
