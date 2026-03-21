@@ -1,5 +1,10 @@
-// Products Page JavaScript - Well-implemented
-// Students should fix the HTML structure and CSS styling in products.html and styles.css
+// Products Page JavaScript
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     loadProducts();
@@ -26,8 +31,11 @@ function loadProducts() {
                     <p>Check the browser console (F12) for more details.</p>
                 </div>
             `;
-            console.error('Error loading products:', error);
-            console.error('Full error details:', error);
+            if (error && error.stack) {
+                console.error('Full error details (stack):', error.stack);
+            } else {
+                console.error('Error loading products:', error);
+            }
         });
 }
 
@@ -43,19 +51,15 @@ function displayProducts(products) {
     
     products.forEach(product => {
         html += `
-            <div class="bad-product-card">
-                <div class="bad-product-info">
-                    <h3 class="bad-product-name">${product.name}</h3>
-                    <p class="bad-product-description">${product.description || 'No description available'}</p>
-                    <p class="bad-product-price">${product.price}</p>
-                    <div class="bad-product-actions">
-                        <a href="product-detail.html?id=${product.id}">View Details</a>
-                        <button onclick="addToCart(${product.id}, '${product.name.replace(/'/g, "\\'")}}', ${product.price})">Add to Cart</button>
-                    </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <h3 class="product-name">${escapeHtml(product.name)}</h3>
+                    <p class="product-description">${escapeHtml(product.description || 'No description available')}</p>
+                    <p class="product-price">$${product.price.toFixed(2)}</p>
                 </div>
             </div>
         `;
     });
     
-    productsList.innerHTML = html;
+    productsList.innerHTML = `<div class="product-grid">${html}</div>`;
 }
