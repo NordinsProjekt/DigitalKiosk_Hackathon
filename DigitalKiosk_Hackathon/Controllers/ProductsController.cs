@@ -1,4 +1,3 @@
-using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
@@ -12,13 +11,7 @@ public class ProductsController(IProductService productService) : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var products = await productService.GetAllAsync();
-        return Ok(products);
-    }
-    
-    [HttpGet]
-    public async Task<IActionResult> GetAllAgain()
-    {
-        var products = await productService.GetAllAsync();
+
         return Ok(products);
     }
 
@@ -27,6 +20,7 @@ public class ProductsController(IProductService productService) : ControllerBase
     {
         var product = await productService.GetByIdAsync(id);
         if (product == null) return NotFound();
+
         return Ok(product);
     }
 }
