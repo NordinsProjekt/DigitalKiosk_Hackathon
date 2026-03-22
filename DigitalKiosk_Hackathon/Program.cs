@@ -29,7 +29,6 @@ public class Program
             // Enable logs to be sent to Sentry
             o.EnableLogs = true;
         });
-        SentrySdk.CaptureMessage("Hello Sentry"); //Test
 
         // Add services to the container.
         builder.Services.AddControllers();
@@ -37,6 +36,8 @@ public class Program
         builder.Services.AddOpenApi();
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<ICustomerService, CustomerService>();
+        builder.Services.AddScoped<IProductService, ProductService>();
+
         var app = builder.Build();
 
         app.UseCors("AllowAll"); //Unsafe only for debugging
@@ -48,7 +49,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Cafe API v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Kiosk API v1");
                 options.RoutePrefix = string.Empty;
             });
         }

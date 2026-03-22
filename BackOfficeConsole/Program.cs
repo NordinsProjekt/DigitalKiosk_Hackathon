@@ -35,10 +35,5 @@ internal class Program
             o.TracesSampleRate = tracesSampleRate;
             o.EnableLogs = true;
         });
-
-#if DEBUG
-        // Test message to verify Sentry integration in debug builds only.
-        SentrySdk.CaptureMessage("Hello Sentry"); //Test
-#endif
     }
 }
