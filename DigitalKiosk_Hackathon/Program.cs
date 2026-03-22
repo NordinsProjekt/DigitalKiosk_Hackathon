@@ -30,6 +30,16 @@ public class Program
             o.EnableLogs = true;
         });
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
+            });
+        });
+
         // Add services to the container.
         builder.Services.AddControllers();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -43,16 +53,13 @@ public class Program
         app.UseCors("AllowAll"); //Unsafe only for debugging
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        app.MapOpenApi();
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
         {
-            app.MapOpenApi();
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Kiosk API v1");
-                options.RoutePrefix = string.Empty;
-            });
-        }
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Kiosk API v1");
+            options.RoutePrefix = string.Empty;
+        });
 
         app.UseHttpsRedirection();
 

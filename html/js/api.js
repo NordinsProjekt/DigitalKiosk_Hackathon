@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'https://localhost:5001/api';
+const API_BASE_URL = 'http://localhost:5155/api';
 
 // API Service Object
 const apiService = {
@@ -23,7 +23,7 @@ const apiService = {
 
     /**
      * Fetch a single product by ID
-     * @param {number} id - Product ID
+     * @param {string} id - Product ID (GUID)
      * @returns {Promise<Object>} Product object
      */
     async getProductById(id) {
@@ -38,33 +38,7 @@ const apiService = {
             console.error(`Error fetching product ${id}:`, error);
             throw error;
         }
-    },
-
-    /**
-     * Create a new order
-     * @param {Object} orderData - Order data with customerName and items
-     * @returns {Promise<Object>} Created order response
-     */
-    async createOrder(orderData) {
-        try {
-            const response = await fetch(`${API_BASE_URL}/orders`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(orderData)
-            });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const result = await response.json();
-            return result;
-        } catch (error) {
-            console.error('Error creating order:', error);
-            throw error;
-        }
     }
+
 };
 
