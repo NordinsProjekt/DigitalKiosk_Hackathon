@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'https://localhost:5001';
+const API_BASE_URL = 'https://localhost:5001/api';
 
 // API Service Object
 const apiService = {
