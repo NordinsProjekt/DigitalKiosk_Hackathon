@@ -29,5 +29,4 @@ public class ProductsController(IProductService productService) : ControllerBase
         if (product == null) return NotFound();
         return Ok(product);
     }
-    
 }
