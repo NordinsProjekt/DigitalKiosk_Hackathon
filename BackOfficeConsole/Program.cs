@@ -9,12 +9,27 @@ internal class Program
         builder.WebHost.UseSentry(o =>
         {
             o.Dsn = builder.Configuration["Sentry:Dsn"];
-            // When configuring for the first time, to see what the SDK is doing:
-            o.Debug = true;
-            // Set TracesSampleRate to 1.0 to capture 100%
-            // of transactions for tracing.
-            // We recommend adjusting this value in production
-            o.TracesSampleRate = 1.0;
+
+            var environmentName = global::System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var isDevelopment = string.Equals(environmentName, "Development", global::System.StringComparison.OrdinalIgnoreCase);
+
+            // Enable Sentry SDK debug logging only in Development
+            o.Debug = isDevelopment;
+
+            // Allow TracesSampleRate to be configured; fall back to safer defaults per environment
+            double tracesSampleRate;
+            var configuredSampleRate = builder.Configuration["Sentry:TracesSampleRate"];
+            if (!global::System.Double.TryParse(
+                    configuredSampleRate,
+                    global::System.Globalization.NumberStyles.Float,
+                    global::System.Globalization.CultureInfo.InvariantCulture,
+                    out tracesSampleRate))
+            {
+                // Default to full tracing in Development, reduced sampling elsewhere
+                tracesSampleRate = isDevelopment ? 1.0 : 0.2;
+            }
+
+            o.TracesSampleRate = tracesSampleRate;
             // Enable logs to be sent to Sentry
             o.EnableLogs = true;
         });
