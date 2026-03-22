@@ -13,7 +13,7 @@
   </Folder>
   <Folder Name="/5. Presentation/">
     <Project Path="BackOfficeConsole/BackOfficeConsole.csproj" />
-    <Project Path="DigitalKiosk_Hackathon/DigitalKiosk_Hackathon.csproj" />
+    <Project Path="DigitalKiosk_Hackathon/Api.csproj" />
   </Folder>
   <Folder Name="/6. Tests/">
     <Project Path="Application.ServicesTests/Application.ServicesTests.csproj" />
