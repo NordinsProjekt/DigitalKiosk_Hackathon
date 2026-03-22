@@ -36,7 +36,10 @@ internal class Program
 
         var app = builder.Build();
 
+#if DEBUG
+        // Test message to verify Sentry integration in debug builds only.
         SentrySdk.CaptureMessage("Hello Sentry"); //Test
+#endif
 
         await app.RunAsync();
     }
