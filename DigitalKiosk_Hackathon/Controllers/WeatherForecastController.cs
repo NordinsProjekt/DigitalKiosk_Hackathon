@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace DigitalKiosk_Hackathon.Controllers;
+namespace DigitalKioskHackathon.Controllers;
 
 [ApiController]
 [Route("[controller]")]

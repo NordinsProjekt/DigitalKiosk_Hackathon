@@ -1,6 +1,0 @@
-@DigitalKiosk_Hackathon_HostAddress = http://localhost:5155
-
-GET {{DigitalKiosk_Hackathon_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

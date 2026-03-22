@@ -11,5 +11,5 @@ public class Product
     public Section Section { get; set; }
     public decimal Price { get; set; }
 
-    public ICollection<DiscountedProduct> DiscountedProducts { get; set; } = new List<DiscountedProduct>();
+    public ICollection<DiscountedProduct> DiscountedProducts { get; set; } = [];
 }
