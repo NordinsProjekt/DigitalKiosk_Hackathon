@@ -1,4 +1,7 @@
 
+using Services;
+using Services.Interfaces;
+
 namespace Api;
 
 public class Program
@@ -32,6 +35,7 @@ public class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddScoped<IProductService, ProductService>();
 
         var app = builder.Build();
 
