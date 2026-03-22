@@ -17,7 +17,11 @@ public class CustomersController(ICustomerService customerService) : ControllerB
     [HttpGet("{id:Guid}")]
     public async Task <IActionResult> GetById(Guid id)
     {
-            return NotFound("No customer was found");
-
-    }
+            var customer = await customerService.GetByIdAsync(id);
+            if (customer is null)
+            {
+                return NotFound("No customer was found");
+            }
+            return Ok(customer);
+        }
 }

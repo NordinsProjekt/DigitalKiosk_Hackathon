@@ -8,7 +8,7 @@ namespace Services;
 
 public class CustomerService : ICustomerService
 {
-    public Task AddNameAsync(Customer customer)
+    public Task AddAsync(Customer customer)
     {
         throw new NotImplementedException();
     }
@@ -18,7 +18,7 @@ public class CustomerService : ICustomerService
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Customer>> GetAllAsync()
+    public Task <List<Customer>> GetAllAsync()
     {
         throw new NotImplementedException();
     }
