@@ -1,4 +1,4 @@
-namespace DigitalKiosk_Hackathon;
+namespace DigitalKioskHackathon;
 
 public class WeatherForecast
 {

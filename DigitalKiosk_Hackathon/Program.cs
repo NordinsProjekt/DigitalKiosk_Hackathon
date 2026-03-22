@@ -1,5 +1,5 @@
 
-namespace DigitalKiosk_Hackathon;
+namespace Api;
 
 public class Program
 {
