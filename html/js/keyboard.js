@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleKeyboardInput(event) {
     if (!activeInput) return;
     event.preventDefault();
-    const char = event.target.dataset.char;
+    const char = event.currentTarget.dataset.char;
     if (char === "Backspace") {
       activeInput.value = activeInput.value.slice(0, -1);
       return;
