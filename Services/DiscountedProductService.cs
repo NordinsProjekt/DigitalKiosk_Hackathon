@@ -5,7 +5,6 @@ namespace Services;
 
 public class DiscountedProductService(IDiscountedProductRepository repo) : IDiscountedProductService
 {
-    
     public async Task<List<DiscountedProduct>> GetAllAsync()
     {
         return await repo.GetAllAsync();

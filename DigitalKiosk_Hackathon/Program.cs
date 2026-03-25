@@ -47,6 +47,7 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<ICustomerService, CustomerService>();
         builder.Services.AddScoped<IProductService, ProductService>();
+        builder.Services.AddScoped<IDiscountedProductService, DiscountedProductService>();
 
         var app = builder.Build();
 
@@ -64,8 +65,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
-
+        
         app.MapControllers();
 
         app.Run();
