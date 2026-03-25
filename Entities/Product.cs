@@ -10,6 +10,5 @@ public class Product
     public ShelfLocation ShelfLocation { get; set; }
     public Section Section { get; set; }
     public decimal Price { get; set; }
-
     public ICollection<DiscountedProduct> DiscountedProducts { get; set; } = [];
 }
