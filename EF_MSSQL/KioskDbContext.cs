@@ -10,6 +10,11 @@ public class KioskDbContext(DbContextOptions<KioskDbContext> options) : DbContex
     public DbSet<DiscountedProduct> DiscountedProducts { get; set; }
     public DbSet<CustomerDiscountedProduct> CustomerDiscountedProducts { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=HackathonDB;Trusted_Connection=True;");
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
