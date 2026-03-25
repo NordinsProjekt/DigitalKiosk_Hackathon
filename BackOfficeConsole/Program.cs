@@ -52,7 +52,8 @@ internal class Program
 
         var provider = services.BuildServiceProvider();
 
-        var productService = provider.GetRequiredService<IProductService>();
+        using var scope = provider.CreateScope();
+        var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
         var handler = new ProductHandler(productService);
 
         var menu = new MenuData(new List<MenuOption>{
