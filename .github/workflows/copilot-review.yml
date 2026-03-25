@@ -1,0 +1,22 @@
+# This workflow automatically triggers a GitHub Copilot code review on every pull request.
+# Copilot will review the PR regardless of whether the contributor has Copilot Pro.
+# For more information see: https://docs.github.com/en/copilot/using-github-copilot/code-review/using-copilot-code-review
+
+name: Copilot Code Review
+
+on:
+  pull_request:
+    branches: [ "**" ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  copilot-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request Copilot code review
+        uses: github/copilot-pull-request-reviewer@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
