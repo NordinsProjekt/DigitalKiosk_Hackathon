@@ -22,9 +22,14 @@ public class CustomerService(ICustomerRepository repo) : ICustomerService
         await repo.AddAsync(customer);
     }
 
-    public async Task UpdateAsync(Customer customer)
+    public async Task UpdateNameAsync(Customer customer)
     {
         await repo.UpdateNameAsync(customer);
+    }
+
+    public async Task UpdateIdentityNumberAsync(Customer customer)
+    {
+        await repo.UpdateIdentityNumberAsync(customer);
     }
 
     public async Task DeleteAsync(Guid id)
