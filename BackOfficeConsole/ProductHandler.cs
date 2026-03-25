@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using BackOfficeConsole.Validation;
+using Entities;
 using Entities.Enums;
 using Services.Interfaces;
 
@@ -15,26 +16,11 @@ public class ProductHandler
 
     public async Task AddProduct()
     {
-        Console.Write("Namn: ");
-        var name = Console.ReadLine()!;
-
-        Console.Write("Beskrivning: ");
-        var description = Console.ReadLine()!;
-
-        Console.Write("Pris: ");
-        decimal.TryParse(Console.ReadLine(), out decimal price);
-
-        Console.WriteLine("Hyllplats:");
-        foreach (var s in Enum.GetValues<ShelfLocation>())
-            Console.WriteLine($"  {(int)s}. {s}");
-        Console.Write("Välj: ");
-        var shelfLocation = (ShelfLocation)int.Parse(Console.ReadLine()!);
-
-        Console.WriteLine("Sektion:");
-        foreach (var s in Enum.GetValues<Section>())
-            Console.WriteLine($"  {(int)s}. {s}");
-        Console.Write("Välj: ");
-        var section = (Section)int.Parse(Console.ReadLine()!);
+        if (!ProductValidator.TryGetName(out var name)) return;
+        if (!ProductValidator.TryGetDescription(out var description)) return;
+        if (!ProductValidator.TryGetPrice(out var price)) return;
+        if (!ProductValidator.TryGetShelfLocation(out var shelfLocation)) return;
+        if (!ProductValidator.TryGetSection(out var section)) return;
 
         var product = new Product
         {
