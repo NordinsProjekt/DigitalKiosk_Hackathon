@@ -1,4 +1,6 @@
 
+using EF_MSSQL;
+using EF_MSSQL.Seeders;
 using Services;
 using Services.Interfaces;
 
@@ -6,7 +8,7 @@ namespace Api;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public async static Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.WebHost.UseSentry(o =>
@@ -61,6 +63,17 @@ public class Program
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Kiosk API v1");
             options.RoutePrefix = string.Empty;
         });
+        
+        using var scope = app.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<KioskDbContext>();
+
+        if (!db.Products.Any())
+        {
+            var products = ProductSeeder.Generate(3000);
+            db.Products.AddRange(products);
+            await db.SaveChangesAsync();
+            Console.WriteLine($"✅ Seeded {products.Count} products.");
+        }
 
         app.UseHttpsRedirection();
 
