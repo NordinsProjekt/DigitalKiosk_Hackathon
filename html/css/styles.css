@@ -26,13 +26,11 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        /* align-items: center; */
-        /* background-color: #4e9627; */
+        background-color: #b9b9b9;
         
         .category-item{
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            background-color: #b9b9b9;
 
             
             .ListedItems{
