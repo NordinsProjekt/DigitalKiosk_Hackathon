@@ -19,7 +19,7 @@ public class ProductsController(IProductService productService) : ControllerBase
     public async Task<IActionResult> GetById(Guid id)
     {
         var product = await productService.GetByIdAsync(id);
-        if (product == null) return NotFound();
+        if (product is null) return NotFound();
 
         return Ok(product);
     }
