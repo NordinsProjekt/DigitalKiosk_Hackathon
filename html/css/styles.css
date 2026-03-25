@@ -14,7 +14,6 @@ body {
   background-color: #f8f9fa;
 }
 
-
 .splitMainScreen {
   display: grid;
   grid-template-columns: 250px 830px;
@@ -118,7 +117,8 @@ body {
   height: 30px;
   border-radius: 15px;
 }
-
+.keyboard-container {
+}
 /* Product Grid */
 .product-grid {
   display: grid;
