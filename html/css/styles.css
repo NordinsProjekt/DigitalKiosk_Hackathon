@@ -27,11 +27,12 @@ body {
         flex-direction: column;
         justify-content: space-around;
         /* align-items: center; */
-        background-color: #4e9627;
+        /* background-color: #4e9627; */
         
         .category-item{
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
+            background-color: #b9b9b9;
 
             
             .ListedItems{
@@ -42,8 +43,7 @@ body {
                 border: none;
                 align-items: flex-start;
                 text-align: left;
-                background-color: #f8f9fa;
-                background-color: #4e9627;
+                background-color: #b9b9b9;
             }
             
             .ListedItems:hover
@@ -54,7 +54,7 @@ body {
     }
 
     .StoreMap{
-        background-color: #710b0b;
+        /* background-color: #710b0b; */
      }
 }
 
