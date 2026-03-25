@@ -43,10 +43,10 @@ internal class Program
             o.EnableLogs = true;
         });
 
-        //Run()
+        
         var services = new ServiceCollection();
 
-        services.AddDbContext<KioskDbContext>(options => options.UseSqlServer("DefaultConnection"));
+        services.AddDbContext<KioskDbContext>();
 
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductService, ProductService>();
