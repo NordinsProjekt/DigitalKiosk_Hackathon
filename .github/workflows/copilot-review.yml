@@ -6,7 +6,7 @@ name: Copilot Code Review
 
 on:
   pull_request:
-    branches: [ "**" ]
+    branches: [ "develop", "onsdagsprint" ]
 
 permissions:
   contents: read
