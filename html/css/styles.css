@@ -26,18 +26,30 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        align-items: center;
+        /* align-items: center; */
         /* background-color: #4e9627; */
         
-        .ListedItems{
-            border: none;
-            justify-content: space-around;
-            align-items: center;
-            /* background-color: #4e9627; */
-        }
-        .ListedItems:hover
-        {
-            background-color: #710b0b;
+        .category-item{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background-color: #b9b9b9;
+
+            
+            .ListedItems{
+                grid-column: 2 / span 1;
+                display: flex;
+                margin: 0rem;
+                padding: 0rem;
+                border: none;
+                align-items: flex-start;
+                text-align: left;
+                background-color: #b9b9b9;
+            }
+            
+            .ListedItems:hover
+            {
+                background-color: #710b0b;
+            }
         }
     }
 
