@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById("store-map");
     const ctx = canvas.getContext("2d");
     const sections = loadSections();
@@ -19,11 +19,11 @@ function drawSection(ctx, section, index) {
     ctx.fillStyle = "black";
     ctx.font = "16px sans-serif";
     let textHeight = 32;
-    cx = x + w / 2;
-    cy = y + h / 2
-    let splitText = section.split(" ")
+    let cx = x + w / 2;
+    let cy = y + h / 2
+    let splitText = section.split(" ");
     ctx.textAlign = "center";
-    ctx.textBaseLine = "middle";
+    ctx.textBaseline = "middle";
     splitText.forEach((text, i) => {
         let textY = ((Math.floor(splitText.length / 2) - i)) * textHeight + cy;
         ctx.fillText(text, cx, textY);
@@ -32,7 +32,7 @@ function drawSection(ctx, section, index) {
 
 
 function loadSections() {
-    return Sections = [
+    return [
         "Fruits and Vegetables",
         "Dairy",
         "Meat",
