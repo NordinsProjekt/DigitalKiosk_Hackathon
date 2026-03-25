@@ -5,30 +5,30 @@ using System.Collections.Generic;
 
 namespace Services;
 
-public class CustomerService : ICustomerService
+public class CustomerService(ICustomerRepository repo) : ICustomerService
 {
-    public Task AddAsync(Customer customer)
+    public async Task AddAsync(Customer customer)
     {
-        throw new NotImplementedException();
+        await repo.AddAsync(customer);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        await repo.DeleteAsync(id);
     }
 
-    public Task <List<Customer>> GetAllAsync()
+    public async Task <List<Customer>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await repo.GetAllAsync();
     }
 
-    public Task<Customer?> GetByIdAsync(Guid id)
+    public async Task<Customer?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await repo.GetByIdAsync(id);
     }
 
-    public Task UpdateAsync(Customer customer)
+    public async Task UpdateAsync(Customer customer)
     {
-        throw new NotImplementedException();
+        await repo.UpdateNameAsync(customer);
     }
 }
