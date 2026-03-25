@@ -7,16 +7,6 @@ namespace Services;
 
 public class CustomerService(ICustomerRepository repo) : ICustomerService
 {
-    public async Task AddAsync(Customer customer)
-    {
-        await repo.AddAsync(customer);
-    }
-
-    public async Task DeleteAsync(Guid id)
-    {
-        await repo.DeleteAsync(id);
-    }
-
     public async Task <List<Customer>> GetAllAsync()
     {
         return await repo.GetAllAsync();
@@ -27,8 +17,18 @@ public class CustomerService(ICustomerRepository repo) : ICustomerService
         return await repo.GetByIdAsync(id);
     }
 
+    public async Task AddAsync(Customer customer)
+    {
+        await repo.AddAsync(customer);
+    }
+
     public async Task UpdateAsync(Customer customer)
     {
         await repo.UpdateNameAsync(customer);
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        await repo.DeleteAsync(id);
     }
 }
