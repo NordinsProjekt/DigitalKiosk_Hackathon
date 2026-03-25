@@ -1,11 +1,10 @@
-﻿using EF_MSSQL;
+﻿using BackOfficeConsole.Menu;
+using EF_MSSQL;
 using EF_MSSQL.Repositories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Interfaces;
-using BackOfficeConsole.Menu;
 
 namespace BackOfficeConsole;
 
@@ -59,11 +58,11 @@ internal class Program
         var menu = new MenuData(new List<MenuOption>{
             new MenuOption("Lista produkter", async () => await handler.ListProducts()),
             new MenuOption("Lägg till produkt", async () => await handler.AddProduct()),
-            new MenuOption("Avsluta", () => { Environment.Exit(0); return Task.CompletedTask; })
+            new MenuOption("Redigera produkt", async () => await handler.EditProductAsync()),
+            new MenuOption("Avsluta", () => { Environment.Exit(0); return Task.CompletedTask;})
              });
 
         await menu.Run();
-       
     }
 }
 
