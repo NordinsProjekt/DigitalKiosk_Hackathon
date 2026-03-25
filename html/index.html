@@ -8,36 +8,39 @@
     <!-- TESTAR -->
   </head>
   <body>
-    <nav class="navbar">
-      <div class="container">
-        <div class="nav-brand">
-          <h1>Digital Kiosk</h1>
+    <div class="wrapper">
+        <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+            <h1>Digital Kiosk</h1>
+            </div>
+            <ul class="nav-menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            </ul>
         </div>
-        <ul class="nav-menu">
-          <li><a href="index.html" class="active">Home</a></li>
-        </ul>
-      </div>
-    </nav>
+        </nav>
 
-    <header class="hero">
-      <div class="hero-content">
-        <h2>Welcome to Digital Kiosk</h2>
-      </div>
-    </header>
+        <header class="hero">
+        <div class="hero-content">
+            <h2>Välkommen till Anderssons Livs</h2>
+            <input type="text" id="myInput" placeholder="Sök produkt" />
+        </div>
+        </header>
 
-    <main class="container" style="padding: 2rem 20px">
-      <canvas id="store-map" width="1000" height="800"></canvas>
-      <div id="error-message"></div>
-      <div id="products-list"></div>
-    </main>
+        <main class="container" style="padding: 2rem 20px">
+        <canvas id="store-map" width="1000" height="800"></canvas>
+        <div id="error-message"></div>
+        <div id="products-list"></div>
+        </main>
 
-    <footer class="footer">
-      <div class="container">
-        <p>&copy; 2025 Digital Kiosk. All rights reserved.</p>
-      </div>
-    </footer>
+        <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Digital Kiosk. All rights reserved.</p>
+        </div>
+        </footer>
 
-    <script src="js/api.js"></script>
-    <script src="js/products.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/products.js"></script>
+    <div>
   </body>
 </html>
