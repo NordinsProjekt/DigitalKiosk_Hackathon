@@ -124,9 +124,9 @@ body {
 /* Product Grid */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 300px);
+  grid-template-columns: repeat(2, 300px);
   gap: 1rem;
-  justify-content: center;
+  justify-content: right;
   margin-bottom: 1rem;
 }
 
