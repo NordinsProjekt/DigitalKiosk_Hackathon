@@ -29,4 +29,9 @@ public class ProductService(IProductRepository productRepository) : IProductServ
     {
         await productRepository.DeleteAsync(id);
     }
+
+    public async Task<List<Product>> FilterProducts(string product)
+    {
+        return await productRepository.FilteringProducts(product);
+    }
 }
