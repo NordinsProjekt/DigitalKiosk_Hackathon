@@ -32,7 +32,7 @@ body {
       grid-template-columns: 1fr 1fr 1fr;
 
       .ListedItems {
-        grid-column: 2 / span 1;
+        grid-column: 2 / span 2;
         display: flex;
         margin: 0rem;
         padding: 0rem;
@@ -53,7 +53,7 @@ body {
   }
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0px;
+  padding: 0 20px 0 0;
 }
 
 .wrapper {
@@ -110,6 +110,15 @@ body {
 .hero-content h2 {
   font-size: 3rem;
   margin-bottom: 1rem;
+}
+
+.hero-h3 {
+  padding-bottom: 1rem;
+}
+.sökfält {
+  padding-left: 3.5rem;
+  height: 30px;
+  border-radius: 15px;
 }
 
 /* Product Grid */
