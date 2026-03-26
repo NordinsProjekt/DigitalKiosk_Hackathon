@@ -8,27 +8,42 @@ public class CustomerValidation
 {
     public static bool TryGetName(out string name)
     {
-        Console.WriteLine("Namn: ");
+        while (true)
+        {
+
+        Console.Write("Namn: ");
         name = Console.ReadLine()!;
 
         if (string.IsNullOrWhiteSpace(name))
         {
             Console.WriteLine("Fel! Namn får inte vara tomt");
-            return false;
         }
-        return true;
+        else
+            {
+            return true;
+            }
+        }
     }
 
     public static bool TryGetPersonalIdentityNumber(out string personalIdentity)
     {
-        Console.WriteLine("Personnummer: ");
-        personalIdentity = Console.ReadLine()!;
+        while (true)
+        {
+            Console.Write("Personnummer (YYYYMMDD-XXXX): ");
+            personalIdentity = Console.ReadLine()!;
 
         if (string.IsNullOrWhiteSpace(personalIdentity))
         {
             Console.WriteLine("Fel! personnummer får inte vara tomt");
-            return false;
         }
-        return true;
+            else if (!System.Text.RegularExpressions.Regex.IsMatch(personalIdentity, @"^\d{8}-\d{4}$"))
+            {
+                Console.WriteLine("Fel: Ange personnummer i format YYYYMMDD-XXXX.");
+            }
+                else
+                {
+                    return true;
+                }
+        }
     }
 }
