@@ -6,9 +6,42 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  loadProducts();
+document.addEventListener('DOMContentLoaded', function () {
+    loadProducts();
+
+    const searchBar = document.getElementById('myInput');
+    searchBar.addEventListener('input', () => {
+        loadProductsByName(searchBar.value);
+    })
 });
+
+function loadProductsByName(name) {
+    const productsList = document.getElementsByClassName("product-grid")[0];
+    const errorMessage = document.getElementById('error-message');
+
+    productsList.innerHTML = '<div class="loading">Loading products...</div>';
+    apiService.getAllProducts().then(products => {
+        products = products.filter(product => product.name.toUpperCase().includes(name.toUpperCase()));
+        displayProducts(products);
+    })
+        .catch(error => {
+            productsList.innerHTML = '';
+            errorMessage.innerHTML = `
+                <div class="error-message">
+                    <p><strong>Unable to load products.</strong></p>
+                    <p>Error: ${error.message}</p>
+                    <p>Make sure the API is running at https://localhost:5001</p>
+                    <p>Check the browser console (F12) for more details.</p>
+                </div>
+            `;
+            if (error && error.stack) {
+                console.error('Full error details (stack):', error.stack);
+            } else {
+                console.error('Error loading products:', error);
+            }
+        });
+}
+
 
 function loadProducts() {
   const productsList = document.getElementsByClassName("product-grid")[0];
