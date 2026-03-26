@@ -6,8 +6,8 @@
 }
 
 body {
-  max-width: 1080px;
-  max-height: 1920px;
+  /* max-width: 1080px;
+  max-height: 1920px; */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
@@ -17,9 +17,9 @@ body {
 .splitMainScreen {
   display: grid;
   grid-template-columns: 250px 830px;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
-  padding: 0 20px 0 0;
+  /* padding: 0 20px 0 0; */
 }
 
 .splitMainScreen .listCategory {
@@ -135,7 +135,7 @@ body {
   width: 300px;
   height: 350px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   text-align: center;
   flex-direction: column;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
