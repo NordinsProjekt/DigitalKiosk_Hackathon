@@ -140,19 +140,11 @@ body {
 
 /* Product Grid */
 .product-grid {
-<<<<<<< HEAD
-  display: grid;
-  grid-template-columns: repeat(2, 300px);
-  row-gap: 4rem;
-  justify-content: space-evenly;
-  margin-bottom: 1rem;
-=======
     display: grid;
     grid-template-columns: repeat(2, 300px);
     justify-content: center;
     gap: 1rem;
     margin: 1rem 0 1rem 0;
->>>>>>> nyfideli
 }
 
 .product-card {
