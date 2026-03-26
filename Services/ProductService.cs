@@ -28,7 +28,7 @@ public class ProductService(IProductRepository productRepository) : IProductServ
         var product = await productRepository.GetByIdAsync(id);
 
         if (product is null)
-            throw new Exception("Product not found.");
+            throw new KeyNotFoundException("Product not found.");
 
         var updated = ProductFactory.Create(productDetails);
 
