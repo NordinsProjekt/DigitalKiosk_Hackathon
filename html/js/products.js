@@ -34,7 +34,7 @@ function loadProductsByName(name) {
                 <div class="error-message">
                     <p><strong>Unable to load products.</strong></p>
                     <p>Error: ${error.message}</p>
-                    <p>Make sure the API is running at https://localhost:5001</p>
+                    <p>Make sure the API is running at https://localhost:5155</p>
                     <p>Check the browser console (F12) for more details.</p>
                 </div>
             `;
@@ -63,7 +63,7 @@ function loadProductsBySection(sectionId) {
                 <div class="error-message">
                     <p><strong>Unable to load products.</strong></p>
                     <p>Error: ${error.message}</p>
-                    <p>Make sure the API is running at https://localhost:5001</p>
+                    <p>Make sure the API is running at https://localhost:5155</p>
                     <p>Check the browser console (F12) for more details.</p>
                 </div>
             `;
@@ -93,7 +93,7 @@ function loadProducts() {
                 <div class="error-message">
                     <p><strong>Unable to load products.</strong></p>
                     <p>Error: ${error.message}</p>
-                    <p>Make sure the API is running at https://localhost:5001</p>
+                    <p>Make sure the API is running at https://localhost:5155</p>
                     <p>Check the browser console (F12) for more details.</p>
                 </div>
             `;
@@ -146,8 +146,6 @@ function displayProducts(products) {
 
 function showProductDetails(productId) {
   const productDetails = document.getElementsByClassName("productview")[0];
-
-  console.log("Product details loaded:", productId);
   apiService
     .getProductById(productId)
     .then((product) => {
@@ -159,8 +157,8 @@ function showProductDetails(productId) {
                         <img id="detail-image" src="https://picsum.photos/300/150" alt="Produktbild" />
                         <h2 id="detail-name">${escapeHtml(product.name)}</h2>
                         <p id="detail-description">${escapeHtml(product.description || "No description available")}</p>
-                        <p id="ShelfLocation">Hyllaplats: ${escapeHtml(product.shelfLocation || "No shelf location available")}</p>
-                        <p id="Section">Avdelning: ${escapeHtml(product.section || "No section available")}</p>
+                        <p id="ShelfLocation">Hyllaplats: ${escapeHtml(product.shelfLocation ?? "No shelf location available")}</p>
+                        <p id="Section">Avdelning: ${escapeHtml(product.section ?? "No section available")}</p>
                         <p id="detail-price">Pris: ${escapeHtml(product.price.toFixed(2))} kr</p>
                       </div>
                     </div>
