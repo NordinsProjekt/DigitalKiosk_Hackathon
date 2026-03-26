@@ -17,9 +17,8 @@ body {
 .splitMainScreen {
   display: grid;
   grid-template-columns: 250px 830px;
-  /* max-width: 1200px; */
+  grid-template-rows: repeat(24, (70vh/24));
   margin: 0 auto;
-  /* padding: 0 20px 0 0; */
 }
 
 .splitMainScreen .listCategory {
