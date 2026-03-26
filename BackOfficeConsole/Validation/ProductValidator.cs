@@ -26,7 +26,7 @@ public class ProductValidator
 
         if (string.IsNullOrWhiteSpace(description))
         {
-            Console.WriteLine("Fel! description får inte vara tomt");
+            Console.WriteLine("Fel! Beskrivning får inte vara tomt");
             return false;
         }
             return true;

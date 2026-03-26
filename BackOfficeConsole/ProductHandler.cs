@@ -88,8 +88,8 @@ public class ProductHandler
         if (!ProductValidator.TryGetName(out var name)) return;
         if (!ProductValidator.TryGetDescription(out var description)) return;
         if (!ProductValidator.TryGetPrice(out var price)) return;
-        if (!ProductValidator.TryGetShelfLocation(out var shelfLocation)) return;
         if (!ProductValidator.TryGetSection(out var section)) return;
+        if (!ProductValidator.TryGetShelfLocation(out var shelfLocation)) return;
 
         var product = new Product
         {
@@ -109,6 +109,6 @@ public class ProductHandler
     {
         var products = await _productService.GetAllAsync();
         foreach (var p in products)
-            Console.WriteLine($"[{p.Id}] {p.Name} - {p.Price:C}");
+            Console.WriteLine($"{p.Name} - {p.Price:C}");
     }
 }
