@@ -32,9 +32,9 @@ public class CustomerDiscountedProductRepository(KioskDbContext context) : ICust
     {
         var customerDiscountedProduct = await context.CustomerDiscountedProducts.FindAsync(discontinuedProductId, customerId);
         if (customerDiscountedProduct == null) return;
-        
+
         context.CustomerDiscountedProducts.Remove(customerDiscountedProduct);
         await context.SaveChangesAsync();
     }
-    
+
 }
