@@ -140,11 +140,11 @@ body {
 
 /* Product Grid */
 .product-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 300px);
-    justify-content: center;
-    gap: 1rem;
-    margin: 1rem 0 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0 1rem 0;
 }
 
 .product-card {
