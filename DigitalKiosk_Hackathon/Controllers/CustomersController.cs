@@ -27,10 +27,7 @@ public class CustomersController(ICustomerService customerService) : ControllerB
 
         return Ok(customer);
     }
-    private sealed class PersonnummerRequest
-    {
-        public string? Personnummer { get; set; }
-    }
+   
     [HttpGet("personnummer/{personnummer}")]
     public async Task<IActionResult> GetByPersonnummer(string personnummer)
     {

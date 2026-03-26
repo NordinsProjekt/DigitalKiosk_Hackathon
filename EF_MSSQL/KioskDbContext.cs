@@ -17,14 +17,26 @@ public class KioskDbContext : DbContext
         {
             return;
         }
-        var connectionString = Environment.GetEnvironmentVariable("KIOSKDB_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironmentVariable("KIOSKDB_CONNECTION_STRING");
         if (string.IsNullOrWhiteSpace(connectionString))
         {
-            throw new InvalidOperationException(
-                "The database connection string is not configured. " +
-                "Please set the 'KIOSKDB_CONNECTION_STRING' environment variable to a valid SQL Server connection string.");
+            var environmentName = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (string.Equals(environmentName, "Development", System.StringComparison.OrdinalIgnoreCase))
+            {
+                // Development fallback to preserve out-of-the-box behavior for local runs and EF tooling
+                connectionString = "Server=(localdb)\\mssqllocaldb;Database=KioskDb;Trusted_Connection=True;MultipleActiveResultSets=true;";
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "The database connection string is not configured. " +
+                    "Please set the 'KIOSKDB_CONNECTION_STRING' environment variable to a valid SQL Server connection string.");
+            }
         }
-        optionsBuilder.UseSqlServer(connectionString);
+        if (!string.IsNullOrWhiteSpace(connectionString))
+        {
+            optionsBuilder.UseSqlServer(connectionString);
+        }
 
     }
 
