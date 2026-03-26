@@ -31,5 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     activeInput.value += char;
+
+    activeInput.dispatchEvent(new Event("input", { bubbles: true }));
   }
 });
