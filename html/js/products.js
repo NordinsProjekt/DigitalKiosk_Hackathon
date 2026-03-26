@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function loadProductsByName(name) {
-    const productsList = document.getElementById('products-list');
+    const productsList = document.getElementsByClassName("product-grid")[0];
     const errorMessage = document.getElementById('error-message');
 
     productsList.innerHTML = '<div class="loading">Loading products...</div>';
