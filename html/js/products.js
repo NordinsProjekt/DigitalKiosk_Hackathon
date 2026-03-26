@@ -95,7 +95,7 @@ function displayProducts(products) {
               <h2 class="product-name">${escapeHtml(product.name)}</h2>
               <p class="product-price">${product.price.toFixed(2)} kr</p>
               <section class="product-button">
-                <button data-product-id="${product.id}" class="product-button show-button">Visa produkt</button>
+                <button data-product-id="${product.id}" class="show-button">Visa produkt</button>
                 <button class="add-button">Lägg till</button>
               </section>
             </div>
@@ -105,7 +105,7 @@ function displayProducts(products) {
 
   productsList.innerHTML = html;
 
-  const detailsButtons = document.querySelectorAll(".product-button");
+  const detailsButtons = document.querySelectorAll(".show-button");
 
   detailsButtons.forEach((button) => {
     button.addEventListener("pointerdown", (e) => {
@@ -113,14 +113,16 @@ function displayProducts(products) {
       showProductDetails(productId);
     });
   });
-  function showProductDetails(productId) {
-    const productDetails = document.getElementsByClassName("productview")[0];
+}
 
-    apiService
-      .getProductById(productId)
-      .then((product) => {
-        productDetails.innerHTML = `
-            <article class="productview">
+function showProductDetails(productId) {
+  const productDetails = document.getElementsByClassName("productview")[0];
+
+  console.log("Product details loaded:", productId);
+  apiService
+    .getProductById(productId)
+    .then((product) => {
+      productDetails.innerHTML = `
                   <div id="product-overlay" class="product-detail-overlay">
                     <div class="detail-container">
                       <button class="back-button" onclick="hideProductView()">← Tillbaka</button>
@@ -134,21 +136,19 @@ function displayProducts(products) {
                       </div>
                     </div>
                 </div>
-            </article>
         `;
-      })
-      .catch((error) => {
-        productDetails.innerHTML = `
+    })
+    .catch((error) => {
+      productDetails.innerHTML = `
         <div class="error-message">Det finns ingen tillgänglig information för denna produkt.</div>
         `;
-        if (error && error.stack) {
-          console.error("Full error details (stack):", error.stack);
-        } else {
-          console.error("Error loading products:", error);
-        }
-      });
-    productDetails.style.display = "block";
-  }
+      if (error && error.stack) {
+        console.error("Full error details (stack):", error.stack);
+      } else {
+        console.error("Error loading products:", error);
+      }
+    });
+  productDetails.style.display = "block";
 }
 
 function hideProductView() {

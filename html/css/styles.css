@@ -214,8 +214,10 @@ section {
 }
 
 /* product detail view */
-.product-detail-overlay {
+.productview {
   display: none;
+}
+.product-detail-overlay {
   position: fixed;
   top: 0;
   left: 0;
