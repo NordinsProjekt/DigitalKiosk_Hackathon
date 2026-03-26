@@ -14,6 +14,10 @@ body {
   background-color: #f8f9fa;
 }
 
+section {
+  max-width: 830px;
+}
+
 .splitMainScreen {
   display: grid;
   grid-template-columns: 250px 830px;
@@ -209,9 +213,8 @@ body {
   margin-bottom: 1rem;
 }
 
-
 /* product detail view */
-.product-detail-overlay{
+.product-detail-overlay {
   display: none;
   position: fixed;
   top: 0;
@@ -239,7 +242,7 @@ body {
   margin-bottom: 20px;
 }
 
-.detail-content img{
+.detail-content img {
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -256,16 +259,13 @@ body {
   line-height: 1.8;
   color: #000;
 }
-  
+
 .detail-content-price-tag {
   font-size: 2rem;
   font-weight: bold;
   color: #27ae60;
   margin: 20px 0;
 }
-
-
-
 
 /* Footer */
 .footer {
