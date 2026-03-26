@@ -32,8 +32,6 @@ namespace Factories
                 productDetails.Price
             );
 
-            product.DiscountedProducts = new List<DiscountedProduct>();
-
             return product;
         }
     }
