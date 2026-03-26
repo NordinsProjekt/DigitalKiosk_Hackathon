@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
-namespace DigitalKioskHackathon.Controllers;
+namespace Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

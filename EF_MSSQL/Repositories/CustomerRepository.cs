@@ -46,5 +46,4 @@ public class CustomerRepository(KioskDbContext context) : ICustomerRepository
         _context.Customers.Remove(customer);
         await _context.SaveChangesAsync();
     }
-    
 }

@@ -18,6 +18,7 @@
   <Folder Name="/6. Tests/">
     <Project Path="Application.ServicesTests/Application.ServicesTests.csproj" />
     <Project Path="Domain.FactoriesTests/Domain.FactoriesTests.csproj" />
+    <Project Path="Infrastructure.Test/Infrastructure.Repositories.Test.csproj" Id="7ea271ed-cb37-4ecb-85df-5ec9553eb9e5" />
   </Folder>
   <Folder Name="/8. Dokumentation/">
     <File Path="DatabaseSchema.xsd" />
