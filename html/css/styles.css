@@ -6,14 +6,27 @@
 }
 
 body {
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
   max-width: 1080px;
   max-height: 1920px;
+>>>>>>> HTML/CSS
+=======
+>>>>>>> Stashed changes
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #f8f9fa;
 }
 
+<<<<<<< HEAD
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+<<<<<<< Updated upstream
+=======
 .splitMainScreen {
   display: grid;
   grid-template-columns: 250px 830px;
@@ -55,6 +68,9 @@ body {
 
 .wrapper {
   max-width: 1080px;
+>>>>>>> HTML/CSS
+=======
+>>>>>>> Stashed changes
 }
 
 /* Navigation */
@@ -63,8 +79,23 @@ body {
   color: white;
   padding: 1rem 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+}
+.sökfält {
+  width: 25%;
+  height: 30px;
+  border-radius: 25px;
+=======
+>>>>>>> HTML/CSS
+}
+=======
 }
 
+.sökruta {
+  border-radius: 10%;
+}
+>>>>>>> Stashed changes
 .navbar .container {
   display: flex;
   justify-content: space-between;
@@ -72,7 +103,13 @@ body {
 }
 
 .nav-brand h1 {
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
   padding: 0rem 1rem;
+>>>>>>> HTML/CSS
+=======
+>>>>>>> Stashed changes
   font-size: 1.5rem;
 }
 
@@ -85,7 +122,13 @@ body {
 .nav-menu a {
   color: white;
   text-decoration: none;
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
   padding: 0rem 1rem;
+>>>>>>> HTML/CSS
+=======
+>>>>>>> Stashed changes
   font-weight: 500;
   transition: color 0.3s;
   position: relative;
@@ -122,22 +165,40 @@ body {
 /* Product Grid */
 .product-grid {
   display: grid;
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+=======
   grid-template-columns: repeat(2, 300px);
   gap: 1rem;
   justify-content: right;
   margin-bottom: 1rem;
+>>>>>>> HTML/CSS
+=======
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+>>>>>>> Stashed changes
 }
 
 .product-card {
   background: white;
   border-radius: 10px;
   overflow: hidden;
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
   width: 300px;
   height: 350px;
   display: flex;
   justify-content: center;
   text-align: center;
   flex-direction: column;
+>>>>>>> HTML/CSS
+=======
+>>>>>>> Stashed changes
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
