@@ -50,9 +50,10 @@ body {
   background-color: #710b0b;
 }
 
-/* .StoreMap {
-  background-color: #710b0b;
-} */
+.StoreMap {
+ position: sticky;
+ top: 1120px;
+}
 
 /* .wrapper {
   max-width: 1080px;
