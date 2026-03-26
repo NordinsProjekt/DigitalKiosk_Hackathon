@@ -1,5 +1,6 @@
 ﻿using BackOfficeConsole.Validation;
 using Entities;
+using Factories.Models;
 using Services.Interfaces;
 
 namespace BackOfficeConsole;
@@ -66,9 +67,17 @@ public class ProductHandler
                 Console.WriteLine("Ogiltigt val.");
                 return;
         }
-        await _productService.UpdateAsync(product);
-        Console.WriteLine("✓ Produkten har uppdaterats!");
 
+        var productDetails = new ProductDetails(
+            name: product.Name,
+            description: product.Description,
+            shelfLocation: product.ShelfLocation,
+            section: product.Section,
+            price: product.Price
+        );
+
+        await _productService.UpdateAsync(product.Id, productDetails);
+        Console.WriteLine("✓ Produkten har uppdaterats!");
     }
 
     private async Task<Product?> SelectProductAsync()
@@ -104,17 +113,15 @@ public class ProductHandler
         if (!ProductValidator.TryGetSection(out var section)) return;
         if (!ProductValidator.TryGetShelfLocation(out var shelfLocation)) return;
 
-        var product = new Product
-        {
-            Id = Guid.NewGuid(),
-            Name = name,
-            Description = description,
-            Price = price,
-            ShelfLocation = shelfLocation,
-            Section = section
-        };
+        var productDetails = new ProductDetails(
+            name: name,
+            description: description,
+            shelfLocation: shelfLocation,
+            section: section,
+            price: price
+        );
 
-        await _productService.AddAsync(product);
+        await _productService.AddAsync(productDetails);
         Console.WriteLine("Produkt tillagd!");
     }
 

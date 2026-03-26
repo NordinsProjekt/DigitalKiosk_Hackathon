@@ -1,5 +1,7 @@
 using Entities;
 using Entities.Enums;
+using Factories;
+using Factories.Models;
 
 namespace EF_MSSQL.Seeders;
 
@@ -68,16 +70,18 @@ public static class ProductSeeder
         while (products.Count < count)
         {
             var name = BuildName();
-            if (!usedNames.Add(name)) continue; 
-            products.Add(new Product
-            {
-                Id              = Guid.NewGuid(),
-                Name            = name,
-                Description     = BuildDescription(),
-                ShelfLocation   = ShelfLocations[Rng.Next(ShelfLocations.Length)],
-                Section         = Sections[Rng.Next(Sections.Length)],
-                Price           = BuildPrice(),
-            });
+            if (!usedNames.Add(name)) continue;
+            
+            var details = new ProductDetails(
+                name: name,
+                description: BuildDescription(),
+                shelfLocation: ShelfLocations[Rng.Next(ShelfLocations.Length)],
+                section: Sections[Rng.Next(Sections.Length)],
+                price: BuildPrice()
+            );
+
+            var product = ProductFactory.Create(details);
+            products.Add(product);
         }
 
         return products;
