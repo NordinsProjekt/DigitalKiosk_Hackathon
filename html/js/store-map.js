@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let activeSection = "";
 
-    const canvas = document.getElementById("store-map");
-    const ctx = canvas.getContext("2d");
     const storeSections = {
         0: { id: "FruitsAndVegetables", displayName: "Fruits & Vegetables", mapArea: { x: 0.000, y: 0.000, w: 0.12, h: 0.32 } },
         1: { id: "Dairy", displayName: "Dairy & Eggs", mapArea: { x: 0.125, y: 0.000, w: 0.12, h: 0.32 } },
@@ -33,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const sectionButtons = document.querySelectorAll(".ListedItems");
 
     sectionButtons.forEach(button => {
-        button.addEventListener('click', ()=> {
+        button.addEventListener('click', () => {
             const sectionId = button.getAttribute("data-section");
             updateActiveSection(sectionId);
         })
@@ -42,19 +40,22 @@ document.addEventListener("DOMContentLoaded", function () {
     drawMap();
 
     function drawMap() {
+        const canvas = document.getElementById("store-map");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, ctx.canvasWidth, ctx.canvasHeight);
         Object.values(storeSections).forEach(section => {
             drawSection(ctx, section);
         });
     }
 
-    function drawSection(ctx, section, index) {
+    function drawSection(ctx, section) {
         const canvasWidth = ctx.canvas.width;
         const canvasHeight = ctx.canvas.height;
         const w = canvasWidth * section.mapArea.w;
-        const h = canvasWidth * section.mapArea.h;
+        const h = canvasHeight * section.mapArea.h;
         const x = canvasWidth * section.mapArea.x;
-        const y = canvasWidth * section.mapArea.y;
-        if (section.id == activeSection) {
+        const y = canvasHeight * section.mapArea.y;
+        if (section.id === activeSection) {
             ctx.fillStyle = "green";
         } else {
             ctx.fillStyle = "gray";
