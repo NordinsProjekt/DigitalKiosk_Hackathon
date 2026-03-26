@@ -63,6 +63,8 @@ body {
   color: white;
   padding: 1rem 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
 }
 
 .navbar .container {
@@ -102,6 +104,8 @@ body {
   color: white;
   padding: 100px 20px;
   text-align: center;
+  position: sticky;
+  top: 70px;
 }
 
 .hero-content h2 {
@@ -121,11 +125,11 @@ body {
 }
 /* Product Grid */
 .product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 300px);
-  gap: 1rem;
-  justify-content: right;
-  margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
+    row-gap: 4rem;
+    justify-content: space-evenly;
+    margin: 1rem;
 }
 
 .product-card {
