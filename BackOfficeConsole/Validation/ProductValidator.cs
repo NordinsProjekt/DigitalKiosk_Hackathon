@@ -8,15 +8,15 @@ public class ProductValidator
     {
         while (true)
         {
+            Console.Write("Namn: ");
+            name = Console.ReadLine()!;
 
-        Console.Write("Namn: ");
-        name = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            Console.WriteLine("Fel! Namn får inte vara tomt");
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("Fel! Namn får inte vara tomt");
+            }
+            return true;
         }
-        return true;
     }
     public static bool TryGetDescription(out string description)
     {
@@ -39,21 +39,21 @@ public class ProductValidator
 
     public static bool TryGetPrice(out decimal price)
     {
-        
+
         while (true)
         {
             Console.Write("Pris: ");
             if (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
             {
-            Console.WriteLine("Fel: Ange ett giltigt pris (t.ex. 29.90).");
+                Console.WriteLine("Fel: Ange ett giltigt pris (t.ex. 29.90).");
             }
             else
             {
-            return true;
+                return true;
             }
         }
-        
-        
+
+
     }
 
     public static bool TryGetSection(out Section section)
@@ -63,9 +63,9 @@ public class ProductValidator
         {
             Console.WriteLine($"  {(int)s}. {s}");
         }
-        
-            while (true)
-            {
+
+        while (true)
+        {
 
             Console.Write("Välj: ");
             if (!int.TryParse(Console.ReadLine(), out int val) || !Enum.IsDefined(typeof(Section), val))
@@ -77,9 +77,9 @@ public class ProductValidator
                 section = (Section)val;
                 return true;
             }
-            }
-            
-        
+        }
+
+
     }
 
     public static bool TryGetShelfLocation(out ShelfLocation shelfLocation)
@@ -89,7 +89,7 @@ public class ProductValidator
         {
             Console.WriteLine($"  {(int)s}. {s}");
         }
-        
+
         while (true)
         {
             Console.Write("Välj: ");
