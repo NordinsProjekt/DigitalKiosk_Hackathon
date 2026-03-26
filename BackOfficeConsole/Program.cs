@@ -60,32 +60,10 @@ internal class Program
         var productHandler = new ProductHandler(productService);
         var customerHandler = new CustomerHandler(customerService);
 
-        var options = new string[]
-     {
-    "Lista produkter",
-    "Lägg till produkt",
-    "Redigera produkt",
-    "Lista kunder",
-    "Lägg till kund",
-    "Redigera kund",
-    "Avsluta"
-     };
+        var mainMenu = new MainMenu(productHandler, customerHandler);
+        await mainMenu.Run();
 
-        var menu = new NavigationMenu(options, async (selectedIndex) =>
-        {
-            switch (selectedIndex)
-            {
-                case 0: await productHandler.ListProducts(); break;
-                case 1: await productHandler.AddProduct(); break;
-                case 2: await productHandler.EditProductAsync(); break;
-                case 3: await customerHandler.ListCustomer(); break;
-                case 4: await customerHandler.AddCustomer(); break;
-                case 5: await customerHandler.EditCustomerAsync(); break;
-                case 6: Environment.Exit(0); break;
-            }
-        });
 
-        await menu.Run();
     }
 }
 
