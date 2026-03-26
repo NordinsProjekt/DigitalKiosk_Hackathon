@@ -12,7 +12,7 @@ public class KioskDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=HackathonDB;Trusted_Connection=True;");
+        optionsBuilder.UseSqlServer("Data Source=localhost,1433;Database=NewKiosk;User ID=SA;Password=admin123!;Pooling=False;Trust Server Certificate=True;Authentication=SqlPassword");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

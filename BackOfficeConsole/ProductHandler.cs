@@ -129,6 +129,6 @@ public class ProductHandler
     {
         var products = await _productService.GetAllAsync();
         foreach (var p in products)
-            Console.WriteLine($"[{p.Id}] {p.Name} - {p.Price:C}");
+            Console.WriteLine($"{p.Name} - {p.Price:C}");
     }
 }
