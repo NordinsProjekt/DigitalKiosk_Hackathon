@@ -90,11 +90,11 @@ function displayProducts(products) {
             <img src="https://picsum.photos/300/150" alt="Produktbild" />
             <div class="product-info">
               <h2 class="product-name">${escapeHtml(product.name)}</h2>
-              <p class="product-description">
-                ${escapeHtml(product.description || "No description available")}
-              </p>
               <p class="product-price">${product.price.toFixed(2)} kr</p>
-              <button data-product-id="${product.id}" class="product-button">Visa produkt</button>
+              <section class="product-button">
+                <button data-product-id="${product.id}" class="product-button show-button">Visa produkt</button>
+                <button class="add-button">Lägg till</button>
+              </section>
             </div>
         </article>
         `;
