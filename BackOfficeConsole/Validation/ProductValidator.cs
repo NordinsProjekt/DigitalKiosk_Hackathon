@@ -11,11 +11,17 @@ public class ProductValidator
             Console.Write("Namn: ");
             name = Console.ReadLine()!;
 
+            Console.Write("Namn: ");
+            name = Console.ReadLine()!;
+
             if (string.IsNullOrWhiteSpace(name))
             {
                 Console.WriteLine("Fel! Namn får inte vara tomt");
             }
-            return true;
+            else
+            {
+                return true;
+            }
         }
     }
     public static bool TryGetDescription(out string description)
@@ -34,7 +40,7 @@ public class ProductValidator
                 return true;
             }
         }
-        return true;
+        
     }
 
     public static bool TryGetPrice(out decimal price)
