@@ -136,7 +136,16 @@ namespace Application.ServicesTests
             await _service.AddAsync(productDetails);
 
             // Assert
-            await _repository.Received(1).AddAsync(Arg.Any<Product>());
+            await _repository.Received(1).AddAsync(
+                Arg.Is<Product>(p =>
+                    p.Id != Guid.Empty &&
+                    p.Name == productDetails.Name &&
+                    p.Description == productDetails.Description &&
+                    p.ShelfLocation == productDetails.ShelfLocation &&
+                    p.Section == productDetails.Section &&
+                    p.Price == productDetails.Price
+                )
+            );
         }
 
         [Fact]
