@@ -39,11 +39,14 @@ public class ProductRepository(KioskDbContext context) : IProductRepository
 
     public async Task<List<Product>> FilterAsync(string query)
     {
-        var normalizedQuery = query.ToLower();
 
         var filter = await context.Products
+
             .AsNoTracking()
-            .Where(x => x.Name.ToLower().Contains(normalizedQuery)).ToListAsync();
+
+            .Where(x => x.Name.ToLower().Contains(query))
+            
+            .ToListAsync();
 
         return filter;
     }
