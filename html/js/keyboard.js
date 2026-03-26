@@ -28,8 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const char = event.currentTarget.dataset.char;
     if (char === "Backspace") {
       activeInput.value = activeInput.value.slice(0, -1);
+      activeInput.dispatchEvent(new Event("input", { bubbles: true }));
       return;
     }
     activeInput.value += char;
+
+    activeInput.dispatchEvent(new Event("input", { bubbles: true }));
   }
 });
