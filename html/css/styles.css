@@ -121,11 +121,11 @@ body {
 }
 /* Product Grid */
 .product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 300px);
-  gap: 1rem;
-  justify-content: right;
-  margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
+    row-gap: 4rem;
+    justify-content: space-evenly;
+    margin: 1rem;
 }
 
 .product-card {
