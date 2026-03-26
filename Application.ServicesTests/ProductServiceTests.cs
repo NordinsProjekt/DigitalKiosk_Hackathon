@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿using Entities;
+using Entities.Enums;
+using NSubstitute;
 using Services;
 using Services.Interfaces;
-using Entities;
-using NSubstitute;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Application.ServicesTests
 {
@@ -24,11 +24,29 @@ namespace Application.ServicesTests
         public async Task ProductService_GetAllAsync_ShouldReturnAllProducts()
         {
             // Arrange
-            var products = new List<Product>
+            var product1 = new Product(
+                name: "Product 1",
+                description: "Description 1",
+                shelfLocation: ShelfLocation.A1,
+                section: Section.Baby,
+                price: 10m
+            )
             {
-                new Product(),
-                new Product()
+                Id = Guid.NewGuid()
             };
+
+            var product2 = new Product(
+                name: "Product 2",
+                description: "Description 2",
+                shelfLocation: ShelfLocation.B2,
+                section: Section.Beverages,
+                price: 20m
+            )
+            {
+                Id = Guid.NewGuid()
+            };
+
+            var products = new List<Product> { product1, product2 };
             _repository.GetAllAsync().Returns(products);
 
             // Act
@@ -36,6 +54,8 @@ namespace Application.ServicesTests
 
             // Assert
             Assert.Equal(2, result.Count);
+            Assert.Contains(result, p => p.Id == product1.Id);
+            Assert.Contains(result, p => p.Id == product2.Id);
         }
 
         [Fact]
@@ -56,15 +76,34 @@ namespace Application.ServicesTests
         {
             // Arrange
             var existingId = Guid.NewGuid();
-            var product = new Product { Id = existingId };
+
+            // Existing product in repository (realistic instance using constructor)
+            var product = new Product(
+                name: "Existing product",
+                description: "Some description",
+                shelfLocation: ShelfLocation.A1,
+                section: Section.Baby,
+                price: 10m
+            )
+            {
+                Id = existingId // preserve the original Id
+            };
+
             _repository.GetByIdAsync(existingId).Returns(product);
 
             // Act
             var result = await _service.GetByIdAsync(existingId);
 
             // Assert
+            Assert.NotNull(result);
             Assert.Equal(existingId, result.Id);
+            Assert.Equal("Existing product", result.Name);
+            Assert.Equal("Some description", result.Description);
+            Assert.Equal(ShelfLocation.A1, result.ShelfLocation);
+            Assert.Equal(Section.Baby, result.Section);
+            Assert.Equal(10m, result.Price);
         }
+
 
         [Fact]
         public async Task ProductService_GetByIdAsync_ProductDoesNotExist_ShouldReturnNull()
@@ -84,28 +123,63 @@ namespace Application.ServicesTests
         public async Task ProductService_AddAsync_ShouldCallRepositoryOnce()
         {
             // Arrange
-            var product = new Product();
-            _repository.AddAsync(product).Returns(Task.CompletedTask);
+            var productDetails = new ProductDetails(
+                name: "Product name",
+                description: "Product description",
+                shelfLocation: ShelfLocation.A1,
+                section: Section.Baby,
+                price: 10m
+            );
 
             // Act
-            await _service.AddAsync(product);
+            await _service.AddAsync(productDetails);
 
             // Assert
-            await _repository.Received(1).AddAsync(product);
+            await _repository.Received(1).AddAsync(Arg.Any<Product>());
         }
 
         [Fact]
         public async Task ProductService_UpdateAsync_ShouldCallRepositoryOnce()
         {
             // Arrange
-            var product = new Product();
-            _repository.UpdateAsync(product).Returns(Task.CompletedTask);
+            var id = Guid.NewGuid();
+
+            var existing = new Product(
+                name: "Product name",
+                description: "Product description",
+                shelfLocation: ShelfLocation.A1,
+                section: Section.Baby,
+                price: 10m
+            )
+            {
+                Id = id
+            };
+
+            _repository.GetByIdAsync(id).Returns(existing);
+
+            // New details for update
+            var details = new ProductDetails(
+                name: "Product name",
+                description: "Product description",
+                shelfLocation: ShelfLocation.A1,
+                section: Section.Baby,
+                price: 15m
+            );
 
             // Act
-            await _service.UpdateAsync(product);
+            await _service.UpdateAsync(id, details);
 
             // Assert
-            await _repository.Received(1).UpdateAsync(product);
+            await _repository.Received(1).UpdateAsync(
+                Arg.Is<Product>(p =>
+                    p.Id == id &&
+                    p.Name == details.Name &&
+                    p.Description == details.Description &&
+                    p.ShelfLocation == details.ShelfLocation &&
+                    p.Section == details.Section &&
+                    p.Price == details.Price
+                )
+            );
         }
 
         [Fact]
