@@ -36,4 +36,8 @@ public class CustomerService(ICustomerRepository repo) : ICustomerService
     {
         await repo.DeleteAsync(id);
     }
+    public async Task<Customer?> GetCustomerAsync(string personalIdentityNumber)
+    { 
+    return await repo.GetByPersonalIdentityNumberAsync(personalIdentityNumber);
+    }
 }
