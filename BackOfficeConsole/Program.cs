@@ -33,14 +33,14 @@ internal class Program
             tracesSampleRate = isDevelopment ? 1.0 : 0.2;
         }
 
-        using var _ = SentrySdk.Init(o =>
-        {
-            o.Dsn = configuration["Sentry:Dsn"];
-            // Enable Sentry SDK debug logging only in Development
-            o.Debug = isDevelopment;
-            o.TracesSampleRate = tracesSampleRate;
-            o.EnableLogs = true;
-        });
+        //using var _ = SentrySdk.Init(o =>
+        //{
+        //    o.Dsn = configuration["Sentry:Dsn"];
+        //    // Enable Sentry SDK debug logging only in Development
+        //    o.Debug = isDevelopment;
+        //    o.TracesSampleRate = tracesSampleRate;
+        //    o.EnableLogs = true;
+        //});
 
 
         var services = new ServiceCollection();
