@@ -4,6 +4,7 @@ using System.Text;
 
 using Entities.Enums;
 using Factories;
+using Factories.Models;
 
 namespace Domain.FactoriesTests
 {

@@ -1,6 +1,7 @@
 using Entities;
 using Entities.Enums;
 using Factories;
+using Factories.Models;
 
 namespace EF_MSSQL.Seeders;
 

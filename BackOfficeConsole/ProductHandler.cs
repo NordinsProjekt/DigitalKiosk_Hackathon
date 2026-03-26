@@ -1,5 +1,6 @@
 ﻿using BackOfficeConsole.Validation;
 using Entities;
+using Factories.Models;
 using Services.Interfaces;
 
 namespace BackOfficeConsole;

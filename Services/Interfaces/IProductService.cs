@@ -1,4 +1,5 @@
 using Entities;
+using Factories.Models;
 
 namespace Services.Interfaces;
 
