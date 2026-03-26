@@ -119,16 +119,32 @@ body {
   padding-left: 3.5rem;
   height: 30px;
   border-radius: 15px;
+  margin-bottom: 1rem;
 }
-.keyboard-container {
+.keyboard-container button {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #ecf0f1;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
 }
+.keyboard-spacce-row button {
+  width: 300px;
+}
+
 /* Product Grid */
 .product-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 300px);
-    row-gap: 4rem;
-    justify-content: space-evenly;
-    margin: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  row-gap: 4rem;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
 }
 
 .product-card {
