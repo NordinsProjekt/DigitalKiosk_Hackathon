@@ -3,30 +3,30 @@ using Services.Interfaces;
 
 namespace Services;
 
-public class ProductService : IProductService
+public class ProductService(IProductRepository productRepository) : IProductService
 {
-    public Task<List<Product>> GetAllAsync()
+    public async Task<List<Product>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await productRepository.GetAllAsync();
     }
 
-    public Task<Product?> GetByIdAsync(Guid id)
+    public async Task<Product?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await productRepository.GetByIdAsync(id);
     }
 
-    public Task AddAsync(Product product)
+    public async Task AddAsync(Product product)
     {
-        throw new NotImplementedException();
+        await productRepository.AddAsync(product);
     }
 
-    public Task UpdateAsync(Product product)
+    public async Task UpdateAsync(Product product)
     {
-        throw new NotImplementedException();
+        await productRepository.UpdateAsync(product);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        await productRepository.DeleteAsync(id);
     }
 }
