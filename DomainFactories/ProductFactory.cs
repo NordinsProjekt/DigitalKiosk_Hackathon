@@ -13,8 +13,14 @@ namespace Factories
             if (string.IsNullOrWhiteSpace(productDetails.Name))
                 throw new ArgumentException("Product name cannot be empty.", nameof(productDetails.Name));
 
+            if (productDetails.Name.Length > 256)
+                throw new ArgumentException("Product name cannot exceed 256 characters.", nameof(productDetails.Name));
+
             if (string.IsNullOrWhiteSpace(productDetails.Description))
                 throw new ArgumentException("Product description cannot be empty.", nameof(productDetails.Description));
+
+            if (productDetails.Description.Length > 1000)
+                throw new ArgumentException("Product description cannot exceed 1000 characters.", nameof(productDetails.Description));
 
             if (!Enum.IsDefined(typeof(ShelfLocation), productDetails.ShelfLocation))
                 throw new ArgumentException("Invalid ShelfLocation value.", nameof(productDetails.ShelfLocation));
