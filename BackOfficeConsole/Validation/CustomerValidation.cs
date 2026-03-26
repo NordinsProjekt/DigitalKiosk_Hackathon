@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BackOfficeConsole.Validation;
+﻿namespace BackOfficeConsole.Validation;
 
 public class CustomerValidation
 {

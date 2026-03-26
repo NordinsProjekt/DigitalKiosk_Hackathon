@@ -42,7 +42,7 @@ internal class Program
             o.EnableLogs = true;
         });
 
-        
+
         var services = new ServiceCollection();
 
         services.AddDbContext<KioskDbContext>();
@@ -60,14 +60,30 @@ internal class Program
         var productHandler = new ProductHandler(productService);
         var customerHandler = new CustomerHandler(customerService);
 
-        var menu = new MenuData(new List<MenuOption>{
-            new MenuOption("Lista produkter", async () => await productHandler.ListProducts()),
-            new MenuOption("Lägg till produkt", async () => await productHandler.AddProduct()),
-            new MenuOption("Redigera produkt", async () => await productHandler.EditProductAsync()),
-            new MenuOption("Lista Kunder", async () => await customerHandler.ListCustomer()),
-            new MenuOption("Lägg till kund", async () => await customerHandler.AddCustomer()),
-            new MenuOption("Avsluta", () => { Environment.Exit(0); return Task.CompletedTask;})
-             });
+        var options = new string[]
+     {
+    "Lista produkter",
+    "Lägg till produkt",
+    "Redigera produkt",
+    "Lista kunder",
+    "Lägg till kund",
+    "Redigera kund",
+    "Avsluta"
+     };
+
+        var menu = new NavigationMenu(options, async (selectedIndex) =>
+        {
+            switch (selectedIndex)
+            {
+                case 0: await productHandler.ListProducts(); break;
+                case 1: await productHandler.AddProduct(); break;
+                case 2: await productHandler.EditProductAsync(); break;
+                case 3: await customerHandler.ListCustomer(); break;
+                case 4: await customerHandler.AddCustomer(); break;
+                case 5: await customerHandler.EditCustomerAsync(); break;
+                case 6: Environment.Exit(0); break;
+            }
+        });
 
         await menu.Run();
     }

@@ -1,13 +1,11 @@
 ﻿using Entities;
 using Services.Interfaces;
-using System;
-using System.Collections.Generic;
 
 namespace Services;
 
 public class CustomerService(ICustomerRepository repo) : ICustomerService
 {
-    public async Task <List<Customer>> GetAllAsync()
+    public async Task<List<Customer>> GetAllAsync()
     {
         return await repo.GetAllAsync();
     }
