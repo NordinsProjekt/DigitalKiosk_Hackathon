@@ -1,6 +1,5 @@
 ﻿using BackOfficeConsole.Validation;
 using Entities;
-using Entities.Enums;
 using Services.Interfaces;
 
 namespace BackOfficeConsole;
@@ -53,40 +52,21 @@ public class ProductHandler
         switch (menuChoice)
         {
             case 1:
-                Console.Write($"Nuvarande beskrivning: {product.Description}\nNy beskrivning: ");
-                var desc = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(desc))
-                {
-                    Console.WriteLine("Beskrivning får inte vara tom.");
+                if (!ProductValidator.TryGetDescription(out var desc))
                     return;
-                }
                 product.Description = desc;
                 break;
 
             case 2:
-                Console.Write($"Nuvarande pris: {product.Price:C}\nNytt pris: ");
-                if (!decimal.TryParse(Console.ReadLine(), out decimal newPrice) || newPrice <= 0)
-                {
-                    Console.WriteLine("Ogiltigt pris. Måste vara ett tal som är större än 0.");
+                if (!ProductValidator.TryGetPrice(out var newPrice))
                     return;
-                }
                 product.Price = newPrice;
                 break;
 
             case 3:
-                Console.WriteLine("Välj ny hyllplats:");
-                var locations = Enum.GetValues<ShelfLocation>();
-                for (int i = 0; i < locations.Length; i++)
-                    Console.WriteLine($"{i + 1}. {locations[i]}");
-
-                Console.Write("Ange nummer: ");
-                if (!int.TryParse(Console.ReadLine(), out int locChoice)
-                    || locChoice < 1 || locChoice > locations.Length)
-                {
-                    Console.WriteLine("Ogiltigt val.");
+                if (!ProductValidator.TryGetShelfLocation(out var newLocation))
                     return;
-                }
-                product.ShelfLocation = locations[locChoice - 1];
+                product.ShelfLocation = newLocation;
                 break;
 
             case 4:

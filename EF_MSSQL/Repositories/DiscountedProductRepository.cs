@@ -11,9 +11,9 @@ public class DiscountedProductRepository(KioskDbContext context) : IDiscountedPr
         return await context.DiscountedProducts.AsNoTracking().ToListAsync();
     }
 
-    public async Task<DiscountedProduct?> GetByIdAsync(Guid discontinuedProductId, Guid customerId)
+    public async Task<DiscountedProduct?> GetByIdAsync(Guid discontinuedProductId)
     {
-        return await context.DiscountedProducts.FindAsync(discontinuedProductId, customerId);
+        return await context.DiscountedProducts.FindAsync(discontinuedProductId);
     }
 
     public async Task AddAsync(DiscountedProduct discountedProduct)
@@ -28,9 +28,9 @@ public class DiscountedProductRepository(KioskDbContext context) : IDiscountedPr
         await context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Guid discontinuedProductId, Guid customerId)
+    public async Task DeleteAsync(Guid discontinuedProductId)
     {
-        var discountedProduct = await context.DiscountedProducts.FindAsync(discontinuedProductId, customerId);
+        var discountedProduct = await context.DiscountedProducts.FindAsync(discontinuedProductId);
         if (discountedProduct == null) return;
         
         context.DiscountedProducts.Remove(discountedProduct);
