@@ -27,4 +27,22 @@ public class CustomersController(ICustomerService customerService) : ControllerB
 
         return Ok(customer);
     }
+   
+    [HttpGet("personnummer/{personnummer}")]
+    public async Task<IActionResult> GetByPersonnummer(string personnummer)
+    {
+        if (string.IsNullOrWhiteSpace(personnummer))
+        {
+            return BadRequest("Personnummer is required.");
+        }
+
+        var customer = await customerService.GetByPersonalIdentityNumberAsync(personnummer);
+
+        if (customer is null)
+        {
+            return NotFound("No customer was found with the provided personnummer.");
+        }
+
+        return Ok(customer);
+    }
 }
