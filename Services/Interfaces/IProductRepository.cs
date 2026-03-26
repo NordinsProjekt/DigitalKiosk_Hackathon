@@ -11,5 +11,4 @@ public interface IProductRepository
     Task DeleteAsync(Guid id);
 
     Task<List<Product>> FilteringProducts(string product);
-    
 }

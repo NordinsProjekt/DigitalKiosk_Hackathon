@@ -46,10 +46,4 @@ public class CustomerRepository(KioskDbContext context) : ICustomerRepository
         _context.Customers.Remove(customer);
         await _context.SaveChangesAsync();
     }
-
-    public async Task<List<Product>> FilteringProducts(string product)
-    {
-        var filter = _context.Products.Where(x => x.Name.ToLower().Contains(product)).ToList();
-        return filter;
-    }
 }
