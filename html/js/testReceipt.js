@@ -1,5 +1,5 @@
- //export function ReceiptPrintReady(){  <-- byt till denna efter testning
-export function getTestReceiptPrintReady() {
+ export function ReceiptPrintReady(){ 
+/*export function getTestReceiptPrintReady() {
   
     return `
         <div style="font-family: monospace; width: 250px;">
@@ -22,5 +22,5 @@ export function getTestReceiptPrintReady() {
 
             <p style="text-align:center;">Tack för ditt köp!</p>
         </div>
-    `;
+    `;*/
 }
