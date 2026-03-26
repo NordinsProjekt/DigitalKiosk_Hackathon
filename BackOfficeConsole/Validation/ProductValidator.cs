@@ -1,7 +1,4 @@
 ﻿using Entities.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BackOfficeConsole.Validation;
 
@@ -19,11 +16,7 @@ public class ProductValidator
         {
             Console.WriteLine("Fel! Namn får inte vara tomt");
         }
-        else
-            {
-            return true;
-            }
-        }
+        return true;
     }
     public static bool TryGetDescription(out string description)
     {
@@ -41,6 +34,7 @@ public class ProductValidator
                 return true;
             }
         }
+        return true;
     }
 
     public static bool TryGetPrice(out decimal price)
