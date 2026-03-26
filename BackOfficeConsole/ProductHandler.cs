@@ -16,26 +16,14 @@ public class ProductHandler
 
     public async Task EditProductAsync()
     {
-        var products = await _productService.GetAllAsync();
-        if (!products.Any())
-        {
-            Console.WriteLine("Inga produkter finns i systemet.");
-            return;
-        }
-        Console.WriteLine("\n=== Välj produkt att redigera ===");
-        for (int i = 0; i < products.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {products[i].Name} | {products[i].Price:C} | {products[i].Section} {products[i].ShelfLocation}");
-        }
+        var product = await SelectProductAsync();
+        if (product == null) return;
+        await HandleMenuAsync(product);
+    }
 
-        Console.WriteLine("\n Ange nummer: ");
-        if (!int.TryParse(Console.ReadLine(), out var productChoice)
-            || productChoice < 1 || productChoice > products.Count)
-        {
-            Console.WriteLine("Ogitigt val!");
-            return;
-        }
-        var product = products[productChoice - 1];
+    private async Task HandleMenuAsync(Product product)
+    {
+
 
         Console.WriteLine($"\nRedigerar: {product.Name}");
         Console.WriteLine("1.Ändra beskrivning");
@@ -44,14 +32,15 @@ public class ProductHandler
         Console.WriteLine("4.Avbryt");
         Console.Write("\n Gör ett val: ");
 
+
         if (!int.TryParse(Console.ReadLine(), out int menuChoice))
         {
             Console.WriteLine("Ogiltigt val!");
             return;
         }
-
         switch (menuChoice)
         {
+
             case 1:
                 if (!ProductValidator.TryGetDescription(out var desc))
                     return;
@@ -91,6 +80,31 @@ public class ProductHandler
         Console.WriteLine("✓ Produkten har uppdaterats!");
     }
 
+    private async Task<Product?> SelectProductAsync()
+    {
+        var products = await _productService.GetAllAsync();
+        if (!products.Any())
+        {
+            Console.WriteLine("Inga produkter finns i systemet.");
+            return null;
+        }
+        Console.WriteLine("\n=== Välj produkt att redigera ===");
+        for (int i = 0; i < products.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {products[i].Name} | {products[i].Price:C} | {products[i].Section} {products[i].ShelfLocation}");
+        }
+
+        Console.WriteLine("\n Ange nummer: ");
+        if (!int.TryParse(Console.ReadLine(), out var productChoice)
+            || productChoice < 1 || productChoice > products.Count)
+        {
+            Console.WriteLine("Ogitigt val!");
+            return null;
+        }
+        var product = products[productChoice - 1];
+        return product;
+    }
+
     public async Task AddProduct()
     {
         if (!ProductValidator.TryGetName(out var name)) return;
@@ -113,8 +127,10 @@ public class ProductHandler
 
     public async Task ListProducts()
     {
+        Console.WriteLine("Laddar...");
         var products = await _productService.GetAllAsync();
-        foreach (var p in products)
+        Console.Clear();
+        foreach (var p in products.OrderBy(p => p.Price))
             Console.WriteLine($"{p.Name} - {p.Price:C}");
     }
 }

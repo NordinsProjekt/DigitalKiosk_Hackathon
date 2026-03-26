@@ -8,7 +8,7 @@
   </head>
 
   <body>
-    <div class="wrapper">
+    <!-- <div class="wrapper"> -->
       <nav class="navbar">
         <div class="container">
           <div class="nav-brand">
@@ -25,6 +25,12 @@
           <h2>Välkommen till Anderssons Livs</h2>
           <h3 class="hero-h3">Kvalitet och närhet sedan 1987</h3>
 
+          <input
+            class="sökfält"
+            type="text"
+            id="myInput"
+            placeholder="  Sök produkt"
+          />
           <div class="keyboard-container">
             <div class="keyboard-row-1234">
               <button data-char="1" class="key">1</button>
@@ -78,137 +84,156 @@
               <button data-char="M" class="key">M</button>
             </div>
 
-            <div class="keyboard-row">
+            <div class="keyboard-space-row">
               <button data-char=" " class="key">Space</button>
             </div>
           </div>
-
-          <input
-            class="sökfält"
-            type="text"
-            id="myInput"
-            placeholder="  Sök produkt"
-          />
         </div>
       </header>
 
       <main class="container">
-        <section class="product-grid">
-          <article class="product-card">
-            <img src="https://picsum.photos/300/150" alt="Produktbild" />
-            <div class="product-info">
-              <h2 class="product-name">Produktnamn</h2>
-              <p class="product-description">
-                Det här är en kort beskrivning av produkten.
-              </p>
-              <p class="product-price">199 kr</p>
-              <button class="product-button">Visa produkt</button>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <img src="https://picsum.photos/300/150" alt="Produktbild" />
-            <div class="product-info">
-              <h2 class="product-name">Produktnamn</h2>
-              <p class="product-description">
-                Det här är en kort beskrivning av produkten.
-              </p>
-              <p class="product-price">199 kr</p>
-              <button class="product-button">Visa produkt</button>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <img src="https://picsum.photos/300/150" alt="Produktbild" />
-            <div class="product-info">
-              <h2 class="product-name">Produktnamn</h2>
-              <p class="product-description">
-                Det här är en kort beskrivning av produkten.
-              </p>
-              <p class="product-price">199 kr</p>
-              <button class="product-button">Visa produkt</button>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <img src="https://picsum.photos/300/150" alt="Produktbild" />
-            <div class="product-info">
-              <h2 class="product-name">Produktnamn</h2>
-              <p class="product-description">
-                Det här är en kort beskrivning av produkten.
-              </p>
-              <p class="product-price">199 kr</p>
-              <button class="product-button">Visa produkt</button>
-            </div>
-          </article>
-        </section>
-
-        <section>
-          <div class="StoreMap">
-            <h3>Store Map</h3>
-            <canvas id="store-map" width="1000" height="800"></canvas>
-            <div id="error-message"></div>
-            <div id="products-list"></div>
-          </div>
-        </section>
-
         <aside class="container">
           <article class="splitMainScreen">
             <section class="listCategory">
               <div class="category-item">
-                <button class="ListedItems">Chark</button>
+                <button class="ListedItems">Fruits &amp; Vegetables</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Electronics</button>
+                <button class="ListedItems">Dairy &amp; Eggs</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Clothing</button>
+                <button class="ListedItems">Meat &amp; Poultry</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Books</button>
+                <button class="ListedItems">Fish &amp; Seafood</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Beauty</button>
+                <button class="ListedItems">Deli &amp; Cheese</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Health</button>
+                <button class="ListedItems">Bread &amp; Bakery</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Furniture</button>
+                <button class="ListedItems">Beverages</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Chark</button>
+                <button class="ListedItems">Frozen Foods</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Electronics</button>
+                <button class="ListedItems">General Grocery</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Clothing</button>
+                <button class="ListedItems">Pantry Staples</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Home &amp; Garden</button>
+                <button class="ListedItems">Candy &amp; Snacks</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Books</button>
+                <button class="ListedItems">Ice Cream</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Toys</button>
+                <button class="ListedItems">Baking Supplies</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Sports</button>
+                <button class="ListedItems">Spices &amp; Seasonings</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Beauty</button>
+                <button class="ListedItems">Canned Goods</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Health</button>
+                <button class="ListedItems">Pasta &amp; Rice</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Furniture</button>
+                <button class="ListedItems">Breakfast &amp; Cereal</button>
               </div>
               <div class="category-item">
-                <button class="ListedItems">Automotive</button>
+                <button class="ListedItems">Coffee &amp; Tea</button>
               </div>
+              <div class="category-item">
+                <button class="ListedItems">Household Items</button>
+              </div>
+              <div class="category-item">
+                <button class="ListedItems">Kitchenware</button>
+              </div>
+              <div class="category-item">
+                <button class="ListedItems">Health &amp; Beauty</button>
+              </div>
+              <div class="category-item">
+                <button class="ListedItems">Pet Care</button>
+              </div>
+              <div class="category-item">
+                <button class="ListedItems">Baby Care</button>
+              </div>
+              <div class="category-item">
+                <button class="ListedItems">Other</button>
+              </div>
+            </section>
+            <section>
+              <section class="product-grid">
+                <article class="product-card">
+                  <img src="https://picsum.photos/300/150" alt="Produktbild" />
+                  <div class="product-info">
+                    <h2 class="product-name">Produktnamn</h2>
+                    <p class="product-price">199 kr</p>
+                    <section class="product-button">
+                      <button class="show-button">Visa mer</button>
+                      <button class="add-button">Lägg till</button>
+                    </section>
+                  </div>
+                </article>
+
+                <article class="product-card">
+                  <img src="https://picsum.photos/300/150" alt="Produktbild" />
+                  <div class="product-info">
+                    <h2 class="product-name">Produktnamn</h2>
+                    <p class="product-price">199 kr</p>
+                    <section class="product-button">
+                      <button class="show-button">Visa mer</button>
+                      <button class="add-button">Lägg till</button>
+                    </section>
+                  </div>
+                </article>
+
+                <article class="product-card">
+                  <img src="https://picsum.photos/300/150" alt="Produktbild" />
+                  <div class="product-info">
+                    <h2 class="product-name">Produktnamn</h2>
+                    <p class="product-price">199 kr</p>
+                    <section class="product-button">
+                      <button class="show-button">Visa mer</button>
+                      <button class="add-button">Lägg till</button>
+                    </section>
+                  </div>
+                </article>
+
+                <article class="product-card">
+                  <img src="https://picsum.photos/300/150" alt="Produktbild" />
+                  <div class="product-info">
+                    <h2 class="product-name">Produktnamn</h2>
+                    <p class="product-price">199 kr</p>
+                    <section class="product-button">
+                      <button class="show-button">Visa mer</button>
+                      <button class="add-button">Lägg till</button>
+                    </section>
+                  </div>
+                </article>
+              </section>
+                
+              
+              
+              <article class="productview"></article>
+        
+              
+              
+
+
+              <section>
+                <div class="StoreMap">
+                  <canvas id="store-map" width="800" height="800"></canvas>
+                  <div id="error-message"></div>
+                  <div id="products-list"></div>
+                </div>
+              </section>
             </section>
           </article>
         </aside>
@@ -225,6 +250,6 @@
       <script src="js/api.js"></script>
       <script src="js/products.js"></script>
       <script src="js/keyboard.js"></script>
-    </div>
+    <!-- </div> -->
   </body>
 </html>

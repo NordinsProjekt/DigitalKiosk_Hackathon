@@ -42,7 +42,7 @@ internal class Program
             o.EnableLogs = true;
         });
 
-        
+
         var services = new ServiceCollection();
 
         services.AddDbContext<KioskDbContext>();
@@ -60,16 +60,10 @@ internal class Program
         var productHandler = new ProductHandler(productService);
         var customerHandler = new CustomerHandler(customerService);
 
-        var menu = new MenuData(new List<MenuOption>{
-            new MenuOption("Lista produkter", async () => await productHandler.ListProducts()),
-            new MenuOption("Lägg till produkt", async () => await productHandler.AddProduct()),
-            new MenuOption("Redigera produkt", async () => await productHandler.EditProductAsync()),
-            new MenuOption("Lista Kunder", async () => await customerHandler.ListCustomer()),
-            new MenuOption("Lägg till kund", async () => await customerHandler.AddCustomer()),
-            new MenuOption("Avsluta", () => { Environment.Exit(0); return Task.CompletedTask;})
-             });
+        var mainMenu = new MainMenu(productHandler, customerHandler);
+        await mainMenu.Run();
 
-        await menu.Run();
+
     }
 }
 

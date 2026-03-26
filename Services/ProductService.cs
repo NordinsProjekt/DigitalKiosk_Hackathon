@@ -45,4 +45,11 @@ public class ProductService(IProductRepository productRepository) : IProductServ
     {
         await productRepository.DeleteAsync(id);
     }
+
+    public async Task<List<Product>> FilterAsync(string query)
+    {
+        var normalizedQuery = (query ?? string.Empty).Trim();
+
+        return await productRepository.FilterAsync(normalizedQuery);
+    }
 }
