@@ -22,12 +22,12 @@ public class ProductRepository(KioskDbContext context) : IProductRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Product product) 
+    public async Task UpdateAsync(Product product)
     {
         context.Products.Update(product);
         await context.SaveChangesAsync();
     }
-    
+
     public async Task DeleteAsync(Guid id)
     {
         var product = await context.Products.FindAsync(id);
@@ -39,8 +39,11 @@ public class ProductRepository(KioskDbContext context) : IProductRepository
 
     public async Task<List<Product>> FilterAsync(string query)
     {
+        var normalizedQuery = query.ToLower();
+
         var filter = await context.Products
-             .Where(x => x.Name.ToLower().Contains(query)).ToListAsync();
+            .AsNoTracking()
+            .Where(x => x.Name.ToLower().Contains(normalizedQuery)).ToListAsync();
 
         return filter;
     }

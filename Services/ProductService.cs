@@ -32,6 +32,8 @@ public class ProductService(IProductRepository productRepository) : IProductServ
 
     public async Task<List<Product>> FilterAsync(string query)
     {
-        return await productRepository.FilterAsync("pot");
+        var normalizedQuery = query?.Trim();
+
+        return await productRepository.FilterAsync(normalizedQuery!);
     }
 }
