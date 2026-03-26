@@ -46,7 +46,7 @@ public class CustomerRepository(KioskDbContext context) : ICustomerRepository
         _context.Customers.Remove(customer);
         await _context.SaveChangesAsync();
     }
-    public async Task<Customer>? GetByPersonalIdentityNumberAsync(string personalIdentityNumber)
+    public async Task<Customer?> GetByPersonalIdentityNumberAsync(string personalIdentityNumber)
     {
         return await _context.Customers.AsNoTracking()
             .FirstOrDefaultAsync(c => c.PersonalIdentityNumber == personalIdentityNumber);
