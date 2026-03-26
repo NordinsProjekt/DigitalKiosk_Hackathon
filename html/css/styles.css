@@ -17,7 +17,7 @@ body {
 .splitMainScreen {
   display: grid;
   grid-template-columns: 250px 830px;
-  grid-template-rows: repeat(24, (70vh/24));
+  max-height: 100%;
   margin: 0 auto;
 }
 
@@ -134,7 +134,7 @@ body {
     background-color 0.3s,
     transform 0.3s;
 }
-.keyboard-spacce-row button {
+.keyboard-space-row button {
   width: 300px;
 }
 
