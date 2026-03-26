@@ -193,5 +193,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateActiveSection(sectionId) {
     activeSection = sectionId;
     drawMap();
+    const sectionStringKey = Object.keys(storeSections).find(
+      (key) => storeSections[key].id === sectionId,
+    );
+    const sectionInt = parseInt(sectionStringKey, 10);
+    loadProductsBySection(sectionInt);
   }
 });

@@ -46,6 +46,35 @@ function loadProductsByName(name) {
     });
 }
 
+function loadProductsBySection(sectionId) {
+  const productsList = document.getElementsByClassName("product-grid")[0];
+  const errorMessage = document.getElementById("error-message");
+
+  productsList.innerHTML = '<div class="loading">Loading products...</div>';
+  apiService
+    .getAllProducts()
+    .then((products) => {
+      products = products.filter((product) => product.section === sectionId);
+      displayProducts(products);
+    })
+    .catch((error) => {
+      productsList.innerHTML = "";
+      errorMessage.innerHTML = `
+                <div class="error-message">
+                    <p><strong>Unable to load products.</strong></p>
+                    <p>Error: ${error.message}</p>
+                    <p>Make sure the API is running at https://localhost:5001</p>
+                    <p>Check the browser console (F12) for more details.</p>
+                </div>
+            `;
+      if (error && error.stack) {
+        console.error("Full error details (stack):", error.stack);
+      } else {
+        console.error("Error loading products:", error);
+      }
+    });
+}
+
 function loadProducts() {
   const productsList = document.getElementsByClassName("product-grid")[0];
   const errorMessage = document.getElementById("error-message");
