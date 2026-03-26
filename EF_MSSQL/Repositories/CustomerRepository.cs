@@ -52,5 +52,6 @@ public class CustomerRepository(KioskDbContext context) : ICustomerRepository
             .FirstOrDefaultAsync(c => c.PersonalIdentityNumber == personalIdentityNumber);
     
     }
+ 
     
 }
