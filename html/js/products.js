@@ -67,7 +67,7 @@ function displayProducts(products) {
         `;
   });
 
-  productsList.innerHTML = `<div class="product-grid">${html}</div>`;
+  productsList.innerHTML = html;
 
   const detailsButtons = document.querySelectorAll(".product-button");
 
@@ -89,12 +89,12 @@ function displayProducts(products) {
                     <div class="detail-container">
                       <button class="back-button" onclick="hideProductView()">← Tillbaka</button>
                       <div id="detail-content">
-                        <img id=" https://picsum.photos/300/150" src="" alt="Produktbild" />
+                        <img id="detail-image" src="https://picsum.photos/300/150" alt="Produktbild" />
                         <h2 id="detail-name">${escapeHtml(product.name)}</h2>
                         <p id="detail-description">${escapeHtml(product.description || "No description available")}</p>
-                        <p id="ShelfLocation">Hylla: ${product.shelfLocation}, Plats: ${product.shelfPosition}</p>
-                        <p id="Section">Avdelning: ${product.section}</p>
-                        <p id="detail-price">Pris: ${product.price.toFixed(2)} kr</p>
+                        <p id="ShelfLocation">Hyllaplats: ${escapeHtml(product.shelfLocation || "No shelf location available")}</p>
+                        <p id="Section">Avdelning: ${escapeHtml(product.section || "No section available")}</p>
+                        <p id="detail-price">Pris: ${escapeHtml(product.price.toFixed(2))} kr</p>
                       </div>
                     </div>
                 </div>
@@ -111,6 +111,7 @@ function displayProducts(products) {
           console.error("Error loading products:", error);
         }
     });
+    productDetails.style.display = "block";
   }
 }
 
