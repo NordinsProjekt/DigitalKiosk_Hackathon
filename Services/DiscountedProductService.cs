@@ -27,6 +27,6 @@ public class DiscountedProductService(IDiscountedProductRepository repo) : IDisc
 
     public async Task DeleteAsync(Guid id)
     {
-       await repo.DeleteAsync(id); 
+        await repo.DeleteAsync(id);
     }
 }
