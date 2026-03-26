@@ -1,9 +1,6 @@
 using Entities;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Net.WebRequestMethods;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace EF_MSSQL;
 
@@ -16,8 +13,19 @@ public class KioskDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Data Source=FARZAD\SQLEXPRESS;Initial Catalog=HackathonDB;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False;Command Timeout=30");
-       
+        if (optionsBuilder.IsConfigured)
+        {
+            return;
+        }
+        var connectionString = Environment.GetEnvironmentVariable("KIOSKDB_CONNECTION_STRING");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            throw new InvalidOperationException(
+                "The database connection string is not configured. " +
+                "Please set the 'KIOSKDB_CONNECTION_STRING' environment variable to a valid SQL Server connection string.");
+        }
+        optionsBuilder.UseSqlServer(connectionString);
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
