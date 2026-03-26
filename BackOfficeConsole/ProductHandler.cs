@@ -108,8 +108,8 @@ public class ProductHandler
         if (!ProductValidator.TryGetName(out var name)) return;
         if (!ProductValidator.TryGetDescription(out var description)) return;
         if (!ProductValidator.TryGetPrice(out var price)) return;
-        if (!ProductValidator.TryGetShelfLocation(out var shelfLocation)) return;
         if (!ProductValidator.TryGetSection(out var section)) return;
+        if (!ProductValidator.TryGetShelfLocation(out var shelfLocation)) return;
 
         var product = new Product
         {

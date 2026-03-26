@@ -49,17 +49,23 @@ internal class Program
 
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<ICustomerService, CustomerService>();
 
         var provider = services.BuildServiceProvider();
 
         using var scope = provider.CreateScope();
         var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
-        var handler = new ProductHandler(productService);
+        var customerService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
+        var productHandler = new ProductHandler(productService);
+        var customerHandler = new CustomerHandler(customerService);
 
         var menu = new MenuData(new List<MenuOption>{
-            new MenuOption("Lista produkter", async () => await handler.ListProducts()),
-            new MenuOption("Lägg till produkt", async () => await handler.AddProduct()),
-            new MenuOption("Redigera produkt", async () => await handler.EditProductAsync()),
+            new MenuOption("Lista produkter", async () => await productHandler.ListProducts()),
+            new MenuOption("Lägg till produkt", async () => await productHandler.AddProduct()),
+            new MenuOption("Redigera produkt", async () => await productHandler.EditProductAsync()),
+            new MenuOption("Lista Kunder", async () => await customerHandler.ListCustomer()),
+            new MenuOption("Lägg till kund", async () => await customerHandler.AddCustomer()),
             new MenuOption("Avsluta", () => { Environment.Exit(0); return Task.CompletedTask;})
              });
 
