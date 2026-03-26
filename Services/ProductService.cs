@@ -31,11 +31,13 @@ public class ProductService(IProductRepository productRepository) : IProductServ
         if (product is null)
             throw new KeyNotFoundException("Product not found.");
 
-        var updated = ProductFactory.Create(productDetails);
+        product.Name = productDetails.Name;
+        product.Description = productDetails.Description;
+        product.ShelfLocation = productDetails.ShelfLocation;
+        product.Section = productDetails.Section;
+        product.Price = productDetails.Price;
 
-        updated.Id = product.Id;
-
-        await productRepository.UpdateAsync(updated);
+        await productRepository.UpdateAsync(product);
     }
 
     public async Task DeleteAsync(Guid id)
