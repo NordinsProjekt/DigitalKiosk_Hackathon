@@ -6,69 +6,103 @@ public class ProductValidator
 {
     public static bool TryGetName(out string name)
     {
-        Console.WriteLine("Namn: ");
+        while (true)
+        {
+
+        Console.Write("Namn: ");
         name = Console.ReadLine()!;
 
         if (string.IsNullOrWhiteSpace(name))
         {
             Console.WriteLine("Fel! Namn får inte vara tomt");
-            return false;
         }
         return true;
     }
     public static bool TryGetDescription(out string description)
     {
-        Console.WriteLine("Namn: ");
-        description = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(description))
+        while (true)
         {
-            Console.WriteLine("Fel! Beskrivning får inte vara tomt");
-            return false;
+            Console.Write("Beskrivning: ");
+            description = Console.ReadLine()!;
+
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                Console.WriteLine("Fel! Beskrivning får inte vara tomt");
+            }
+            else
+            {
+                return true;
+            }
         }
         return true;
     }
 
     public static bool TryGetPrice(out decimal price)
     {
-        Console.WriteLine("Pris: ");
-        if (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
+        
+        while (true)
         {
+            Console.Write("Pris: ");
+            if (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
+            {
             Console.WriteLine("Fel: Ange ett giltigt pris (t.ex. 29.90).");
-            return false;
+            }
+            else
+            {
+            return true;
+            }
         }
-        return true;
+        
+        
     }
 
     public static bool TryGetSection(out Section section)
     {
-        Console.WriteLine("Avdelning:");
+        Console.Write("Avdelning:");
         foreach (var s in Enum.GetValues<Section>())
-            Console.WriteLine($"  {(int)s}. {s}");
-        Console.Write("Välj: ");
-        if (!int.TryParse(Console.ReadLine(), out int val) || !Enum.IsDefined(typeof(Section), val))
         {
-            Console.WriteLine("Fel: Ogiltigt val.");
-            section = default;
-            return false;
+            Console.WriteLine($"  {(int)s}. {s}");
         }
-        section = (Section)val;
-        return true;
+        
+            while (true)
+            {
+
+            Console.Write("Välj: ");
+            if (!int.TryParse(Console.ReadLine(), out int val) || !Enum.IsDefined(typeof(Section), val))
+            {
+                Console.WriteLine("Fel: Ogiltigt val.");
+            }
+            else
+            {
+                section = (Section)val;
+                return true;
+            }
+            }
+            
+        
     }
 
     public static bool TryGetShelfLocation(out ShelfLocation shelfLocation)
     {
-        Console.WriteLine("Hyllplats:");
+        Console.Write("Hyllplats:");
         foreach (var s in Enum.GetValues<ShelfLocation>())
-            Console.WriteLine($"  {(int)s}. {s}");
-        Console.Write("Välj: ");
-        if (!int.TryParse(Console.ReadLine(), out int val) || !Enum.IsDefined(typeof(ShelfLocation), val))
         {
-            Console.WriteLine("Fel: Ogiltig hyllplats.");
-            shelfLocation = default;
-            return false;
+            Console.WriteLine($"  {(int)s}. {s}");
         }
-        shelfLocation = (ShelfLocation)val;
-        return true;
+        
+        while (true)
+        {
+            Console.Write("Välj: ");
+            if (!int.TryParse(Console.ReadLine(), out int val) || !Enum.IsDefined(typeof(ShelfLocation), val))
+            {
+                Console.WriteLine("Fel: Ogiltig hyllplats.");
+            }
+            else
+            {
+                shelfLocation = (ShelfLocation)val;
+                return true;
+
+            }
+        }
     }
 }

@@ -30,8 +30,10 @@ public class CustomerHandler
 
     public async Task ListCustomer()
     {
+        Console.WriteLine("Laddar...");
         var customers = await _customerService.GetAllAsync();
-        foreach (var c in customers)
+        Console.Clear();
+        foreach (var c in customers.OrderBy(c => c.Name))
         {
             Console.WriteLine($"{c.Name} - {c.PersonalIdentityNumber}");
         }

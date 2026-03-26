@@ -120,8 +120,10 @@ public class ProductHandler
 
     public async Task ListProducts()
     {
+        Console.WriteLine("Laddar...");
         var products = await _productService.GetAllAsync();
-        foreach (var p in products)
+        Console.Clear();
+        foreach (var p in products.OrderBy(p => p.Price))
             Console.WriteLine($"{p.Name} - {p.Price:C}");
     }
 }
