@@ -37,6 +37,20 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     })
 
+    const canvas = document.getElementById("store-map");
+    canvas.addEventListener("click", e => {
+        const x = e.offsetX / canvas.width;
+        const y = e.offsetY / canvas.height;
+        Object.values(storeSections).forEach(section => {
+            const mapArea = section.mapArea;
+            if(x >= mapArea.x && mapArea.x <= x + mapArea.w && y >= mapArea.y && mapArea.y <= y + mapArea.h){
+                activeSection = section.id;
+                drawMap();
+                console.log(e.offsetX, e.offsetY);
+            }
+        })
+    })
+
     drawMap();
 
     function drawMap() {
