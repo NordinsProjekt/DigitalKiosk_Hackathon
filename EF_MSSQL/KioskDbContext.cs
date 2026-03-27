@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EF_MSSQL;
 
-public class KioskDbContext : DbContext
+public class KioskDbContext(DbContextOptions<KioskDbContext> options) : DbContext(options)
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<Customer> Customers { get; set; }
