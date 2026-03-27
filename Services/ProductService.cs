@@ -1,32 +1,55 @@
 using Entities;
+using Factories;
+using Factories.Models;
 using Services.Interfaces;
 
 namespace Services;
 
-public class ProductService : IProductService
+public class ProductService(IProductRepository productRepository) : IProductService
 {
-    public Task<List<Product>> GetAllAsync()
+    public async Task<List<Product>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await productRepository.GetAllAsync();
     }
 
-    public Task<Product?> GetByIdAsync(Guid id)
+    public async Task<Product?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await productRepository.GetByIdAsync(id);
     }
 
-    public Task AddAsync(Product product)
+    public async Task AddAsync(ProductDetails productDetails)
     {
-        throw new NotImplementedException();
+        Product product = ProductFactory.Create(productDetails);
+
+        await productRepository.AddAsync(product);
     }
 
-    public Task UpdateAsync(Product product)
+    public async Task UpdateAsync(Guid id, ProductDetails productDetails)
     {
-        throw new NotImplementedException();
+        var product = await productRepository.GetByIdAsync(id);
+
+        if (product is null)
+            throw new KeyNotFoundException("Product not found.");
+
+        var validatedProduct = ProductFactory.Create(productDetails);
+        product.Name = validatedProduct.Name;
+        product.Description = validatedProduct.Description;
+        product.ShelfLocation = validatedProduct.ShelfLocation;
+        product.Section = validatedProduct.Section;
+        product.Price = validatedProduct.Price;
+
+        await productRepository.UpdateAsync(product);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        await productRepository.DeleteAsync(id);
+    }
+
+    public async Task<List<Product>> FilterAsync(string query)
+    {
+        var normalizedQuery = (query ?? string.Empty).Trim();
+
+        return await productRepository.FilterAsync(normalizedQuery);
     }
 }

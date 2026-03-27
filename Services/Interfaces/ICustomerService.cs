@@ -8,5 +8,7 @@ public interface ICustomerService
     public Task<Customer?> GetByIdAsync(Guid id);
     public Task AddAsync(Customer customer);
     public Task DeleteAsync(Guid id);
-    public Task UpdateAsync(Customer customer);
+    public Task UpdateNameAsync(Customer customer);
+    public Task UpdateIdentityNumberAsync(Customer customer);
+    public Task<Customer?> GetByPersonalIdentityNumberAsync(string personalIdentityNumber);
 }

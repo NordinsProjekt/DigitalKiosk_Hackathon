@@ -48,6 +48,7 @@ All the above rules (test coverage, onion architecture, repository/factory patte
 - All HTML must be **semantic** — use appropriate elements (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`, etc.) instead of generic `<div>` soup.
 - Each HTML file in `html/` **must** have its own dedicated CSS file in `html/css/`. Flag any PR where a single CSS file is shared across multiple HTML pages or where inline styles are used extensively.
 - CSS class names should be descriptive and follow a consistent naming convention.
+- One master css with common css rules that applies to all pages are allowed.
 
 ## JavaScript Guidelines
 
