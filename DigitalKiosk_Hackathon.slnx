@@ -1,23 +1,24 @@
 <Solution>
   <Folder Name="/1. Domain/">
-    <Project Path="Entities/Entities.csproj" />
+    <Project Path="Entities/Entities.csproj" Id="95de3bd9-a587-35a9-17e0-3c34d2a57441" />
   </Folder>
   <Folder Name="/2. DomainServices/">
-    <Project Path="DomainFactories/Factories.csproj" />
+    <Project Path="DomainFactories/Factories.csproj" Id="ad2ba636-8131-ff3c-74c7-1f7c27128058" />
   </Folder>
+  <Folder Name="/2. DomainServices/Models/" />
   <Folder Name="/3. Application/">
-    <Project Path="Services/Services.csproj" />
+    <Project Path="Services/Services.csproj" Id="97207750-6972-232f-bb7b-6106666106af" />
   </Folder>
   <Folder Name="/4. Infrastructure/">
-    <Project Path="EF_MSSQL/EF_MSSQL.csproj" />
+    <Project Path="EF_MSSQL/EF_MSSQL.csproj" Id="ea543da9-4e84-3057-b9f9-7a431ede2b15" />
   </Folder>
   <Folder Name="/5. Presentation/">
-    <Project Path="BackOfficeConsole/BackOfficeConsole.csproj" />
-    <Project Path="DigitalKiosk_Hackathon/DigitalKiosk_Hackathon.csproj" />
+    <Project Path="BackOfficeConsole/BackOfficeConsole.csproj" Id="f572d16b-8dbb-a2d0-a7fd-8654ba46436b" />
+    <Project Path="DigitalKiosk_Hackathon/Api.csproj" Id="2e3de00a-24a6-d345-9343-c80812aedf68" />
   </Folder>
   <Folder Name="/6. Tests/">
-    <Project Path="Application.ServicesTests/Application.ServicesTests.csproj" />
-    <Project Path="Domain.FactoriesTests/Domain.FactoriesTests.csproj" />
+    <Project Path="Application.ServicesTests/Application.ServicesTests.csproj" Id="63bc9014-cdb2-c7da-4ad5-c988061261d2" />
+    <Project Path="Domain.FactoriesTests/Domain.FactoriesTests.csproj" Id="25bc4e78-d187-5f6e-6e4f-ed286ea7db62" />
   </Folder>
   <Folder Name="/8. Dokumentation/">
     <File Path="DatabaseSchema.xsd" />

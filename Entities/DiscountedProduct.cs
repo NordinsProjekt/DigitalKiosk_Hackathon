@@ -9,5 +9,5 @@ public class DiscountedProduct
     public Guid? ProductId { get; set; }
     public Product? Product { get; set; }
 
-    public ICollection<CustomerDiscountedProduct> CustomerDiscountedProducts { get; set; } = new List<CustomerDiscountedProduct>();
+    public ICollection<CustomerDiscountedProduct> CustomerDiscountedProducts { get; set; } = [];
 }

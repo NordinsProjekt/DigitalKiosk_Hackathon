@@ -6,5 +6,5 @@ public class Customer
     public string Name { get; set; } = null!;
     public string PersonalIdentityNumber { get; set; } = null!;
 
-    public ICollection<CustomerDiscountedProduct> CustomerDiscountedProducts { get; set; } = new List<CustomerDiscountedProduct>();
+    public ICollection<CustomerDiscountedProduct> CustomerDiscountedProducts { get; set; } = [];
 }

@@ -39,6 +39,27 @@ This project follows **Onion Architecture**. The layers from innermost to outerm
 - Flag PRs that instantiate domain entities with complex setup directly in services or controllers instead of using a factory.
 - Factories must only depend on `Entities` and must not contain infrastructure concerns.
 
+## C# Code Quality
+
+All the above rules (test coverage, onion architecture, repository/factory patterns) apply specifically to the **C# codebase**. Ensure C# code follows established conventions and patterns described in this document.
+
+## HTML & CSS Guidelines
+
+- All HTML must be **semantic** — use appropriate elements (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`, etc.) instead of generic `<div>` soup.
+- Each HTML file in `html/` **must** have its own dedicated CSS file in `html/css/`. Flag any PR where a single CSS file is shared across multiple HTML pages or where inline styles are used extensively.
+- CSS class names should be descriptive and follow a consistent naming convention.
+- One master css with common css rules that applies to all pages are allowed.
+
+## JavaScript Guidelines
+
+- JavaScript files in `html/js/` must follow **clean code** principles:
+  - Use descriptive, intention-revealing variable and function names.
+  - Keep functions small and focused on a single responsibility.
+  - Avoid deep nesting — extract logic into well-named helper functions.
+  - No magic numbers or strings — use named constants.
+  - Minimize global state; prefer modular patterns.
+  - Flag dead code, commented-out code blocks, and duplicated logic.
+
 ## General Review Guidance
 
 - Ensure `DatabaseSchema.xsd` at the repository root is updated whenever entity or EF Core configuration changes occur.
