@@ -68,6 +68,17 @@ public class Program
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Kiosk API v1");
             options.RoutePrefix = string.Empty;
         });
+        
+        using var scope = app.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<KioskDbContext>();
+
+        if (!db.Products.Any())
+        {
+            var products = ProductSeeder.Generate(3000);
+            db.Products.AddRange(products);
+            await db.SaveChangesAsync();
+            Console.WriteLine($"✅ Seeded {products.Count} products.");
+        }
 
         using var scope = app.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<KioskDbContext>();
@@ -81,9 +92,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
         app.UseAuthorization();
-
         app.MapControllers();
 
         app.Run();
