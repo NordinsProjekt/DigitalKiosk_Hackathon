@@ -1,11 +1,10 @@
 using Entities;
-using Factories;
 using Factories.Models;
 using Services.Interfaces;
 
 namespace Services;
 
-public class ProductService(IProductRepository productRepository) : IProductService
+public class ProductService(IProductRepository productRepository, IProductFactory productFactory) : IProductService
 {
     public async Task<List<Product>> GetAllAsync()
     {
@@ -19,7 +18,7 @@ public class ProductService(IProductRepository productRepository) : IProductServ
 
     public async Task AddAsync(ProductDetails productDetails)
     {
-        Product product = ProductFactory.Create(productDetails);
+        Product product = productFactory.Create(productDetails);
 
         await productRepository.AddAsync(product);
     }
@@ -31,7 +30,7 @@ public class ProductService(IProductRepository productRepository) : IProductServ
         if (product is null)
             throw new KeyNotFoundException("Product not found.");
 
-        var validatedProduct = ProductFactory.Create(productDetails);
+        var validatedProduct = productFactory.Create(productDetails);
         product.Name = validatedProduct.Name;
         product.Description = validatedProduct.Description;
         product.ShelfLocation = validatedProduct.ShelfLocation;

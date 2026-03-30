@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+}
+
+header h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #58a6ff;
+}
+
+#status {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    font-size: 13px;
+}
+
+#connection-status {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+#connection-status.connected {
+    background: #1b4332;
+    color: #40c057;
+}
+
+#connection-status.disconnected {
+    background: #3d1f1f;
+    color: #f03e3e;
+}
+
+#controls {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 8px 24px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    font-size: 13px;
+}
+
+#controls button {
+    background: #21262d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#controls button:hover {
+    background: #30363d;
+}
+
+#controls label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#controls input[type="range"] {
+    width: 100px;
+}
+
+#graph {
+    flex: 1;
+    width: 100%;
+}
+
+/* Nodes */
+.node rect {
+    rx: 6;
+    ry: 6;
+    stroke-width: 2;
+}
+
+.node text {
+    fill: #c9d1d9;
+    font-size: 11px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+
+.node .method-text {
+    font-size: 9px;
+    font-weight: 400;
+    fill: #8b949e;
+}
+
+/* Layer labels */
+.layer-label {
+    fill: #484f58;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Edges */
+.edge {
+    fill: none;
+    stroke-linecap: round;
+}
+
+.edge.ok {
+    stroke: #2ea043;
+}
+
+.edge.error {
+    stroke: #f85149;
+}
+
+.edge.idle {
+    stroke: #30363d;
+    stroke-dasharray: 4, 4;
+}
+
+/* Particles */
+.particle {
+    fill: #58a6ff;
+    opacity: 0.9;
+}
+
+.particle.error {
+    fill: #f85149;
+}
+
+/* Tooltip */
+#tooltip {
+    position: absolute;
+    background: #1c2128;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    max-width: 320px;
+    pointer-events: none;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+#tooltip.hidden {
+    display: none;
+}
+
+#tooltip .tt-title {
+    font-weight: 600;
+    color: #58a6ff;
+    margin-bottom: 6px;
+}
+
+#tooltip .tt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 2px 0;
+}
+
+#tooltip .tt-label {
+    color: #8b949e;
+}
+
+#tooltip .tt-value {
+    color: #c9d1d9;
+    font-weight: 500;
+}
+
+#tooltip .tt-error {
+    color: #f85149;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+/* Highlighted correlation chain */
+.node.highlighted rect {
+    stroke: #ffa657 !important;
+    stroke-width: 3;
+}
+
+.edge.highlighted {
+    stroke: #ffa657 !important;
+    stroke-width: 4 !important;
+    filter: drop-shadow(0 0 6px rgba(255, 166, 87, 0.5));
+}

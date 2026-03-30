@@ -11,6 +11,7 @@
   </Folder>
   <Folder Name="/4. Infrastructure/">
     <Project Path="EF_MSSQL/EF_MSSQL.csproj" Id="ea543da9-4e84-3057-b9f9-7a431ede2b15" />
+    <Project Path="FlowVisualizer.Core/FlowVisualizer.Core.csproj" Id="b1c2d3e4-f5a6-7890-abcd-ef1234567890" />
   </Folder>
   <Folder Name="/5. Presentation/">
     <Project Path="BackOfficeConsole/BackOfficeConsole.csproj" Id="f572d16b-8dbb-a2d0-a7fd-8654ba46436b" />

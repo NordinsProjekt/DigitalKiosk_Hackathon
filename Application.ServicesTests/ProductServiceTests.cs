@@ -5,6 +5,7 @@ using NSubstitute;
 using Entities;
 using Entities.Enums;
 using Factories.Models;
+using FlowVisualizer.Core.Adapters;
 using Services;
 using Services.Interfaces;
 
@@ -18,7 +19,7 @@ namespace Application.ServicesTests
         public ProductServiceTests()
         {
             _repository = Substitute.For<IProductRepository>();
-            _service = new ProductService(_repository);
+            _service = new ProductService(_repository, new ProductFactoryAdapter());
         }
 
         [Fact]

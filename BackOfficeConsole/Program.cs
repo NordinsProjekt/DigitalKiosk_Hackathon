@@ -1,6 +1,7 @@
 ﻿using BackOfficeConsole.Menu;
 using EF_MSSQL;
 using EF_MSSQL.Repositories;
+using FlowVisualizer.Core.Adapters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
@@ -48,6 +49,7 @@ internal class Program
         services.AddDbContext<KioskDbContext>();
 
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IProductFactory, ProductFactoryAdapter>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<ICustomerService, CustomerService>();

@@ -2,6 +2,12 @@
 using EF_MSSQL;
 using EF_MSSQL.Repositories;
 using EF_MSSQL.Seeders;
+using FlowVisualizer.Core;
+using FlowVisualizer.Core.Adapters;
+using FlowVisualizer.Core.Decorators;
+using FlowVisualizer.Core.Hub;
+using FlowVisualizer.Core.Interceptors;
+using FlowVisualizer.Core.Middleware;
 using Services;
 using Services.Interfaces;
 
@@ -12,26 +18,6 @@ public class Program
     public async static Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        //builder.WebHost.UseSentry(o =>
-        //{
-        //    o.Dsn = builder.Configuration["Sentry:Dsn"];
-        //    // Enable Sentry internal debug logging only in Development
-        //    o.Debug = builder.Environment.IsDevelopment();
-
-        //    // Configure traces sample rate from configuration if available,
-        //    // otherwise use 100% in Development and a lower rate in other environments.
-        //    var tracesSampleRateConfig = builder.Configuration["Sentry:TracesSampleRate"];
-        //    if (double.TryParse(tracesSampleRateConfig, out var tracesSampleRate))
-        //    {
-        //        o.TracesSampleRate = tracesSampleRate;
-        //    }
-        //    else
-        //    {
-        //        o.TracesSampleRate = builder.Environment.IsDevelopment() ? 1.0 : 0.1;
-        //    }
-        //    // Enable logs to be sent to Sentry
-        //    o.EnableLogs = true;
-        //});
 
         builder.Services.AddCors(options =>
         {
@@ -45,18 +31,70 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllers();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddDbContext<KioskDbContext>();
-        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-        builder.Services.AddScoped<IProductRepository, ProductRepository>();
-        builder.Services.AddScoped<IDiscountedProductRepository, DiscountedProductRepository>();
-        builder.Services.AddScoped<ICustomerService, CustomerService>();
-        builder.Services.AddScoped<IProductService, ProductService>();
-        builder.Services.AddScoped<IDiscountedProductService, DiscountedProductService>();
+
+        // --- FlowVisualizer: SignalR + tracing infrastructure ---
+        builder.Services.AddSignalR();
+        builder.Services.AddSingleton<IFlowEventSink, SignalRFlowEventSink>();
+        builder.Services.AddScoped<FlowTracer>();
+        builder.Services.AddSingleton<FlowDbCommandInterceptor>();
+
+        // DbContext with tracing interceptor
+        builder.Services.AddDbContext<KioskDbContext>((sp, options) =>
+        {
+            var interceptor = sp.GetRequiredService<FlowDbCommandInterceptor>();
+            options.AddInterceptors(interceptor);
+        });
+
+        // Factory: IProductFactory → TracingProductFactory → ProductFactoryAdapter
+        builder.Services.AddScoped<IProductFactory>(sp =>
+            new TracingProductFactory(
+                new ProductFactoryAdapter(),
+                sp.GetRequiredService<FlowTracer>()));
+
+        // Repositories: Interface → TracingDecorator → ConcreteRepository
+        builder.Services.AddScoped<ProductRepository>();
+        builder.Services.AddScoped<IProductRepository>(sp =>
+            new TracingProductRepository(
+                sp.GetRequiredService<ProductRepository>(),
+                sp.GetRequiredService<FlowTracer>()));
+
+        builder.Services.AddScoped<CustomerRepository>();
+        builder.Services.AddScoped<ICustomerRepository>(sp =>
+            new TracingCustomerRepository(
+                sp.GetRequiredService<CustomerRepository>(),
+                sp.GetRequiredService<FlowTracer>()));
+
+        builder.Services.AddScoped<DiscountedProductRepository>();
+        builder.Services.AddScoped<IDiscountedProductRepository>(sp =>
+            new TracingDiscountedProductRepository(
+                sp.GetRequiredService<DiscountedProductRepository>(),
+                sp.GetRequiredService<FlowTracer>()));
+
+        // Services: Interface → TracingDecorator → ConcreteService
+        builder.Services.AddScoped<ProductService>();
+        builder.Services.AddScoped<IProductService>(sp =>
+            new TracingProductService(
+                sp.GetRequiredService<ProductService>(),
+                sp.GetRequiredService<FlowTracer>()));
+
+        builder.Services.AddScoped<CustomerService>();
+        builder.Services.AddScoped<ICustomerService>(sp =>
+            new TracingCustomerService(
+                sp.GetRequiredService<CustomerService>(),
+                sp.GetRequiredService<FlowTracer>()));
+
+        builder.Services.AddScoped<DiscountedProductService>();
+        builder.Services.AddScoped<IDiscountedProductService>(sp =>
+            new TracingDiscountedProductService(
+                sp.GetRequiredService<DiscountedProductService>(),
+                sp.GetRequiredService<FlowTracer>()));
 
         var app = builder.Build();
+
+        // Correlation middleware must be first
+        app.UseMiddleware<CorrelationIdMiddleware>();
 
         app.UseCors("AllowAll"); //Unsafe only for debugging
 
@@ -68,6 +106,12 @@ public class Program
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Kiosk API v1");
             options.RoutePrefix = string.Empty;
         });
+
+        // FlowVisualizer SignalR hub
+        app.MapHub<FlowHub>("/flow-hub");
+
+        // Serve flow dashboard static files
+        app.UseStaticFiles();
 
         using var scope = app.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<KioskDbContext>();

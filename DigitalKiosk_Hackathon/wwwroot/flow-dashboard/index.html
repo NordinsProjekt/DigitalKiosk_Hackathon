@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Visualizer — DigitalKiosk</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Flow Visualizer</h1>
+        <div id="status">
+            <span id="connection-status" class="disconnected">Disconnected</span>
+            <span id="event-count">0 events</span>
+        </div>
+    </header>
+    <div id="controls">
+        <button id="btn-clear">Clear</button>
+        <label>Window: <input type="range" id="time-window" min="5" max="60" value="10"><span id="window-label">10s</span></label>
+        <label><input type="checkbox" id="show-errors-only"> Errors only</label>
+    </div>
+    <svg id="graph"></svg>
+    <div id="tooltip" class="hidden"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

@@ -23,7 +23,7 @@ const apiService = {
 
     /**
      * Fetch a single product by ID
-     * @param {string} id - Product ID (GUID)
+     * @param {number} id - Product ID
      * @returns {Promise<Object>} Product object
      */
     async getProductById(id) {
@@ -38,7 +38,33 @@ const apiService = {
             console.error(`Error fetching product ${id}:`, error);
             throw error;
         }
-    }
+    },
 
+    /**
+     * Create a new order
+     * @param {Object} orderData - Order data with customerName and items
+     * @returns {Promise<Object>} Created order response
+     */
+    async createOrder(orderData) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error('Error creating order:', error);
+            throw error;
+        }
+    }
 };
 

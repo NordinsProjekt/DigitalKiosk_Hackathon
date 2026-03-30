@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teknisk Rapport — Flow Visualizer Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        :root {
+            --color-primary: #1a3a5c;
+            --color-secondary: #2c5f8a;
+            --color-accent: #c0392b;
+            --color-green: #2ea043;
+            --color-red: #f85149;
+            --color-orange: #d29922;
+            --color-purple: #8957e5;
+            --color-bg-light: #f8f9fa;
+            --color-bg-dark: #0d1117;
+            --color-border: #dee2e6;
+            --color-text: #212529;
+            --color-text-muted: #6c757d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', 'Segoe UI', Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: var(--color-text);
+            background: #fff;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', 'Georgia', serif;
+            color: var(--color-primary);
+            margin-bottom: 0.5em;
+        }
+
+        h1 {
+            font-size: 22pt;
+            font-weight: 900;
+            border-bottom: 3px solid var(--color-primary);
+            padding-bottom: 0.3em;
+            margin-bottom: 0.8em;
+        }
+
+        h2 {
+            font-size: 16pt;
+            font-weight: 700;
+            margin-top: 1.8em;
+            margin-bottom: 0.6em;
+            border-left: 4px solid var(--color-secondary);
+            padding-left: 12px;
+        }
+
+        h3 {
+            font-size: 13pt;
+            font-weight: 700;
+            margin-top: 1.2em;
+            margin-bottom: 0.4em;
+        }
+
+        h4 {
+            font-size: 11pt;
+            font-weight: 700;
+            color: var(--color-secondary);
+            margin-top: 1em;
+        }
+
+        p {
+            margin-bottom: 0.8em;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 1.5em;
+            margin-bottom: 0.8em;
+        }
+
+        li { margin-bottom: 0.3em; }
+
+        /* Sidhuvud */
+        .document-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: 16px;
+            margin-bottom: 30px;
+        }
+
+        .document-header .logo-area {
+            flex: 1;
+        }
+
+        .document-header .logo-area .company-name {
+            font-family: 'Merriweather', serif;
+            font-size: 26pt;
+            font-weight: 900;
+            color: var(--color-primary);
+            line-height: 1.1;
+        }
+
+        .document-header .logo-area .company-tagline {
+            font-size: 10pt;
+            color: var(--color-text-muted);
+            font-style: italic;
+        }
+
+        .document-header .meta-info {
+            text-align: right;
+            font-size: 9pt;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+        }
+
+        .document-header .meta-info strong {
+            color: var(--color-text);
+        }
+
+        /* Inforuta */
+        .info-box {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-left: 4px solid var(--color-secondary);
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin: 1.2em 0;
+            font-size: 10.5pt;
+        }
+
+        .info-box.highlight {
+            border-left-color: var(--color-accent);
+            background: #fdf2f2;
+        }
+
+        .info-box.success {
+            border-left-color: var(--color-green);
+            background: #f0fdf4;
+        }
+
+        /* Kod */
+        code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 9.5pt;
+            background: #f0f3f6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--color-accent);
+        }
+
+        pre {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 9pt;
+            background: var(--color-bg-dark);
+            color: #c9d1d9;
+            padding: 16px 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1em 0;
+            line-height: 1.5;
+        }
+
+        pre .keyword { color: #ff7b72; }
+        pre .type { color: #79c0ff; }
+        pre .string { color: #a5d6ff; }
+        pre .comment { color: #8b949e; font-style: italic; }
+        pre .method { color: #d2a8ff; }
+
+        /* Tabell */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+            font-size: 10pt;
+        }
+
+        table th {
+            background: var(--color-primary);
+            color: #fff;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+        }
+
+        table td {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        table tr:nth-child(even) td {
+            background: var(--color-bg-light);
+        }
+
+        /* Diagram */
+        .diagram {
+            background: var(--color-bg-dark);
+            border-radius: 8px;
+            padding: 28px 20px;
+            margin: 1.5em 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .diagram svg { max-width: 100%; }
+
+        .flow-chain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+            padding: 10px 0;
+        }
+
+        .flow-node {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 9pt;
+            font-weight: 500;
+            color: #fff;
+            min-width: 110px;
+        }
+
+        .flow-node .layer-tag {
+            font-size: 7pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+
+        .flow-node.controller { background: #1f6feb; }
+        .flow-node.service { background: #8957e5; }
+        .flow-node.factory { background: #d29922; }
+        .flow-node.repository { background: #2ea043; }
+        .flow-node.database { background: #f85149; }
+
+        .flow-arrow {
+            font-size: 18pt;
+            color: #58a6ff;
+            padding: 0 6px;
+            line-height: 1;
+        }
+
+        .flow-arrow.error { color: #f85149; }
+
+        /* Visuella regler */
+        .visual-rules {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 1em 0;
+        }
+
+        .rule-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--color-bg-light);
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+        }
+
+        .rule-indicator {
+            width: 40px;
+            height: 6px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .rule-indicator.green { background: var(--color-green); }
+        .rule-indicator.red { background: var(--color-red); }
+
+        .rule-indicator.thin {
+            height: 2px;
+            background: var(--color-green);
+        }
+
+        .rule-indicator.thick {
+            height: 8px;
+            background: var(--color-green);
+        }
+
+        .rule-text {
+            font-size: 9.5pt;
+        }
+
+        .rule-text strong {
+            color: var(--color-primary);
+        }
+
+        /* Arkitekturstack */
+        .arch-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 1.2em 0;
+        }
+
+        .arch-layer {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid var(--color-border);
+            border-bottom: none;
+        }
+
+        .arch-layer:last-child {
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .arch-layer-label {
+            width: 140px;
+            padding: 10px 14px;
+            font-weight: 700;
+            font-size: 9.5pt;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .arch-layer-content {
+            flex: 1;
+            padding: 10px 14px;
+            font-size: 9.5pt;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: #fff;
+        }
+
+        .arch-layer-content .chip {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 8.5pt;
+        }
+
+        .arch-layer-content .chip.decorator {
+            background: #fff8e1;
+            border-color: #ffe082;
+        }
+
+        /* Sidfot */
+        .page-footer {
+            margin-top: 3em;
+            padding-top: 16px;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+            font-size: 8.5pt;
+            color: var(--color-text-muted);
+        }
+
+        /* Print */
+        @media print {
+            body { padding: 15mm; }
+            .diagram { break-inside: avoid; }
+            pre { break-inside: avoid; }
+            h2 { break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════ SIDHUVUD ═══════════════ -->
+    <div class="document-header">
+        <div class="logo-area">
+            <div class="company-name">Digital Kiosk</div>
+            <div class="company-tagline">Teknisk dokumentation — Hackathon-projekt</div>
+        </div>
+        <div class="meta-info">
+            <strong>Dokument:</strong> Teknisk Rapport<br>
+            <strong>Ämne:</strong> Flow Visualizer Dashboard<br>
+            <strong>Datum:</strong> 2026-03-29<br>
+            <strong>Version:</strong> 1.0
+        </div>
+    </div>
+
+    <!-- ═══════════════ TITEL ═══════════════ -->
+    <h1>Flow Visualizer Dashboard</h1>
+
+    <p>
+        Flow Visualizer är ett realtidsverktyg som visuellt visar hur data rör sig genom
+        systemets alla lager — från det att ett API-anrop når en <strong>Controller</strong>,
+        genom <strong>Service</strong>- och <strong>Factory</strong>-lagren, vidare till
+        <strong>Repository</strong> och slutligen ner till <strong>databasen</strong>.
+        Varje metodanrop trackas med exakt tidsåtgång, och resultatet animeras live i en
+        webbläsarbaserad dashboard.
+    </p>
+
+    <div class="info-box success">
+        <strong>Nyckelpoäng:</strong> Visualiseringen kräver inga ändringar i befintlig affärslogik.
+        All instrumentering sker via <em>Decorator-pattern</em> runt existerande interfaces och
+        konfigureras enbart i Dependency Injection-registreringen.
+    </div>
+
+    <!-- ═══════════════ SEKTION 1 ═══════════════ -->
+    <h2>1. Vad är Flow Visualizer?</h2>
+
+    <p>
+        Flow Visualizer är ett diagnostikverktyg byggt som ett separat Class Library-projekt
+        (<code>FlowVisualizer.Core</code>) integrerat med API-projektets ASP.NET-pipeline.
+        Det består av tre delar:
+    </p>
+
+    <ol>
+        <li><strong>Tracing-infrastruktur</strong> — Decorator-klasser som wrappar varje service,
+            repository och factory med tidsmätning och felhantering.</li>
+        <li><strong>SignalR Hub</strong> — Realtidskommunikation som pushar varje trackat event
+            till anslutna dashboard-klienter via WebSocket.</li>
+        <li><strong>Webbdashboard</strong> — En D3.js-baserad grafvisualisering som ritar noder
+            och animerade linjer i realtid.</li>
+    </ol>
+
+    <!-- ═══════════════ SEKTION 2 ═══════════════ -->
+    <h2>2. Arkitekturöversikt</h2>
+
+    <p>
+        Systemet följer en strikt lagerarkitektur där varje lager kommunicerar nedåt via interfaces.
+        Flow Visualizer lägger sig som ett transparent lager <em>mellan</em> varje interface och
+        dess konkreta implementation:
+    </p>
+
+    <div class="arch-stack">
+        <div class="arch-layer">
+            <div class="arch-layer-label" style="background: #1f6feb;">Controller</div>
+            <div class="arch-layer-content">
+                <span class="chip">ProductsController</span>
+                <span class="chip">CustomersController</span>
+                <span class="chip">DiscountedProductController</span>
+            </div>
+        </div>
+        <div class="arch-layer">
+            <div class="arch-layer-label" style="background: #8957e5;">Service</div>
+            <div class="arch-layer-content">
+                <span class="chip decorator">TracingProductService</span>
+                <span>→</span>
+                <span class="chip">ProductService</span>
+                <span style="color: #aaa; margin: 0 8px;">|</span>
+                <span class="chip decorator">TracingCustomerService</span>
+                <span>→</span>
+                <span class="chip">CustomerService</span>
+            </div>
+        </div>
+        <div class="arch-layer">
+            <div class="arch-layer-label" style="background: #d29922;">Factory</div>
+            <div class="arch-layer-content">
+                <span class="chip decorator">TracingProductFactory</span>
+                <span>→</span>
+                <span class="chip">ProductFactoryAdapter</span>
+                <span>→</span>
+                <span class="chip">ProductFactory (statisk)</span>
+            </div>
+        </div>
+        <div class="arch-layer">
+            <div class="arch-layer-label" style="background: #2ea043;">Repository</div>
+            <div class="arch-layer-content">
+                <span class="chip decorator">TracingProductRepository</span>
+                <span>→</span>
+                <span class="chip">ProductRepository</span>
+                <span style="color: #aaa; margin: 0 8px;">|</span>
+                <span class="chip decorator">TracingCustomerRepository</span>
+                <span>→</span>
+                <span class="chip">CustomerRepository</span>
+            </div>
+        </div>
+        <div class="arch-layer">
+            <div class="arch-layer-label" style="background: #f85149;">Database</div>
+            <div class="arch-layer-content">
+                <span class="chip">KioskDbContext</span>
+                <span>+</span>
+                <span class="chip decorator">FlowDbCommandInterceptor</span>
+                <span>→</span>
+                <span class="chip">SQL Server</span>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        Gula chips (<span class="chip decorator" style="font-size: 8pt; display: inline; padding: 1px 6px;">Tracing…</span>)
+        markerar de nya Decorator-klasserna. Dessa implementerar samma interface som den inre klassen
+        och delegerar alla anrop vidare, men mäter tid och emitterar ett <code>FlowEvent</code> före
+        och efter varje anrop.
+    </p>
+
+    <!-- ═══════════════ SEKTION 3 ═══════════════ -->
+    <h2>3. Dataflöde — ett konkret exempel</h2>
+
+    <p>
+        Så här ser ett komplett flöde ut när en klient skapar en ny produkt via <code>POST /api/products</code>:
+    </p>
+
+    <div class="diagram">
+        <div class="flow-chain">
+            <div class="flow-node controller">
+                <span class="layer-tag">Controller</span>
+                Products
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node service">
+                <span class="layer-tag">Service</span>
+                ProductService
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node factory">
+                <span class="layer-tag">Factory</span>
+                ProductFactory
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node repository">
+                <span class="layer-tag">Repository</span>
+                ProductRepository
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node database">
+                <span class="layer-tag">Database</span>
+                SQL Server
+            </div>
+        </div>
+    </div>
+
+    <p>Vid varje steg i kedjan genereras ett <code>FlowEvent</code> med följande data:</p>
+
+    <table>
+        <tr>
+            <th>Fält</th>
+            <th>Beskrivning</th>
+            <th>Exempel</th>
+        </tr>
+        <tr>
+            <td><code>SourceClass</code></td>
+            <td>Klassen som initierar anropet</td>
+            <td>ProductsController</td>
+        </tr>
+        <tr>
+            <td><code>TargetClass</code></td>
+            <td>Klassen som tar emot anropet</td>
+            <td>ProductService</td>
+        </tr>
+        <tr>
+            <td><code>SourceMethod</code></td>
+            <td>Metoden som anropar</td>
+            <td>Add</td>
+        </tr>
+        <tr>
+            <td><code>TargetMethod</code></td>
+            <td>Metoden som anropas</td>
+            <td>AddAsync</td>
+        </tr>
+        <tr>
+            <td><code>LayerName</code></td>
+            <td>Vilket arkitekturlager eventet hör till</td>
+            <td>Service</td>
+        </tr>
+        <tr>
+            <td><code>DurationMs</code></td>
+            <td>Exekveringstid i millisekunder</td>
+            <td>12.4</td>
+        </tr>
+        <tr>
+            <td><code>IsError</code></td>
+            <td>Sant om ett exception kastades</td>
+            <td>false</td>
+        </tr>
+        <tr>
+            <td><code>ErrorMessage</code></td>
+            <td>Felmeddelande (om IsError = true)</td>
+            <td>null</td>
+        </tr>
+        <tr>
+            <td><code>CorrelationId</code></td>
+            <td>Unikt ID som kopplar ihop alla events i samma HTTP-request</td>
+            <td>a3f7…c9d2</td>
+        </tr>
+    </table>
+
+    <!-- ═══════════════ SEKTION 4 ═══════════════ -->
+    <h2>4. Felflöde — röda linjer</h2>
+
+    <p>
+        Om ett fel kastas (t.ex. ogiltigt produktpris i fabriken) fångas det av Decorator-klassen
+        som sätter <code>IsError = true</code> och <code>ErrorMessage</code> innan eventet emitteras.
+        Felet kastas sedan vidare uppåt i kedjan. I dashboarden syns detta som:
+    </p>
+
+    <div class="diagram">
+        <div class="flow-chain">
+            <div class="flow-node controller">
+                <span class="layer-tag">Controller</span>
+                Products
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node service">
+                <span class="layer-tag">Service</span>
+                ProductService
+            </div>
+            <span class="flow-arrow error">→</span>
+            <div class="flow-node factory" style="background: #f85149;">
+                <span class="layer-tag">Factory — FEL</span>
+                ProductFactory
+            </div>
+            <span class="flow-arrow error" style="opacity: 0.3;">✕</span>
+            <div class="flow-node repository" style="opacity: 0.3;">
+                <span class="layer-tag">Repository</span>
+                ProductRepository
+            </div>
+        </div>
+    </div>
+
+    <p>
+        Anropet når aldrig Repository-lagret. Den röda linjen och felmeddelandet visas direkt
+        i dashboarden — klicka på linjen för att se det exakta felmeddelandet i en tooltip.
+    </p>
+
+    <!-- ═══════════════ SEKTION 5 ═══════════════ -->
+    <h2>5. Visuella regler i dashboarden</h2>
+
+    <div class="visual-rules">
+        <div class="rule-card">
+            <div class="rule-indicator green"></div>
+            <div class="rule-text"><strong>Grön linje</strong> — Lyckat anrop utan fel</div>
+        </div>
+        <div class="rule-card">
+            <div class="rule-indicator red"></div>
+            <div class="rule-text"><strong>Röd linje</strong> — Exception kastades i anropet</div>
+        </div>
+        <div class="rule-card">
+            <div class="rule-indicator thin"></div>
+            <div class="rule-text"><strong>Tunn linje</strong> — Lite trafik (få anrop per tidsfönster)</div>
+        </div>
+        <div class="rule-card">
+            <div class="rule-indicator thick"></div>
+            <div class="rule-text"><strong>Tjock linje</strong> — Mycket trafik (många anrop per tidsfönster)</div>
+        </div>
+    </div>
+
+    <h3>5.1 Linjetjocklek och tidsfönster</h3>
+    <p>
+        Tjockleken beräknas baserat på antal anrop inom ett konfigurerbart tidsfönster (standard: 10 sekunder).
+        Skalan är linjär från <strong>1.5px</strong> (ett anrop) till <strong>8px</strong> (flest anrop bland
+        alla kanter). Om inga anrop skett inom tidsfönstret visas en streckad, grå linje.
+    </p>
+
+    <h3>5.2 Partikelanimation</h3>
+    <p>
+        Varje enskilt anrop visualiseras som en animerad partikel (cirkel) som rör sig längs en
+        Bézier-kurva från käll-noden till mål-noden. Gröna partiklar för lyckade anrop, röda för fel.
+        Animationen tar 600ms.
+    </p>
+
+    <h3>5.3 Correlation-highlighting</h3>
+    <p>
+        Klicka på en linje för att highlighta hela request-kedjan — alla noder och kanter som hör
+        till samma <code>CorrelationId</code> lyser upp i orange. Klicka på bakgrunden för att avmarkera.
+    </p>
+
+    <!-- ═══════════════ SEKTION 6 ═══════════════ -->
+    <h2>6. Teknisk implementation</h2>
+
+    <h3>6.1 Decorator-pattern</h3>
+    <p>
+        Varje interface i systemet (t.ex. <code>IProductService</code>) wrappas med en Tracing-decorator
+        som implementerar samma interface:
+    </p>
+
+    <pre><span class="keyword">public class</span> <span class="type">TracingProductService</span>(<span class="type">IProductService</span> inner, <span class="type">FlowTracer</span> tracer) : <span class="type">IProductService</span>
+{
+    <span class="keyword">public</span> <span class="type">Task</span>&lt;<span class="type">List</span>&lt;<span class="type">Product</span>&gt;&gt; <span class="method">GetAllAsync</span>()
+    {
+        <span class="keyword">return</span> tracer.<span class="method">TraceAsync</span>(
+            <span class="string">"ProductsController"</span>, <span class="string">"GetAll"</span>,       <span class="comment">// källa</span>
+            <span class="string">"ProductService"</span>, <span class="string">"GetAllAsync"</span>,      <span class="comment">// mål</span>
+            <span class="string">"Service"</span>,                            <span class="comment">// lager</span>
+            () =&gt; inner.<span class="method">GetAllAsync</span>());           <span class="comment">// delegera</span>
+    }
+    <span class="comment">// ... övriga metoder följer samma mönster</span>
+}</pre>
+
+    <h3>6.2 FlowTracer</h3>
+    <p>
+        <code>FlowTracer</code> är en scoped service som omsluter varje anrop med en <code>Stopwatch</code>,
+        mäter duration, fångar exceptions och emitterar ett <code>FlowEvent</code> till <code>IFlowEventSink</code>.
+    </p>
+
+    <h3>6.3 SignalR-pipeline</h3>
+    <p>
+        Events flödar genom systemet enligt:
+    </p>
+    <pre>Decorator → FlowTracer → IFlowEventSink → SignalRFlowEventSink → FlowHub → Dashboard (WebSocket)</pre>
+
+    <p>
+        <code>FlowHub</code> exponeras på <code>/flow-hub</code> och broadcastar till alla klienter
+        i gruppen "dashboard". En ring buffer på 1000 events hålls i minnet.
+    </p>
+
+    <h3>6.4 CorrelationId-middleware</h3>
+    <p>
+        En ASP.NET middleware (<code>CorrelationIdMiddleware</code>) körs först i pipeline och tilldelar
+        ett unikt <code>Guid</code> per HTTP-request via <code>AsyncLocal&lt;Guid&gt;</code>.
+        Alla FlowEvents som genereras inom samma request delar detta ID, vilket gör det möjligt
+        att visualisera hela kedjan som en enhet.
+    </p>
+
+    <h3>6.5 EF Core Interceptor</h3>
+    <p>
+        <code>FlowDbCommandInterceptor</code> implementerar <code>DbCommandInterceptor</code> och
+        fångar alla SQL-kommandon (SELECT, INSERT, UPDATE, DELETE) som EF Core utför.
+        Varje kommando emitteras som ett FlowEvent med lagret "Database".
+    </p>
+
+    <!-- ═══════════════ SEKTION 7 ═══════════════ -->
+    <h2>7. DI-registrering</h2>
+
+    <p>All instrumentering konfigureras i <code>Program.cs</code> via decorator-wrapping:</p>
+
+    <pre><span class="comment">// Registrera tracing-infrastruktur</span>
+builder.Services.<span class="method">AddSignalR</span>();
+builder.Services.<span class="method">AddSingleton</span>&lt;<span class="type">IFlowEventSink</span>, <span class="type">SignalRFlowEventSink</span>&gt;();
+builder.Services.<span class="method">AddScoped</span>&lt;<span class="type">FlowTracer</span>&gt;();
+
+<span class="comment">// Wrap repository: Interface → Decorator → Konkret</span>
+builder.Services.<span class="method">AddScoped</span>&lt;<span class="type">ProductRepository</span>&gt;();
+builder.Services.<span class="method">AddScoped</span>&lt;<span class="type">IProductRepository</span>&gt;(sp =&gt;
+    <span class="keyword">new</span> <span class="type">TracingProductRepository</span>(
+        sp.<span class="method">GetRequiredService</span>&lt;<span class="type">ProductRepository</span>&gt;(),
+        sp.<span class="method">GetRequiredService</span>&lt;<span class="type">FlowTracer</span>&gt;()));
+
+<span class="comment">// Wrap service: Interface → Decorator → Konkret</span>
+builder.Services.<span class="method">AddScoped</span>&lt;<span class="type">ProductService</span>&gt;();
+builder.Services.<span class="method">AddScoped</span>&lt;<span class="type">IProductService</span>&gt;(sp =&gt;
+    <span class="keyword">new</span> <span class="type">TracingProductService</span>(
+        sp.<span class="method">GetRequiredService</span>&lt;<span class="type">ProductService</span>&gt;(),
+        sp.<span class="method">GetRequiredService</span>&lt;<span class="type">FlowTracer</span>&gt;()));</pre>
+
+    <!-- ═══════════════ SEKTION 8 ═══════════════ -->
+    <h2>8. Projektstruktur</h2>
+
+    <table>
+        <tr>
+            <th>Fil / Mapp</th>
+            <th>Syfte</th>
+        </tr>
+        <tr>
+            <td><code>FlowVisualizer.Core/</code></td>
+            <td>Class Library — all tracing-logik</td>
+        </tr>
+        <tr>
+            <td><code>├─ FlowEvent.cs</code></td>
+            <td>Datamodell för ett trackat anrop</td>
+        </tr>
+        <tr>
+            <td><code>├─ FlowTracer.cs</code></td>
+            <td>Tidsmätning och event-emittering</td>
+        </tr>
+        <tr>
+            <td><code>├─ FlowCorrelation.cs</code></td>
+            <td>AsyncLocal&lt;Guid&gt; per request</td>
+        </tr>
+        <tr>
+            <td><code>├─ IFlowEventSink.cs</code></td>
+            <td>Abstraktion för event-destination</td>
+        </tr>
+        <tr>
+            <td><code>├─ SignalRFlowEventSink.cs</code></td>
+            <td>Pushar till SignalR hub + ring buffer</td>
+        </tr>
+        <tr>
+            <td><code>├─ NullFlowEventSink.cs</code></td>
+            <td>No-op implementation (feature toggle av)</td>
+        </tr>
+        <tr>
+            <td><code>├─ Hub/FlowHub.cs</code></td>
+            <td>SignalR Hub på /flow-hub</td>
+        </tr>
+        <tr>
+            <td><code>├─ Middleware/CorrelationIdMiddleware.cs</code></td>
+            <td>Sätter CorrelationId per HTTP-request</td>
+        </tr>
+        <tr>
+            <td><code>├─ Interceptors/FlowDbCommandInterceptor.cs</code></td>
+            <td>EF Core interceptor för SQL-anrop</td>
+        </tr>
+        <tr>
+            <td><code>├─ Adapters/ProductFactoryAdapter.cs</code></td>
+            <td>Wrappar statiska ProductFactory som IProductFactory</td>
+        </tr>
+        <tr>
+            <td><code>├─ Decorators/TracingProductService.cs</code></td>
+            <td rowspan="6" style="vertical-align: middle;">Decorator-klasser per interface — wrappar alla metoder med tracing</td>
+        </tr>
+        <tr><td><code>├─ Decorators/TracingCustomerService.cs</code></td></tr>
+        <tr><td><code>├─ Decorators/TracingDiscountedProductService.cs</code></td></tr>
+        <tr><td><code>├─ Decorators/TracingProductRepository.cs</code></td></tr>
+        <tr><td><code>├─ Decorators/TracingCustomerRepository.cs</code></td></tr>
+        <tr><td><code>└─ Decorators/TracingDiscountedProductRepository.cs</code></td></tr>
+        <tr>
+            <td><code>wwwroot/flow-dashboard/</code></td>
+            <td>Webbdashboard (HTML + CSS + JS)</td>
+        </tr>
+    </table>
+
+    <!-- ═══════════════ SEKTION 9 ═══════════════ -->
+    <h2>9. Designbeslut</h2>
+
+    <table>
+        <tr>
+            <th>Beslut</th>
+            <th>Alternativ</th>
+            <th>Motivering</th>
+        </tr>
+        <tr>
+            <td><strong>Decorator-pattern</strong></td>
+            <td>AOP / IL-weaving (PostSharp, Fody)</td>
+            <td>Explicit, debuggbart, inga externa beroenden. Fungerar direkt med befintliga interfaces.</td>
+        </tr>
+        <tr>
+            <td><strong>SignalR</strong></td>
+            <td>Polling / Server-Sent Events</td>
+            <td>Native i ASP.NET, bi-directional, lägre latens. Automatisk fallback till SSE/Long Polling.</td>
+        </tr>
+        <tr>
+            <td><strong>D3.js</strong></td>
+            <td>Cytoscape.js, kommersiella verktyg</td>
+            <td>Gratis, flexibelt, full kontroll över visuell design. Stort community.</td>
+        </tr>
+        <tr>
+            <td><strong>IProductFactory-interface</strong></td>
+            <td>Behålla statisk fabrik</td>
+            <td>Enda sättet att instrumentera statisk klass utan IL-manipulation. Följer Dependency Inversion.</td>
+        </tr>
+        <tr>
+            <td><strong>In-memory ring buffer</strong></td>
+            <td>Databaspersistering</td>
+            <td>Noll extra infrastruktur. Dashboarden behöver bara realtidsdata, inte historik.</td>
+        </tr>
+    </table>
+
+    <!-- ═══════════════ SEKTION 10 ═══════════════ -->
+    <h2>10. Användning</h2>
+
+    <h3>10.1 Starta</h3>
+    <ol>
+        <li>Starta API-projektet som vanligt (<code>dotnet run</code> i <code>DigitalKiosk_Hackathon/</code>).</li>
+        <li>Öppna dashboard i webbläsaren: <code>https://localhost:{port}/flow-dashboard/index.html</code></li>
+        <li>Vänta tills statusen visar <strong style="color: var(--color-green);">Connected</strong>.</li>
+    </ol>
+
+    <h3>10.2 Generera trafik</h3>
+    <ul>
+        <li>Gör API-anrop via Swagger (<code>/</code>), <code>test-api.html</code>, eller valfri HTTP-klient.</li>
+        <li>Varje anrop genererar animerade partiklar och linjer i dashboarden.</li>
+    </ul>
+
+    <h3>10.3 Interaktion</h3>
+    <ul>
+        <li><strong>Hovra</strong> över en linje → tooltip med anropsstatistik (antal, medeltid, felfrekvens).</li>
+        <li><strong>Klicka</strong> på en linje → highlighta hela request-kedjan (CorrelationId).</li>
+        <li><strong>Klicka</strong> på bakgrunden → avmarkera highlighting.</li>
+        <li><strong>Clear</strong>-knappen → nollställ all data.</li>
+        <li><strong>Window</strong>-slider → ändra tidsfönster för linjetjockleksberäkning (5–60s).</li>
+        <li><strong>Errors only</strong>-checkbox → visa enbart kanter med fel.</li>
+    </ul>
+
+    <div class="info-box highlight">
+        <strong>Observera:</strong> Flow Visualizer är ett utvecklingsverktyg och ska inte vara aktivt
+        i produktion. För att stänga av all instrumentering, byt <code>SignalRFlowEventSink</code>
+        mot <code>NullFlowEventSink</code> i DI-registreringen — detta ger noll overhead.
+    </div>
+
+    <!-- ═══════════════ SIDFOT ═══════════════ -->
+    <div class="page-footer">
+        Flow Visualizer Dashboard — Teknisk Rapport v1.0 — Digital Kiosk Hackathon — 2026-03-29
+    </div>
+
+</body>
+</html>

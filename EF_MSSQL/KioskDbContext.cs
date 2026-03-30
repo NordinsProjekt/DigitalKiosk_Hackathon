@@ -6,6 +6,9 @@ namespace EF_MSSQL;
 
 public class KioskDbContext : DbContext
 {
+    public KioskDbContext() { }
+    public KioskDbContext(DbContextOptions<KioskDbContext> options) : base(options) { }
+
     public DbSet<Product> Products { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<DiscountedProduct> DiscountedProducts { get; set; }
