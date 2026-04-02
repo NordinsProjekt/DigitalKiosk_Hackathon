@@ -19,7 +19,17 @@
         <label>Window: <input type="range" id="time-window" min="5" max="60" value="10"><span id="window-label">10s</span></label>
         <label><input type="checkbox" id="show-errors-only"> Errors only</label>
     </div>
-    <svg id="graph"></svg>
+    <div class="main-content">
+        <svg id="graph"></svg>
+        <div id="detail-panel" class="hidden">
+            <div id="detail-header">
+                <h2>Request Flow</h2>
+                <span id="detail-correlation"></span>
+                <button id="detail-close">&times;</button>
+            </div>
+            <div id="detail-steps"></div>
+        </div>
+    </div>
     <div id="tooltip" class="hidden"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>

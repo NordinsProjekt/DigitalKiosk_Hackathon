@@ -241,10 +241,14 @@
             })
             .on("click", function (event, d) {
                 event.stopPropagation();
-                // Highlight correlation of most recent event
                 if (d.recentEvents.length > 0) {
                     const lastEv = d.recentEvents[d.recentEvents.length - 1];
                     selectedCorrelation = selectedCorrelation === lastEv.correlationId ? null : lastEv.correlationId;
+                    if (selectedCorrelation) {
+                        showDetailPanel(selectedCorrelation);
+                    } else {
+                        hideDetailPanel();
+                    }
                     render();
                 }
             });
@@ -311,6 +315,11 @@
             if (last.isError && last.errorMessage) {
                 html += `<div class="tt-error">${escapeHtml(last.errorMessage)}</div>`;
             }
+            if (last.inputPayload) {
+                const preview = last.inputPayload.length > 120 ? last.inputPayload.substring(0, 120) + "…" : last.inputPayload;
+                html += `<div class="tt-row" style="margin-top:4px"><span class="tt-label">Payload</span><span class="tt-value" style="font-size:10px;color:#7ee787">${escapeHtml(preview)}</span></div>`;
+            }
+            html += `<div style="margin-top:6px;color:#58a6ff;font-size:10px;text-align:center">Click for details</div>`;
         }
 
         tooltip.html(html)
@@ -324,6 +333,82 @@
         div.textContent = text;
         return div.innerHTML;
     }
+
+    // ── Detail Panel ──
+    const detailPanel = document.getElementById("detail-panel");
+    const detailCorrelation = document.getElementById("detail-correlation");
+    const detailSteps = document.getElementById("detail-steps");
+    const detailClose = document.getElementById("detail-close");
+
+    function showDetailPanel(correlationId) {
+        const corrEvents = events
+            .filter(ev => ev.correlationId === correlationId)
+            .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+        if (corrEvents.length === 0) return;
+
+        detailCorrelation.textContent = correlationId;
+        detailSteps.innerHTML = "";
+
+        corrEvents.forEach((ev, idx) => {
+            if (idx > 0) {
+                const arrow = document.createElement("div");
+                arrow.className = "step-arrow";
+                arrow.textContent = "▼";
+                detailSteps.appendChild(arrow);
+            }
+
+            const card = document.createElement("div");
+            card.className = `step-card layer-${ev.layerName}`;
+            if (ev.isError) card.classList.add("error");
+
+            let html = `<div class="step-title">
+                <span>${escapeHtml(ev.sourceClass)}.${escapeHtml(ev.sourceMethod)} → ${escapeHtml(ev.targetClass)}.${escapeHtml(ev.targetMethod)}</span>
+                <span class="step-layer ${ev.layerName}">${ev.layerName}</span>
+            </div>`;
+            html += `<div class="step-meta">${ev.durationMs.toFixed(1)} ms`;
+            if (ev.payloadType) html += ` · ${escapeHtml(ev.payloadType)}`;
+            html += `</div>`;
+
+            if (ev.inputPayload) {
+                html += `<div class="step-payload-label">Input</div>`;
+                html += `<div class="step-payload">${escapeHtml(prettyJson(ev.inputPayload))}</div>`;
+            }
+
+            if (ev.outputPayload) {
+                html += `<div class="step-payload-label">Output</div>`;
+                html += `<div class="step-payload">${escapeHtml(prettyJson(ev.outputPayload))}</div>`;
+            }
+
+            if (ev.isError && ev.errorMessage) {
+                html += `<div class="step-error-msg">${escapeHtml(ev.errorMessage)}</div>`;
+            }
+
+            card.innerHTML = html;
+            detailSteps.appendChild(card);
+        });
+
+        detailPanel.classList.remove("hidden");
+    }
+
+    function hideDetailPanel() {
+        detailPanel.classList.add("hidden");
+    }
+
+    function prettyJson(str) {
+        try {
+            const parsed = JSON.parse(str);
+            return JSON.stringify(parsed, null, 2);
+        } catch {
+            return str;
+        }
+    }
+
+    detailClose.addEventListener("click", () => {
+        selectedCorrelation = null;
+        hideDetailPanel();
+        render();
+    });
 
     // ── Controls ──
     btnClear.addEventListener("click", () => {
@@ -347,6 +432,7 @@
 
     svg.on("click", () => {
         selectedCorrelation = null;
+        hideDetailPanel();
         render();
     });
 

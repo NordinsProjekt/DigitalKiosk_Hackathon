@@ -12,7 +12,8 @@ public class TracingProductService(IProductService inner, FlowTracer tracer) : I
             "ProductsController", "GetAll",
             "ProductService", "GetAllAsync",
             "Service",
-            () => inner.GetAllAsync());
+            () => inner.GetAllAsync(),
+            payloadType: "Product[]");
     }
 
     public Task<Product?> GetByIdAsync(Guid id)
@@ -21,7 +22,8 @@ public class TracingProductService(IProductService inner, FlowTracer tracer) : I
             "ProductsController", "GetById",
             "ProductService", "GetByIdAsync",
             "Service",
-            () => inner.GetByIdAsync(id));
+            () => inner.GetByIdAsync(id),
+            input: new { id }, payloadType: "Product");
     }
 
     public Task AddAsync(ProductDetails productDetails)
@@ -30,7 +32,8 @@ public class TracingProductService(IProductService inner, FlowTracer tracer) : I
             "ProductsController", "Add",
             "ProductService", "AddAsync",
             "Service",
-            () => inner.AddAsync(productDetails));
+            () => inner.AddAsync(productDetails),
+            input: productDetails, payloadType: "ProductDetails");
     }
 
     public Task UpdateAsync(Guid id, ProductDetails productDetails)
@@ -39,7 +42,8 @@ public class TracingProductService(IProductService inner, FlowTracer tracer) : I
             "ProductsController", "Update",
             "ProductService", "UpdateAsync",
             "Service",
-            () => inner.UpdateAsync(id, productDetails));
+            () => inner.UpdateAsync(id, productDetails),
+            input: new { id, productDetails }, payloadType: "ProductDetails");
     }
 
     public Task DeleteAsync(Guid id)
@@ -48,6 +52,7 @@ public class TracingProductService(IProductService inner, FlowTracer tracer) : I
             "ProductsController", "Delete",
             "ProductService", "DeleteAsync",
             "Service",
-            () => inner.DeleteAsync(id));
+            () => inner.DeleteAsync(id),
+            input: new { id }, payloadType: "Guid");
     }
 }

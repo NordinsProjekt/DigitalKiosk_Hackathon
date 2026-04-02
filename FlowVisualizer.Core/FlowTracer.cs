@@ -8,7 +8,8 @@ public class FlowTracer(IFlowEventSink sink)
         string sourceClass, string sourceMethod,
         string targetClass, string targetMethod,
         string layerName,
-        Func<Task<T>> action)
+        Func<Task<T>> action,
+        object? input = null, string? payloadType = null)
     {
         var sw = Stopwatch.StartNew();
         try
@@ -23,7 +24,10 @@ public class FlowTracer(IFlowEventSink sink)
                 TargetMethod = targetMethod,
                 LayerName = layerName,
                 DurationMs = sw.Elapsed.TotalMilliseconds,
-                CorrelationId = FlowCorrelation.Current
+                CorrelationId = FlowCorrelation.Current,
+                InputPayload = FlowEvent.Summarize(input),
+                OutputPayload = FlowEvent.Summarize(result),
+                PayloadType = payloadType
             });
             return result;
         }
@@ -40,7 +44,9 @@ public class FlowTracer(IFlowEventSink sink)
                 DurationMs = sw.Elapsed.TotalMilliseconds,
                 IsError = true,
                 ErrorMessage = ex.Message,
-                CorrelationId = FlowCorrelation.Current
+                CorrelationId = FlowCorrelation.Current,
+                InputPayload = FlowEvent.Summarize(input),
+                PayloadType = payloadType
             });
             throw;
         }
@@ -50,7 +56,8 @@ public class FlowTracer(IFlowEventSink sink)
         string sourceClass, string sourceMethod,
         string targetClass, string targetMethod,
         string layerName,
-        Func<Task> action)
+        Func<Task> action,
+        object? input = null, string? payloadType = null)
     {
         var sw = Stopwatch.StartNew();
         try
@@ -65,7 +72,9 @@ public class FlowTracer(IFlowEventSink sink)
                 TargetMethod = targetMethod,
                 LayerName = layerName,
                 DurationMs = sw.Elapsed.TotalMilliseconds,
-                CorrelationId = FlowCorrelation.Current
+                CorrelationId = FlowCorrelation.Current,
+                InputPayload = FlowEvent.Summarize(input),
+                PayloadType = payloadType
             });
         }
         catch (Exception ex)
@@ -81,7 +90,9 @@ public class FlowTracer(IFlowEventSink sink)
                 DurationMs = sw.Elapsed.TotalMilliseconds,
                 IsError = true,
                 ErrorMessage = ex.Message,
-                CorrelationId = FlowCorrelation.Current
+                CorrelationId = FlowCorrelation.Current,
+                InputPayload = FlowEvent.Summarize(input),
+                PayloadType = payloadType
             });
             throw;
         }
@@ -91,7 +102,8 @@ public class FlowTracer(IFlowEventSink sink)
         string sourceClass, string sourceMethod,
         string targetClass, string targetMethod,
         string layerName,
-        Func<T> action)
+        Func<T> action,
+        object? input = null, string? payloadType = null)
     {
         var sw = Stopwatch.StartNew();
         try
@@ -106,7 +118,10 @@ public class FlowTracer(IFlowEventSink sink)
                 TargetMethod = targetMethod,
                 LayerName = layerName,
                 DurationMs = sw.Elapsed.TotalMilliseconds,
-                CorrelationId = FlowCorrelation.Current
+                CorrelationId = FlowCorrelation.Current,
+                InputPayload = FlowEvent.Summarize(input),
+                OutputPayload = FlowEvent.Summarize(result),
+                PayloadType = payloadType
             }).GetAwaiter().GetResult();
             return result;
         }
@@ -123,7 +138,9 @@ public class FlowTracer(IFlowEventSink sink)
                 DurationMs = sw.Elapsed.TotalMilliseconds,
                 IsError = true,
                 ErrorMessage = ex.Message,
-                CorrelationId = FlowCorrelation.Current
+                CorrelationId = FlowCorrelation.Current,
+                InputPayload = FlowEvent.Summarize(input),
+                PayloadType = payloadType
             }).GetAwaiter().GetResult();
             throw;
         }

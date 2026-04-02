@@ -53,7 +53,10 @@ public class FlowDbCommandInterceptor(IFlowEventSink sink) : DbCommandIntercepto
             TargetMethod = commandType,
             LayerName = "Database",
             DurationMs = eventData.Duration.TotalMilliseconds,
-            CorrelationId = FlowCorrelation.Current
+            CorrelationId = FlowCorrelation.Current,
+            InputPayload = TruncateSql(command.CommandText),
+            OutputPayload = SummarizeParameters(command),
+            PayloadType = "SQL"
         });
     }
 
@@ -70,8 +73,26 @@ public class FlowDbCommandInterceptor(IFlowEventSink sink) : DbCommandIntercepto
             DurationMs = eventData.Duration.TotalMilliseconds,
             IsError = true,
             ErrorMessage = eventData.Exception?.Message,
-            CorrelationId = FlowCorrelation.Current
+            CorrelationId = FlowCorrelation.Current,
+            InputPayload = TruncateSql(command.CommandText),
+            OutputPayload = SummarizeParameters(command),
+            PayloadType = "SQL"
         });
+    }
+
+    private static string? TruncateSql(string? sql)
+    {
+        if (sql is null) return null;
+        return sql.Length > 2000 ? sql[..2000] + "\u2026" : sql;
+    }
+
+    private static string? SummarizeParameters(DbCommand command)
+    {
+        if (command.Parameters.Count == 0) return null;
+        var dict = new Dictionary<string, string?>();
+        foreach (DbParameter p in command.Parameters)
+            dict[p.ParameterName] = p.Value?.ToString();
+        return FlowEvent.Summarize(dict);
     }
 
     private static string GetCommandType(string sql)

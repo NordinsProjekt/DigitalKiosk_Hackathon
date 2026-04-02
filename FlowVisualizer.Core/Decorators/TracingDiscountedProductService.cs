@@ -11,7 +11,8 @@ public class TracingDiscountedProductService(IDiscountedProductService inner, Fl
             "DiscountedProductController", "GetAll",
             "DiscountedProductService", "GetAllAsync",
             "Service",
-            () => inner.GetAllAsync());
+            () => inner.GetAllAsync(),
+            payloadType: "DiscountedProduct[]");
     }
 
     public Task<DiscountedProduct?> GetByIdAsync(Guid id)
@@ -20,7 +21,8 @@ public class TracingDiscountedProductService(IDiscountedProductService inner, Fl
             "DiscountedProductController", "GetById",
             "DiscountedProductService", "GetByIdAsync",
             "Service",
-            () => inner.GetByIdAsync(id));
+            () => inner.GetByIdAsync(id),
+            input: new { id }, payloadType: "DiscountedProduct");
     }
 
     public Task AddAsync(DiscountedProduct discountedProduct)
@@ -29,7 +31,8 @@ public class TracingDiscountedProductService(IDiscountedProductService inner, Fl
             "DiscountedProductController", "Add",
             "DiscountedProductService", "AddAsync",
             "Service",
-            () => inner.AddAsync(discountedProduct));
+            () => inner.AddAsync(discountedProduct),
+            input: discountedProduct, payloadType: "DiscountedProduct");
     }
 
     public Task UpdateAsync(DiscountedProduct discountedProduct)
@@ -38,7 +41,8 @@ public class TracingDiscountedProductService(IDiscountedProductService inner, Fl
             "DiscountedProductController", "Update",
             "DiscountedProductService", "UpdateAsync",
             "Service",
-            () => inner.UpdateAsync(discountedProduct));
+            () => inner.UpdateAsync(discountedProduct),
+            input: discountedProduct, payloadType: "DiscountedProduct");
     }
 
     public Task DeleteAsync(Guid id)
@@ -47,6 +51,7 @@ public class TracingDiscountedProductService(IDiscountedProductService inner, Fl
             "DiscountedProductController", "Delete",
             "DiscountedProductService", "DeleteAsync",
             "Service",
-            () => inner.DeleteAsync(id));
+            () => inner.DeleteAsync(id),
+            input: new { id }, payloadType: "Guid");
     }
 }

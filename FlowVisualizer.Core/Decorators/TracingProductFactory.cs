@@ -12,6 +12,7 @@ public class TracingProductFactory(IProductFactory inner, FlowTracer tracer) : I
             "ProductService", "AddAsync",
             "ProductFactory", "Create",
             "Factory",
-            () => inner.Create(productDetails));
+            () => inner.Create(productDetails),
+            input: productDetails, payloadType: "Product");
     }
 }

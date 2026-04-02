@@ -11,7 +11,8 @@ public class TracingDiscountedProductRepository(IDiscountedProductRepository inn
             "DiscountedProductService", "GetAllAsync",
             "DiscountedProductRepository", "GetAllAsync",
             "Repository",
-            () => inner.GetAllAsync());
+            () => inner.GetAllAsync(),
+            payloadType: "DiscountedProduct[]");
     }
 
     public Task<DiscountedProduct?> GetByIdAsync(Guid id)
@@ -20,7 +21,8 @@ public class TracingDiscountedProductRepository(IDiscountedProductRepository inn
             "DiscountedProductService", "GetByIdAsync",
             "DiscountedProductRepository", "GetByIdAsync",
             "Repository",
-            () => inner.GetByIdAsync(id));
+            () => inner.GetByIdAsync(id),
+            input: new { id }, payloadType: "DiscountedProduct");
     }
 
     public Task AddAsync(DiscountedProduct discountedProduct)
@@ -29,7 +31,8 @@ public class TracingDiscountedProductRepository(IDiscountedProductRepository inn
             "DiscountedProductService", "AddAsync",
             "DiscountedProductRepository", "AddAsync",
             "Repository",
-            () => inner.AddAsync(discountedProduct));
+            () => inner.AddAsync(discountedProduct),
+            input: discountedProduct, payloadType: "DiscountedProduct");
     }
 
     public Task UpdateAsync(DiscountedProduct discountedProduct)
@@ -38,7 +41,8 @@ public class TracingDiscountedProductRepository(IDiscountedProductRepository inn
             "DiscountedProductService", "UpdateAsync",
             "DiscountedProductRepository", "UpdateAsync",
             "Repository",
-            () => inner.UpdateAsync(discountedProduct));
+            () => inner.UpdateAsync(discountedProduct),
+            input: discountedProduct, payloadType: "DiscountedProduct");
     }
 
     public Task DeleteAsync(Guid id)
@@ -47,6 +51,7 @@ public class TracingDiscountedProductRepository(IDiscountedProductRepository inn
             "DiscountedProductService", "DeleteAsync",
             "DiscountedProductRepository", "DeleteAsync",
             "Repository",
-            () => inner.DeleteAsync(id));
+            () => inner.DeleteAsync(id),
+            input: new { id }, payloadType: "Guid");
     }
 }

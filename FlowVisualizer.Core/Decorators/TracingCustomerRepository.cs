@@ -11,7 +11,8 @@ public class TracingCustomerRepository(ICustomerRepository inner, FlowTracer tra
             "CustomerService", "GetAllAsync",
             "CustomerRepository", "GetAllAsync",
             "Repository",
-            () => inner.GetAllAsync());
+            () => inner.GetAllAsync(),
+            payloadType: "Customer[]");
     }
 
     public Task<Customer?> GetByIdAsync(Guid id)
@@ -20,7 +21,8 @@ public class TracingCustomerRepository(ICustomerRepository inner, FlowTracer tra
             "CustomerService", "GetByIdAsync",
             "CustomerRepository", "GetByIdAsync",
             "Repository",
-            () => inner.GetByIdAsync(id));
+            () => inner.GetByIdAsync(id),
+            input: new { id }, payloadType: "Customer");
     }
 
     public Task AddAsync(Customer customer)
@@ -29,7 +31,8 @@ public class TracingCustomerRepository(ICustomerRepository inner, FlowTracer tra
             "CustomerService", "AddAsync",
             "CustomerRepository", "AddAsync",
             "Repository",
-            () => inner.AddAsync(customer));
+            () => inner.AddAsync(customer),
+            input: customer, payloadType: "Customer");
     }
 
     public Task UpdateNameAsync(Customer customer)
@@ -38,7 +41,8 @@ public class TracingCustomerRepository(ICustomerRepository inner, FlowTracer tra
             "CustomerService", "UpdateNameAsync",
             "CustomerRepository", "UpdateNameAsync",
             "Repository",
-            () => inner.UpdateNameAsync(customer));
+            () => inner.UpdateNameAsync(customer),
+            input: customer, payloadType: "Customer");
     }
 
     public Task UpdateIdentityNumberAsync(Customer customer)
@@ -47,7 +51,8 @@ public class TracingCustomerRepository(ICustomerRepository inner, FlowTracer tra
             "CustomerService", "UpdateIdentityNumberAsync",
             "CustomerRepository", "UpdateIdentityNumberAsync",
             "Repository",
-            () => inner.UpdateIdentityNumberAsync(customer));
+            () => inner.UpdateIdentityNumberAsync(customer),
+            input: customer, payloadType: "Customer");
     }
 
     public Task DeleteAsync(Guid id)
@@ -56,7 +61,8 @@ public class TracingCustomerRepository(ICustomerRepository inner, FlowTracer tra
             "CustomerService", "DeleteAsync",
             "CustomerRepository", "DeleteAsync",
             "Repository",
-            () => inner.DeleteAsync(id));
+            () => inner.DeleteAsync(id),
+            input: new { id }, payloadType: "Guid");
     }
 
     public Task<Customer?> GetByPersonalIdentityNumberAsync(string personalIdentityNumber)
@@ -65,6 +71,7 @@ public class TracingCustomerRepository(ICustomerRepository inner, FlowTracer tra
             "CustomerService", "GetByPersonalIdentityNumberAsync",
             "CustomerRepository", "GetByPersonalIdentityNumberAsync",
             "Repository",
-            () => inner.GetByPersonalIdentityNumberAsync(personalIdentityNumber));
+            () => inner.GetByPersonalIdentityNumberAsync(personalIdentityNumber),
+            input: new { personalIdentityNumber }, payloadType: "Customer");
     }
 }

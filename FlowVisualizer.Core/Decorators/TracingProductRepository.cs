@@ -11,7 +11,8 @@ public class TracingProductRepository(IProductRepository inner, FlowTracer trace
             "ProductService", "GetAllAsync",
             "ProductRepository", "GetAllAsync",
             "Repository",
-            () => inner.GetAllAsync());
+            () => inner.GetAllAsync(),
+            payloadType: "Product[]");
     }
 
     public Task<Product?> GetByIdAsync(Guid id)
@@ -20,7 +21,8 @@ public class TracingProductRepository(IProductRepository inner, FlowTracer trace
             "ProductService", "GetByIdAsync",
             "ProductRepository", "GetByIdAsync",
             "Repository",
-            () => inner.GetByIdAsync(id));
+            () => inner.GetByIdAsync(id),
+            input: new { id }, payloadType: "Product");
     }
 
     public Task AddAsync(Product product)
@@ -29,7 +31,8 @@ public class TracingProductRepository(IProductRepository inner, FlowTracer trace
             "ProductService", "AddAsync",
             "ProductRepository", "AddAsync",
             "Repository",
-            () => inner.AddAsync(product));
+            () => inner.AddAsync(product),
+            input: product, payloadType: "Product");
     }
 
     public Task UpdateAsync(Product product)
@@ -38,7 +41,8 @@ public class TracingProductRepository(IProductRepository inner, FlowTracer trace
             "ProductService", "UpdateAsync",
             "ProductRepository", "UpdateAsync",
             "Repository",
-            () => inner.UpdateAsync(product));
+            () => inner.UpdateAsync(product),
+            input: product, payloadType: "Product");
     }
 
     public Task DeleteAsync(Guid id)
@@ -47,7 +51,8 @@ public class TracingProductRepository(IProductRepository inner, FlowTracer trace
             "ProductService", "DeleteAsync",
             "ProductRepository", "DeleteAsync",
             "Repository",
-            () => inner.DeleteAsync(id));
+            () => inner.DeleteAsync(id),
+            input: new { id }, payloadType: "Guid");
     }
 
     public Task<List<Product>> FilterAsync(string query)
@@ -56,6 +61,7 @@ public class TracingProductRepository(IProductRepository inner, FlowTracer trace
             "ProductService", "FilterAsync",
             "ProductRepository", "FilterAsync",
             "Repository",
-            () => inner.FilterAsync(query));
+            () => inner.FilterAsync(query),
+            input: new { query }, payloadType: "Product[]");
     }
 }
